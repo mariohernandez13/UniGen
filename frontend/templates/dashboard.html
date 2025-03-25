@@ -1,18 +1,122 @@
-<!-- dashboard.html -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Dashboard</title>
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-    <div class="container">
-        <h2>Bienvenido, {{ username }}</h2>
-        <p>Has iniciado sesión exitosamente.</p>
-        <a href="/logout">Cerrar sesión</a>
+    <nav class="navbar navbar-dark bg-primary px-3">
+        <span class="navbar-brand mb-0 h1">Bienvenido, {{ username }}</span>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#profileModal">
+                    <i class="bi bi-person-circle"></i> Perfil
+                </button>
+            </div>
+            <div class="col">
+                <a href="{{ url_for('logout') }}" class="btn btn-danger">Cerrar sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h4>Crear una nueva actividad</h4>
+                    <form id="activity-form">
+                        <div class="mb-2">
+                            <input type="text" id="activity-name" class="form-control"
+                                placeholder="Nombre de la actividad" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Crear</button>
+                    </form>
+                </div>
+                <div class="card mt-3 p-3">
+                    <h4>Mis actividades</h4>
+                    <ul id="my-activities-list" class="list-group"></ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card p-3">
+                    <h4>Actividades disponibles</h4>
+                    <div class="row" id="activities-list"></div>
+                    <p id="confirmation-message" class="text-success fw-bold mt-2 d-none"></p>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Modal de perfil -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Editar Perfil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="profile-form">
+                        <div class="mb-3">
+                            <label for="profile-name" class="form-label">Nombre</label>
+                            <input type="text" id="profile-name" class="form-control" value="{{ username }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="profile-email" class="form-label">Correo electrónico</label>
+                            <input type="email" id="profile-email" class="form-control" value="usuario@example.com"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Guardar cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('activity-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const activityName = document.getElementById('activity-name').value;
+            if (activityName) {
+                const listItem = document.createElement('li');
+                listItem.classList.add('list-group-item');
+                listItem.textContent = activityName;
+                document.getElementById('my-activities-list').appendChild(listItem);
+                document.getElementById('activity-name').value = '';
+            }
+        });
+
+        function joinActivity(activityName) {
+            const message = document.getElementById('confirmation-message');
+            message.textContent = `Te has inscrito en "${activityName}"`;
+            message.classList.remove('d-none');
+            setTimeout(() => message.classList.add('d-none'), 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const activities = ['Yoga en el parque', 'Clase de pintura', 'Senderismo'];
+            const activitiesList = document.getElementById('activities-list');
+            activities.forEach(activity => {
+                const activityCard = document.createElement('div');
+                activityCard.classList.add('col-md-4', 'mb-3');
+                activityCard.innerHTML = `
+                    <div class="card p-3">
+                        <p class="fw-bold">${activity}</p>
+                        <button class="btn btn-success w-100" onclick="joinActivity('${activity}')">Apuntarse</button>
+                    </div>
+                `;
+                activitiesList.appendChild(activityCard);
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </body>
+
 </html>
