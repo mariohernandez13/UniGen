@@ -29,31 +29,78 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Login Form Styles */
-input, button {
-    font-size: 1rem;
-    padding: 10px;
-    margin: 5px 0;
-    width: 100%;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+/* Modern Login Styles */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #e3e3e3, #ffffff);
 }
 
-input:focus, button:focus {
+.login-box {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.login-box h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+input {
+    font-size: 1rem;
+    padding: 12px;
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+input:focus {
     outline: none;
-    border-color: #0056b3;
+    border-color: #007aff;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 122, 255, 0.2);
 }
 
 button {
-    background-color: #007bff;
-    color: white;
+    font-size: 1rem;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
     border: none;
+    background: #007aff;
+    color: white;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
+    transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background: #0056b3;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #007aff;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
 }
 
 /* Dashboard Styles */
