@@ -1,5 +1,5 @@
 CREATE DATABASE UniGen;
-USE miapp;
+USE UniGen;
 
 CREATE TABLE usuario (
     idusuario INT AUTO_INCREMENT PRIMARY KEY,
