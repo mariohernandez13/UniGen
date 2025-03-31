@@ -14,6 +14,7 @@ CREATE TABLE actividad (
     nombre VARCHAR(100),
     fecha DATE,
     lugar VARCHAR(255),
+    tipo VARCHAR(10),
     descripcion TEXT,
     duracion INT
 );
