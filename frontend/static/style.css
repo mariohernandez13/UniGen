@@ -278,3 +278,12 @@ button:hover {
         text-align: left;
     }
 }
+
+.linkRegistrarse {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.linkRegistrarse:hover {
+    text-decoration: underline;
+}
