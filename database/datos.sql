@@ -5,10 +5,11 @@ USE UniGen;
 -- Crear la tabla de usuario
 CREATE TABLE IF NOT EXISTS usuario (
     idusuario INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
     nombre VARCHAR(50),
     apellido VARCHAR(50),
     email VARCHAR(100) UNIQUE,
-    passwordHash VARCHAR(255)
+    password VARCHAR(255)
 );
 
 -- Crear la tabla de actividad
@@ -40,11 +41,10 @@ CREATE TABLE IF NOT EXISTS creacion (
     FOREIGN KEY (idactividad) REFERENCES actividad(idactividad) ON DELETE CASCADE
 );
 
--- Insertar usuarios de prueba (Las contraseñas deben ser hasheadas en producción)
-INSERT INTO usuario (nombre, apellido, email, passwordHash) VALUES
-('Juan', 'Pérez', 'juan.perez@email.com', '1234'),
-('María', 'López', 'maria.lopez@email.com', '5678'),
-('Carlos', 'Gómez', 'carlos.gomez@email.com', 'admin');
+INSERT INTO usuario (username, nombre, apellido, email, password) VALUES
+('Juanito', 'Juan', 'Pérez', 'juan.perez@email.com', '1234'),
+('Maria','María', 'López', 'maria.lopez@email.com', '5678'),
+('Carlos', 'Carlos', 'Gómez', 'carlos.gomez@email.com', 'admin');
 
 -- Insertar actividades de prueba
 INSERT INTO actividad (nombre, fecha, lugar, descripcion, duracion) VALUES

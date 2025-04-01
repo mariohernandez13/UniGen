@@ -1,12 +1,15 @@
+DROP DATABASE IF EXISTS UniGen;
+
 CREATE DATABASE UniGen;
 USE UniGen;
 
 CREATE TABLE usuario (
     idusuario INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
     nombre VARCHAR(50),
     apellido VARCHAR(50),
     email VARCHAR(100) UNIQUE,
-    passwordHash VARCHAR(255)
+    password VARCHAR(255)
 );
 
 CREATE TABLE actividad (

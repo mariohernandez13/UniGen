@@ -3,40 +3,47 @@ import requests
 
 app = Flask(__name__)
 
-BACKEND_URL = "http://localhost:7229/api/auth"
+API_BASE_URL = "http://localhost:5001"
 
 @app.route("/")
 def index():
-    return render_template("login.html")
+     # Obtener usuarios desde la API
+    response = requests.get(f"{API_BASE_URL}/auth/users")
+    usuarios = response.json() if response.status_code == 200 else []
+    return render_template("login.html", usuarios=usuarios)
 
 @app.route("/login", methods=["POST"])
 def login():
-    username = request.form.get("username")
-    password = request.form.get("password")
-
-    try:
-        response = requests.post(
-            f"{BACKEND_URL}/login",
-            json={"username": username, "password": password},
-            timeout=5  # Agrega un tiempo de espera para evitar bloqueos
-        )
-        response.raise_for_status()  # Lanza una excepción si el código no es 2xx
-
-        if response.status_code == 200:
-            return redirect(url_for("dashboard", username=username))
-        else:
-            return "Error: Usuario o contraseña incorrectos", 401
-    except requests.exceptions.RequestException as e:
-        # Maneja errores de conexión o tiempo de espera
-        return f"Error al conectar con el backend: {e}", 500
-
+    # Capturar datos del formulario
+    data = {
+        "username": request.form["username"],
+        "password": request.form["password"]
+    }
+    # Enviar datos a la API
+    response = requests.post(f"{API_BASE_URL}/auth/login", json=data)
+    if response.status_code == 200:
+        usuario = response.json().get("usuario")  # Extrae los datos del usuario
+        return redirect(url_for("dashboard", username=usuario["username"]))
+    elif response.status_code == 401:
+        return "Error: Usuario o contraseña incorrectos", 401
+    else:
+        return f"Error en la conexión con la API: {response.text}", response.status_code
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
 
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
+    if request.method == "POST":
+        # Enviar datos del formulario a la API
+        data = {
+            "username": request.form["username"],
+            "password": request.form["password"]
+        }
+        response = requests.post(f"{API_BASE_URL}/auth/register", json=data)
+        if response.status_code == 200:
+            return redirect(url_for("login.html"))
     return render_template("register.html")
 
 if __name__ == "__main__":

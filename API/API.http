@@ -1,0 +1,20 @@
+@API_HostAddress = http://localhost:5001
+
+### Registrar un nuevo usuario
+POST {{API_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "nuevoUsuario",
+  "mail": "nuevoUsuario@example.com",
+  "password": "password123"
+}
+
+### Iniciar sesión con un usuario existente
+POST {{API_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "nuevoUsuario",
+  "password": "password123"
+}
