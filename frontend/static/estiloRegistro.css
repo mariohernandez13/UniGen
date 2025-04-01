@@ -1,0 +1,52 @@
+.fondo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 75vh; 
+    padding: 20px;
+}
+
+#formulario {
+    width: 100%;
+    max-width: 550px;
+    background-color: rgb(245, 245, 245); 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+}
+
+.form-floating {
+    margin-bottom: 15px; 
+}
+
+.boton {
+    transition: 0.5s ease;
+    font-size: large;
+    border-width: 2px;
+    color: white;
+    background-color: #007aff;
+    border-color: #007aff;
+    cursor: pointer;
+}
+
+.boton:hover {
+    background-color: #005bb5; 
+    border-color: #005bb5;
+}
+
+.boton:active {
+    transform: scale(0.95);
+}
+
+
+.josefin-sans {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.tituloRegistro {
+    font-size: 3em;
+    margin-top: 70px;
+}
