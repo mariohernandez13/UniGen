@@ -23,11 +23,11 @@ public class AuthController : ControllerBase
     {
         var usuario = new Usuario
         {
-            Username = userDto.Username,
-            Password = userDto.Password
+            username = userDto.username,
+            password = userDto.password
         };
 
-        _context.Usuarios.Add(usuario);
+        _context.usuario.Add(usuario);
         await _context.SaveChangesAsync();
         return Ok(new { message = "Usuario registrado exitosamente" });
     }
@@ -35,8 +35,8 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] UsuarioDTO userDto)
     {
-        var usuario = await _context.Usuarios
-            .FirstOrDefaultAsync(u => u.Username == userDto.Username && u.Password == userDto.Password);
+        var usuario = await _context.usuario
+            .FirstOrDefaultAsync(u => u.username == userDto.username && u.password == userDto.password);
 
         if (usuario == null)
             return Unauthorized(new { message = "Usuario o contraseña incorrectos" });
@@ -47,8 +47,8 @@ public class AuthController : ControllerBase
             message = "Inicio de sesión exitoso",
             usuario = new
             {
-                usuario.Id,
-                usuario.Username
+                usuario.idusuario,
+                usuario.username
             }
         });
     }
@@ -57,19 +57,19 @@ public class AuthController : ControllerBase
     [HttpGet("users")]
     public async Task<IActionResult> GetUsers()
     {
-        var usuarios = await _context.Usuarios.ToListAsync();
+        var usuarios = await _context.usuario.ToListAsync();
         return Ok(usuarios);
     }
 
     [HttpPut("update/{id}")]
     public async Task<IActionResult> UpdateUser(int id, [FromBody] Usuario usuario)
     {
-        var existingUser = await _context.Usuarios.FindAsync(id);
+        var existingUser = await _context.usuario.FindAsync(id);
         if (existingUser == null) return NotFound();
 
-        existingUser.Username = usuario.Username;
-        existingUser.Mail = usuario.Mail;
-        existingUser.Password = usuario.Password;
+        existingUser.username = usuario.username;
+        existingUser.email = usuario.email;
+        existingUser.password = usuario.password;
 
         await _context.SaveChangesAsync();
         return Ok(existingUser);
@@ -78,10 +78,10 @@ public class AuthController : ControllerBase
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {
-        var usuario = await _context.Usuarios.FindAsync(id);
+        var usuario = await _context.usuario.FindAsync(id);
         if (usuario == null) return NotFound();
 
-        _context.Usuarios.Remove(usuario);
+        _context.usuario.Remove(usuario);
         await _context.SaveChangesAsync();
         return Ok(new { message = "Usuario eliminado" });
     }

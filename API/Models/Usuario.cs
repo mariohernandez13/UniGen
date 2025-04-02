@@ -6,9 +6,9 @@ namespace API.Models
     public class Usuario
     {
         [Key]
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Mail { get; set; } 
-        public string Password { get; set; } 
+        public int idusuario { get; set; }
+        public string username { get; set; }
+        public string email { get; set; } 
+        public string password { get; set; } 
     }
 }
