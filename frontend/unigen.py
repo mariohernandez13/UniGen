@@ -16,6 +16,10 @@ def index():
 def actividad():
     return render_template('actividad.html')
 
+@app.route("/dashboard.html")
+def dashboard():
+    return render_template("dashboard.html")
+
 @app.route("/login", methods=["POST"])
 def login():
     # Capturar datos del formulario
@@ -32,9 +36,6 @@ def login():
         return "Error: Usuario o contraseña incorrectos", 401
     else:
         return f"Error en la conexión con la API: {response.text}", response.status_code
-@app.route("/dashboard")
-def dashboard():
-    return render_template("dashboard.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
