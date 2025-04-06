@@ -8,10 +8,12 @@ function validacionDatos(event) {
 
     let nombre = document.forms[0][0];
     let apellidos = document.forms[0][1];
-    let correo = document.forms[0][2];
-    let telefono = document.forms[0][3];
-    let pais = document.forms[0][4];
-    let edad = document.forms[0][5];
+    let contrasenia = document.forms[0][2];
+    let verContrasenia = document.forms[0][3];
+    let correo = document.forms[0][4];
+    let telefono = document.forms[0][5];
+    let pais = document.forms[0][6];
+    let edad = document.forms[0][7];
     let valido = true;
     let regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     let movilRegex = /^\+?[1-9]\d{1,14}$/;
@@ -21,6 +23,14 @@ function validacionDatos(event) {
 
     if (valido) { // Si el nombre es valido pasa a evaluar los apellidos
         Evaluar(apellidos);
+    }
+
+    if (valido) {
+        Evaluar(contrasenia);
+    }
+
+    if (valido) {
+        VerificarContra(contrasenia, verContrasenia);
     }
 
     if (valido) { // Si el apellido es valido pasa a evaluar el correo
@@ -84,6 +94,16 @@ function validacionDatos(event) {
         }
         else {
             edad.classList.remove("is-invalid");
+        }
+    }
+
+    function VerificarContra(contra, verContra) {
+        if (verContra.value === "" || contra.value != verContra.value) {
+            verContra.classList.add("is-invalid");
+            valido = false;
+        }
+        else {
+            verContra.classList.remove("is-invalid");
         }
     }
 
