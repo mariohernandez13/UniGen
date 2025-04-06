@@ -12,6 +12,10 @@ def index():
     usuarios = response.json() if response.status_code == 200 else []
     return render_template("login.html", usuarios=usuarios)
 
+@app.route('/actividad.html')
+def actividad():
+    return render_template('actividad.html')
+
 @app.route("/login", methods=["POST"])
 def login():
     # Capturar datos del formulario
