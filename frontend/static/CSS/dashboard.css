@@ -1,9 +1,40 @@
 .navbar{
-    background-color: 	#9DBCD4;
+    background-color: 	#A0C4FF;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
+.navbar-brand {
+    transition: 1s ease;
+}
+
+.navbar-brand:hover {
+    transform: translateY(-3px);
+}
+
+#link1 {
+    background-color: #f5ff41;
+}
+
+#link1,
 #link2,
 #link3,
 #link4 {
-    color: #F4A261;
+    color: #3d2f46;
+}
+
+.nav-link {
+    animation: lightSpeedInLeft;
+    animation-duration: 2s;
+    transition: 0.5s ease;
+    border-radius: 12px;
+    margin: 10px;
+
+}
+
+.nav-link:hover {
+    background-color: #91ED8C;
+    border-radius: 12px;
+    transform: translateY(-3px);
 }
