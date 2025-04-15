@@ -18,8 +18,8 @@ public class AuthController : ControllerBase
         _context = context;
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] UsuarioDTO userDto)
+    [HttpPost("registro")]
+    public async Task<IActionResult> Registro([FromBody] UsuarioDTO userDto)
     {
         var usuario = new Usuario
         {
