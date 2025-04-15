@@ -20,6 +20,10 @@ def actividad():
 def dashboard():
     return render_template("dashboard.html")
 
+@app.route("/sobrenosotros.html")
+def sobre_nosotros():
+    return render_template("sobrenosotros.html")
+
 @app.route("/login", methods=["POST"])
 def login():
     # Capturar datos del formulario
@@ -38,18 +42,18 @@ def login():
         return f"Error en la conexión con la API: {response.text}", response.status_code
 
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
+@app.route("/registro", methods=["GET", "POST"])
+def registro():
     if request.method == "POST":
         # Enviar datos del formulario a la API
         data = {
             "username": request.form["username"],
             "password": request.form["password"]
         }
-        response = requests.post(f"{API_BASE_URL}/auth/register", json=data)
+        response = requests.post(f"{API_BASE_URL}/auth/registro", json=data)
         if response.status_code == 200:
             return redirect(url_for("login.html"))
-    return render_template("register.html")
+    return render_template("registro.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
