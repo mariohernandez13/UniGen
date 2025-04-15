@@ -29,8 +29,7 @@
                     class="fa-solid fa-cart-shopping"></i> Tienda</a>
                 <a class="nav-link px-3" href="sobrenosotros.html" id="link4"><i 
                     class="fa-solid fa-circle-info"></i> Sobre nosotros</a>
-                <a class="nav-link px-3" href="#" id="link5"><i
-                    class="fa-solid fa-address-card"></i> Mi perfil</a>
+                <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#perfilModal"><i class="fa-solid fa-user"></i> Mi perfil</a>
             </div>
         </div>
     </nav>
@@ -59,6 +58,30 @@
                 <div class="card p-3">
                     <h4>Actividades disponibles</h4>
                     <div class="row" id="activities-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Perfil -->
+    <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="perfilModalLabel">Mi Perfil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Nombre:</strong> Juan Pérez</p>
+                    <p><strong>Email:</strong> juan.perez@email.com</p>
+                    <p><strong>Teléfono:</strong> 666666666</p>
+                    <p><strong>País:</strong> ESPAÑA</p>
+                    <p><strong>Edad:</strong> 20</p>
+                    <p><strong>Rol:</strong> Usuario</p>
+                    <!-- Agrega más información relevante aquí -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
