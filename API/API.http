@@ -1,7 +1,7 @@
 @API_HostAddress = http://localhost:5001
 
 ### Registrar un nuevo usuario
-POST {{API_HostAddress}}/auth/register
+POST {{API_HostAddress}}/auth/registro
 Content-Type: application/json
 
 {
