@@ -1,28 +1,41 @@
+
 // Script para el modal de contacto
 const modal = document.getElementById("contactModal");
-const openBtn = document.getElementById("openModal");
+const modalBackdrop = document.createElement("div");
+modalBackdrop.className = "modal-backdrop";
+document.body.appendChild(modalBackdrop);
+
+const openBtns = document.querySelectorAll("#openModal, #link5");
 const closeBtn = document.querySelector(".close-btn");
 const contactForm = document.getElementById("contactForm");
 
-// Abrir modal
-openBtn.addEventListener("click", () => {
+function openModal() {
+    document.body.classList.add("modal-open");
+    modalBackdrop.style.display = "block";
     modal.style.display = "block";
-    document.body.style.overflow = "hidden"; // Evitar scroll del fondo
+    
+    // Pequeño retraso para que la animación funcione correctamente
+    setTimeout(() => {
+        modalBackdrop.style.opacity = "1";
+    }, 10);
+}
+
+function closeModal() {
+    document.body.classList.remove("modal-open");
+    modal.style.display = "none";
+    modalBackdrop.style.display = "none";
+}
+
+// Event listeners para abrir el modal
+openBtns.forEach(btn => {
+    btn.addEventListener("click", openModal);
 });
 
-// Cerrar modal
-closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    document.body.style.overflow = "auto";
-});
+// Event listeners para cerrar el modal
+closeBtn.addEventListener("click", closeModal);
 
 // Cerrar al hacer clic fuera del modal
-window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-    }
-});
+modalBackdrop.addEventListener("click", closeModal);
 
 // Manejar envío del formulario
 contactForm.addEventListener("submit", (e) => {
@@ -39,14 +52,12 @@ contactForm.addEventListener("submit", (e) => {
     
     // Resetear formulario y cerrar modal
     contactForm.reset();
-    modal.style.display = "none";
-    document.body.style.overflow = "auto";
+    closeModal();
 });
 
 // Cerrar con tecla ESC
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && modal.style.display === "block") {
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
+        closeModal();
     }
 });

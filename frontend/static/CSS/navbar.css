@@ -1,0 +1,37 @@
+.navbar {
+    background-color: #00bfff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+body {
+    background-color: #ecf0f1;
+}
+
+.navbar-brand {
+    transition: 1s ease;
+}
+
+.navbar-brand:hover {
+    transform: translateY(-3px);
+}
+
+.active {
+    background-color: #f5ff41;
+}
+
+.nav-link {
+    animation: lightSpeedInLeft;
+    animation-duration: 2s;
+    transition: 0.5s ease;
+    border-radius: 12px;
+    margin: 10px;
+    color: #3d2f46;
+}
+
+.nav-link:hover {
+    background-color: #f5ff41;
+    border-radius: 12px;
+    transform: translateY(-3px);
+}
