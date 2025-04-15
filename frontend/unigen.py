@@ -17,6 +17,13 @@ def index():
 def inicio():
     return render_template('inicio.html')
 
+
+
+@app.route("/RecuperarContraseña")
+def recuperar_contraseña():
+    return render_template("RecuperarConstraseña.html")
+
+
 # Página de actividades
 @app.route('/actividad')
 def actividad():
@@ -50,18 +57,40 @@ def login():
         return "Error: Usuario o contraseña incorrectos", 401
     else:
         return f"Error en la conexión con la API: {response.text}", response.status_code
+    
+
 @app.route("/registro", methods=["GET", "POST"])
 def registro():
     if request.method == "POST":
-        # Enviar datos del formulario a la API
+        # Obtener datos del formulario
+        nombre = request.form.get("username")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        telefono = request.form.get("telefono")
+        pais = request.form.get("pais")
+        edad = request.form.get("edad")
+
+        # Construir payload para enviar a la API
         data = {
-            "username": request.form["username"],
-            "password": request.form["password"]
+            "username": nombre,
+            "email": email,
+            "password": password,
+            "telefono": telefono,
+            "pais": pais,
+            "edad": int(edad)
         }
+
         response = requests.post(f"{API_BASE_URL}/auth/registro", json=data)
+
         if response.status_code == 200:
-            return redirect(url_for("login.html"))
+            return redirect(url_for("index"))  # Redirige a inicio
+        else:
+            return f"Error al registrar usuario: {response.text}", response.status_code
+
     return render_template("registro.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
