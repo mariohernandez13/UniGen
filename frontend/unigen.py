@@ -18,9 +18,9 @@ def inicio():
     return render_template('inicio.html')
 
 # Página de actividades
-@app.route('/actividades')
-def actividades():
-    return render_template('actividades.html')
+@app.route('/actividad')
+def actividad():
+    return render_template('actividad.html')
 
 # Dashboard del usuario
 @app.route("/dashboard")
