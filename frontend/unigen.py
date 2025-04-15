@@ -13,19 +13,27 @@ def index():
     usuarios = response.json() if response.status_code == 200 else []
     return render_template("login.html", usuarios=usuarios)
 
+@app.route('/inicio')
+def inicio():
+    return render_template('inicio.html')
+
 # Página de actividades
-@app.route('/actividad.html')
-def actividad():
-    return render_template('actividad.html')
+@app.route('/actividades')
+def actividades():
+    return render_template('actividades.html')
 
 # Dashboard del usuario
-@app.route("/dashboard.html")
+@app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
 
-@app.route("/sobrenosotros.html")
+@app.route("/sobrenosotros")
 def sobre_nosotros():
     return render_template("sobrenosotros.html")
+
+@app.route("/tienda")
+def tienda():
+    return render_template("tienda.html")
 
 # Procesa el login
 @app.route("/login", methods=["POST"])
@@ -37,7 +45,7 @@ def login():
     response = requests.post(f"{API_BASE_URL}/auth/login", json=data)
     if response.status_code == 200:
         usuario = response.json().get("usuario")
-        return redirect(url_for("dashboard", username=usuario["username"]))
+        return redirect(url_for("inicio", username=usuario["username"]))
     elif response.status_code == 401:
         return "Error: Usuario o contraseña incorrectos", 401
     else:

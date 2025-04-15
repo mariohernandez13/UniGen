@@ -1,8 +1,13 @@
 .navbar {
     background-color: #00bfff;
+    /* background-color: white; */
     position: sticky;
     top: 0;
     z-index: 100;
+}
+
+body {
+    background-color: #ecf0f1;
 }
 
 .navbar-brand {
@@ -21,7 +26,8 @@
 #link2,
 #link3,
 #link4,
-#link5 {
+#link5,
+#link6 {
     color: #3d2f46;
 }
 
