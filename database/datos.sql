@@ -41,10 +41,12 @@ CREATE TABLE IF NOT EXISTS creacion (
     FOREIGN KEY (idactividad) REFERENCES actividad(idactividad) ON DELETE CASCADE
 );
 
-INSERT INTO usuario (username, nombre, apellido, email, password) VALUES
-('Juanito', 'Juan', 'Pérez', 'juan.perez@email.com', '1234'),
-('Maria','María', 'López', 'maria.lopez@email.com', '5678'),
-('Carlos', 'Carlos', 'Gómez', 'carlos.gomez@email.com', 'admin');
+INSERT INTO usuario (idUsuario, username, email, password, telefono, pais, edad) 
+VALUES 
+(1, 'Juan Perez', 'juan.perez@example.com', 'password123', '123456789', 'Mexico', 30),
+(2, 'Maria Lopez', 'maria.lopez@example.com', 'password123', '987654321', 'Argentina', 25),
+(3, 'Carlos Gomez', 'carlos.gomez@example.com', 'password123', '456789123', 'Chile', 35),
+(4, 'Ana Torres', 'ana.torres@example.com', 'password123', '789123456', 'Colombia', 28);
 
 -- Insertar actividades de prueba
 INSERT INTO actividad (nombre, fecha, lugar, descripcion, duracion) VALUES
