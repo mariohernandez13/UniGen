@@ -31,7 +31,10 @@ def recuperar_contraseña():
 # Página de actividades
 @app.route('/actividad')
 def actividad():
-    return render_template('actividad.html')
+    # Llamar al endpoint de la API para obtener todas las actividades
+    response = requests.get(f"{API_BASE_URL}/activity/all")
+    actividades = response.json() if response.status_code == 200 else []
+    return render_template("actividad.html", actividades=actividades)
 
 
 # Dashboard del usuario
