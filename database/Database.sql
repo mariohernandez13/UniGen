@@ -17,8 +17,9 @@ CREATE TABLE actividad (
     idactividad INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100),
     fecha DATE,
+    hora TIME,
     lugar VARCHAR(255),
-    tipo VARCHAR(10),
+    tipo VARCHAR(100),
     descripcion TEXT,
     duracion INT
 );

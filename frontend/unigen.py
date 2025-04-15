@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify
 import requests
 
 app = Flask(__name__)
+
+# añade una clave secreta para la sesión
+app.secret_key = "miclavesecreta123"
 
 API_BASE_URL = "http://localhost:5001"
 
@@ -11,12 +14,13 @@ def index():
     # Obtener usuarios desde la API
     response = requests.get(f"{API_BASE_URL}/auth/users")
     usuarios = response.json() if response.status_code == 200 else []
-    return render_template("login.html", usuarios=usuarios)
+    return render_template("login.html")
+
 
 @app.route('/inicio')
 def inicio():
-    return render_template('inicio.html')
-
+    usuario = session.get("usuario")
+    return render_template('inicio.html', usuario=usuario)
 
 
 @app.route("/RecuperarContraseña")
@@ -29,18 +33,22 @@ def recuperar_contraseña():
 def actividad():
     return render_template('actividad.html')
 
+
 # Dashboard del usuario
 @app.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
 
+
 @app.route("/sobrenosotros")
 def sobre_nosotros():
     return render_template("sobrenosotros.html")
 
+
 @app.route("/tienda")
 def tienda():
     return render_template("tienda.html")
+
 
 # Procesa el login
 @app.route("/login", methods=["POST"])
@@ -52,7 +60,17 @@ def login():
     response = requests.post(f"{API_BASE_URL}/auth/login", json=data)
     if response.status_code == 200:
         usuario = response.json().get("usuario")
-        return redirect(url_for("inicio", username=usuario["username"]))
+        
+        # Guardar todo en la sesión
+        session["usuario"] = {
+            "username": usuario["username"],
+            "email": usuario.get("email"),
+            "telefono": usuario.get("telefono"),
+            "pais": usuario.get("pais"),
+            "edad": usuario.get("edad")
+        }
+        
+        return redirect(url_for("inicio"))
     elif response.status_code == 401:
         return "Error: Usuario o contraseña incorrectos", 401
     else:

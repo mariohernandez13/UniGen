@@ -18,6 +18,11 @@ public class AuthController : ControllerBase
         _context = context;
     }
 
+    /// <summary>
+    /// Registro de un nuevo usuario.
+    /// </summary>
+    /// <param name="userDto"></param>
+    /// <returns></returns>
     [HttpPost("registro")]
     public async Task<IActionResult> Registro([FromBody] UsuarioDTO userDto)
     {
@@ -47,6 +52,11 @@ public class AuthController : ControllerBase
         return Ok(new { message = "Usuario registrado exitosamente" });
     }
 
+    /// <summary>
+    /// Inicio de sesión de usuario.
+    /// </summary>
+    /// <param name="loginDto"></param>
+    /// <returns>OK si es correcto y toda la info del usuario</returns>
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
     {
@@ -62,7 +72,11 @@ public class AuthController : ControllerBase
             usuario = new
             {
                 usuario.idusuario,
-                usuario.username
+                usuario.username,
+                usuario.email,
+                usuario.telefono,
+                usuario.pais,
+                usuario.edad
             }
         });
     }
@@ -84,10 +98,14 @@ public class AuthController : ControllerBase
         existingUser.username = usuario.username;
         existingUser.email = usuario.email;
         existingUser.password = usuario.password;
+        existingUser.telefono = usuario.telefono;
+        existingUser.pais = usuario.pais;
+        existingUser.edad = usuario.edad;
 
         await _context.SaveChangesAsync();
         return Ok(existingUser);
     }
+
 
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteUser(int id)

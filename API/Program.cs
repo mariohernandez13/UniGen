@@ -38,7 +38,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API UniGen v1"));
 }
 
-// 🧠 IMPORTANTE: CORS va antes de Authorization o cualquier otro middleware
+//  IMPORTANTE: CORS va antes de Authorization o cualquier otro middleware
 app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
