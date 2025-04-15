@@ -26,44 +26,44 @@
         <h1 class="text-center josefin-sans tituloRegistro">Registrate aquí</h1>
 
         <div class="container-fluid fondo">
-            <form class="form" id="formulario" name="formularioContacto" target="_blank" method="post" action="https://postman-echo.com/post">
+            <form class="form" id="formulario" name="formularioContacto" method="POST" action="/registro">
                 <p class="title">Registro</p>
                 <p class="message">Regístrate ahora y obtén acceso completo a nuestra aplicación</p>
               
                 <div class="flex">
                   <label>
-                    <input required placeholder="" type="text" class="input" name="Nombre" id="floatingInput1" />
+                    <input required placeholder="" type="text" class="input" name="username" id="floatingInput1" />
                     <span>Nombre</span>
                   </label>
               
                   <label>
-                    <input required placeholder="" type="text" class="input" name="Apellidos" id="floatingInput2" />
+                    <input required placeholder="" type="text" class="input" name="apellidos" id="floatingInput2" />
                     <span>Apellidos</span>
                   </label>
                 </div>
               
                 <label>
-                  <input required placeholder="" type="email" class="input" name="Correo" id="floatingInput3" />
+                  <input required placeholder="" type="email" class="input" name="email" id="floatingInput3" />
                   <span>correo</span>
                 </label>
               
                 <label>
-                  <input required placeholder="" type="password" class="input" name="Contraseña" id="floatingInput5" />
+                  <input required placeholder="" type="password" class="input" name="password" id="floatingInput5" />
                   <span>Contraseña</span>
                 </label>
               
                 <label>
-                  <input required placeholder="" type="password" class="input" name="Verificar contraseña" id="floatingInput6" />
+                  <input required placeholder="" type="password" class="input" name="ver_password" id="floatingInput6" />
                   <span>Confirmacion Constraseña</span>
                 </label>
               
                 <label>
-                  <input required placeholder="" type="text" class="input" name="Telefono" id="floatingInput4" />
+                  <input required placeholder="" type="text" class="input" name="telefono" id="floatingInput4" />
                   <span>Numero de telefono</span>
                 </label>
               
                 <label>
-                  <input required class="input" list="datalistPais" id="DataListPais"  name="Pais" />
+                  <input required class="input" list="datalistPais" id="DataListPais"  name="pais" />
                   <span>País</span>
                 </label>
                 <datalist id="datalistPais">
@@ -100,7 +100,7 @@
                 </datalist>
               
                 <label>
-                  <input required placeholder="" type="number" class="input" name="Edad" id="floatingInputEdad" />
+                  <input required placeholder="" type="number" class="input" name="edad" id="floatingInputEdad" />
                   <span>Age</span>
                 </label>
               
@@ -115,6 +115,7 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
         <script src="{{ url_for('static', filename='JS/registro.js') }}"></script>
+
     </body>
 
 </html>

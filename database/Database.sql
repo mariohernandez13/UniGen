@@ -4,12 +4,13 @@ CREATE DATABASE UniGen;
 USE UniGen;
 
 CREATE TABLE usuario (
-    idusuario INT AUTO_INCREMENT PRIMARY KEY,
+    idusuario INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) UNIQUE,
-    nombre VARCHAR(50),
-    apellido VARCHAR(50),
     email VARCHAR(100) UNIQUE,
-    password VARCHAR(255)
+    password VARCHAR(100),
+    telefono VARCHAR(20),
+    pais VARCHAR(50),
+    edad INT
 );
 
 CREATE TABLE actividad (

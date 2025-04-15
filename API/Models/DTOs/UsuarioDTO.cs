@@ -9,5 +9,14 @@ namespace API.Models
 
         [Required]
         public string password { get; set; }
+
+        [Required]
+        public string email { get; set; }
+
+        public string telefono { get; set; }
+
+        public string pais { get; set; }
+
+        public int edad { get; set; }
     }
 }

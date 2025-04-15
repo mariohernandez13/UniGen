@@ -3,25 +3,24 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar CORS
+// Configurar CORS para permitir solicitudes desde localhost y 127.0.0.1
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:5000") //frontend Flask
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy
+            .WithOrigins("http://localhost:5000", "http://127.0.0.1:5000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
-// Configurar DbContext sin migraciones
+// Configurar DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<MiDbContext>(options =>
-    options.UseMySQL(connectionString)); 
+    options.UseMySQL(connectionString));
 
-
-        
 // Agregar servicios de Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -39,11 +38,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API UniGen v1"));
 }
 
-app.UseCors("AllowFrontend"); // Habilitar CORS
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
+// 🧠 IMPORTANTE: CORS va antes de Authorization o cualquier otro middleware
+app.UseCors("AllowFrontend");
 
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
 
 
 

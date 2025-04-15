@@ -49,10 +49,10 @@ function validacionDatos(event) {
         EvaluarEdad(edad);
     }
 
-    if(!valido) { // Si alguno de los elementos es invalido no se envia el formulario
-        event.preventDefault();
-    }
-
+    // if(!valido) { 
+    //     event.preventDefault();
+    // }
+    
 
     function Evaluar(campo) { // Funcion basica para evaluar los elementos
 

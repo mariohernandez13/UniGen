@@ -181,3 +181,11 @@
       opacity: 0;
     }
   }
+
+  #botonEnvio {
+    transition: 0.5s ease;
+  }
+
+  #botonEnvio:active {
+    transform: scale(0.95);
+  }

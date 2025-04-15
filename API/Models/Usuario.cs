@@ -7,8 +7,17 @@ namespace API.Models
     {
         [Key]
         public int idusuario { get; set; }
+
         public string username { get; set; }
-        public string email { get; set; } 
-        public string password { get; set; } 
+
+        public string email { get; set; }
+
+        public string password { get; set; }
+
+        public string telefono { get; set; }
+
+        public string pais { get; set; }
+
+        public int edad { get; set; } 
     }
 }
