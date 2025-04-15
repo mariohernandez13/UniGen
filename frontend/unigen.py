@@ -17,6 +17,13 @@ def index():
 def inicio():
     return render_template('inicio.html')
 
+
+
+@app.route("/RecuperarContraseña")
+def recuperar_contraseña():
+    return render_template("RecuperarConstraseña.html")
+
+
 # Página de actividades
 @app.route('/actividad')
 def actividad():
