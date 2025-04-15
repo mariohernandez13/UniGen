@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +11,22 @@
     <link rel="icon" href="../static/IMAGES/logo_unigen.svg" class="imagen">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/sobrenosotros.css') }}">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-expand-md px-4">
-        <a class="navbar-brand" href="dashboard.html"><img src="../static/IMAGES/logo_unigen.svg" width="50px" height="auto"></a>
+        <a class="navbar-brand" href="dashboard.html"><img src="../static/IMAGES/logo_unigen.svg" width="50px"
+                height="auto"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="ms-auto collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-5">
-                <a class="nav-link px-3" href="#" id="link1"><i
-                    class="fa-solid fa-house"></i> Inicio</a>
-                <a class="nav-link px-3" href="#" id="link2"><i 
-                    class="fa-solid fa-file-pen"></i></i> Actividades</a>
-                <a class="nav-link px-3" href="#" id="link3"><i 
-                    class="fa-solid fa-cart-shopping"></i> Tienda</a>
-                <a class="nav-link px-3" href="sobrenosotros.html" id="link4"><i 
-                    class="fa-solid fa-circle-info"></i> Sobre nosotros</a>
-                <a class="nav-link px-3" href="#" id="link5"><i
-                    class="fa-solid fa-user"></i> Mi perfil</a>
+                <a class="nav-link px-3" href="#" id="link1"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a class="nav-link px-3" href="#" id="link2"><i class="fa-solid fa-file-pen"></i></i> Actividades</a>
+                <a class="nav-link px-3" href="#" id="link3"><i class="fa-solid fa-cart-shopping"></i> Tienda</a>
+                <a class="nav-link px-3" href="sobrenosotros.html" id="link4"><i class="fa-solid fa-circle-info"></i>Sobre nosotros</a>
+                <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#perfilModal"><i class="fa-solid fa-user"></i> Mi perfil</a>
             </div>
         </div>
     </nav>
@@ -36,33 +34,25 @@
     <header>
         <div class="container">
             <div class="logo">ROAR SL</div>
-            <div class="tagline">Ingeniería Informática - Grupo B06</div>
+            <div class="tagline">Desarrollando soluciones tecnológicas con impacto social</div>
         </div>
     </header>
-    
-    <nav>
-        <ul>
-            <li><a href="#about">Sobre Nosotros</a></li>
-            <li><a href="#project">Nuestro Proyecto</a></li>
-            <li><a href="#team">Equipo</a></li>
-            <li><a href="#features">Características</a></li>
-            <li><a href="#timeline">Fases</a></li>
-            <li><a href="#impact">Impacto</a></li>
-            <li><a href="#contact">Contacto</a></li>
-        </ul>
-    </nav>
-    
+
     <div class="container">
         <section id="about">
             <h2>Sobre Nosotros</h2>
-            <p>Somos ROAR SL, un equipo de estudiantes de 2° de Ingeniería Informática en la Universidad Francisco de Vitoria (UFV). Estamos comprometidos con el desarrollo de soluciones tecnológicas que tengan un impacto positivo en la sociedad.</p>
-            <p>Nuestro proyecto UniGen nace de la necesidad de reducir la brecha digital y fomentar la conexión intergeneracional a través de la tecnología.</p>
+            <p>Somos ROAR SL, un equipo de estudiantes de Ingeniería Informática en la Universidad Francisco de Vitoria
+                (UFV). Estamos comprometidos con el desarrollo de soluciones tecnológicas que tengan un impacto positivo
+                en la sociedad.</p>
+            <p>Nuestro proyecto UniGen nace de la necesidad de reducir la brecha digital y fomentar la conexión
+                intergeneracional a través de la tecnología.</p>
         </section>
-        
+
         <section id="project">
             <h2>Nuestro Proyecto: UniGen</h2>
-            <p>UniGen es una aplicación multiplataforma diseñada para conectar a jóvenes y personas mayores, facilitando el intercambio de conocimientos y experiencias entre generaciones.</p>
-            
+            <p>UniGen es una aplicación multiplataforma diseñada para conectar a jóvenes y personas mayores, facilitando
+                el intercambio de conocimientos y experiencias entre generaciones.</p>
+
             <h3>Objetivos principales</h3>
             <ul>
                 <li>Reducir la brecha digital entre generaciones</li>
@@ -71,10 +61,10 @@
                 <li>Promover valores comunitarios y de colaboración</li>
             </ul>
         </section>
-        
+
         <section id="team">
             <h2>Nuestro Equipo</h2>
-            <div class="team-grid">
+            <div class="team-row">
                 <div class="team-member">
                     <h3>Mario Hernández Santos</h3>
                     <p>Desarrollador Backend</p>
@@ -87,6 +77,8 @@
                     <h3>Gonzalo de Lorenzo Vaquero</h3>
                     <p>Diseñador de Base de Datos</p>
                 </div>
+            </div>
+            <div class="team-row">
                 <div class="team-member">
                     <h3>Nicolás Sanchidrián Infante</h3>
                     <p>Arquitecto de Software</p>
@@ -97,17 +89,19 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="features">
             <h2>Características Principales</h2>
             <div class="features">
                 <div class="feature-card">
                     <h3>Sistema de Registro</h3>
-                    <p>Interfaz intuitiva para registro y gestión de perfiles de usuarios, con categorización por grupos de edad.</p>
+                    <p>Interfaz intuitiva para registro y gestión de perfiles de usuarios, con categorización por grupos
+                        de edad.</p>
                 </div>
                 <div class="feature-card">
                     <h3>Actividades Intergeneracionales</h3>
-                    <p>Plataforma para crear y participar en actividades que fomenten el intercambio de conocimientos.</p>
+                    <p>Plataforma para crear y participar en actividades que fomenten el intercambio de conocimientos o
+                        ayuda.</p>
                 </div>
                 <div class="feature-card">
                     <h3>Sistema de Puntos</h3>
@@ -122,17 +116,16 @@
                     <p>Posibilidad de convertir puntos en donaciones a organizaciones benéficas.</p>
                 </div>
             </div>
-            
+
             <h3>Tecnologías Utilizadas</h3>
             <div class="tech-stack">
                 <span class="tech-item">C#</span>
                 <span class="tech-item">MySQL</span>
-                <span class="tech-item">MVC</span>
                 <span class="tech-item">GitHub</span>
                 <span class="tech-item">HTML/CSS/JS</span>
             </div>
         </section>
-        
+
         <section id="timeline">
             <h2>Fases del Proyecto</h2>
             <div class="timeline">
@@ -144,8 +137,22 @@
                 </div>
                 <div class="timeline-item right">
                     <div class="timeline-content">
+                        <h3>Definición de Objetivos</h3>
+                        <p>Establecimiento de objetivos generales y específicos del proyecto.</p>
+                    </div>
+                </div>
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h3>Casos de Uso y Plan de Trabajo</h3>
+                        <p>Elaboración de casos de uso detallados y planificación del trabajo mediante diagramas de
+                            Gantt.</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
                         <h3>Diseño</h3>
-                        <p>Creación de diagramas de clases, flujo y entidad-relación para la arquitectura del sistema.</p>
+                        <p>Creación de diagramas de clases, flujo y entidad-relación para la arquitectura del sistema.
+                        </p>
                     </div>
                 </div>
                 <div class="timeline-item left">
@@ -168,7 +175,7 @@
                 </div>
             </div>
         </section>
-        
+
         <section id="impact">
             <h2>Impacto Social</h2>
             <p>UniGen busca crear un impacto positivo en la sociedad a través de:</p>
@@ -180,67 +187,67 @@
                 <li>Facilitación del acceso a la tecnología para personas con menos competencias digitales</li>
             </ul>
         </section>
-        
+
         <section id="contact">
             <h2>Contacto</h2>
-            <p>Para más información sobre nuestro proyecto UniGen, puedes contactarnos a través de la Universidad Francisco de Vitoria.</p>
+            <p>Para más información sobre nuestro proyecto UniGen, puedes contactarnos a través de la Universidad
+                Francisco de Vitoria.</p>
             <div class="contact-info">
                 <p><strong>Universidad Francisco de Vitoria</strong></p>
                 <p>Pozuelo de Alarcón, Madrid</p>
-                <p>Ingeniería Informática - 2° Curso</p>
-                <p>Grupo B06 - ROAR SL</p>
+                <p>Ingeniería Informática</p>
+                <p>Equipo ROAR SL</p>
             </div>
         </section>
     </div>
-    
+
+    <!-- Modal de Perfil -->
+    <div class="modal fade" id="perfilModal" tabindex="-1" aria-labelledby="perfilModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="perfilModalLabel">Mi Perfil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Nombre:</strong> Juan Pérez</p>
+                    <p><strong>Email:</strong> juan.perez@email.com</p>
+                    <p><strong>Teléfono:</strong> 666666666</p>
+                    <p><strong>País:</strong> ESPAÑA</p>
+                    <p><strong>Edad:</strong> 20</p>
+                    <p><strong>Rol:</strong> Usuario</p>
+                    <!-- Agrega más información relevante aquí -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2025 ROAR SL - Grupo B06 - Ingeniería Informática UFV</p>
-        <p>Proyecto UniGen - Reduciendo la brecha digital intergeneracional</p>
+        <p>&copy; 2025 ROAR SL - Ingeniería Informática UFV</p>
+        <p>Proyecto UniGen</p>
     </footer>
-    
+
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                window.scrollTo({
-                    top: targetElement.offsetTop - 70,
-                    behavior: 'smooth'
-                });
-            });
+        // Animación para los elementos del equipo
+        const teamMembers = document.querySelectorAll('.team-member');
+
+        teamMembers.forEach((member, index) => {
+            member.style.opacity = '0';
+            member.style.transform = 'translateY(20px)';
+            member.style.transition = `all 0.5s ease ${index * 0.1}s`;
+
+            setTimeout(() => {
+                member.style.opacity = '1';
+                member.style.transform = 'translateY(0)';
+            }, 500);
         });
-        
-        // Add active class to current section in navigation
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('nav a');
-            
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                
-                if (pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-        
-        // Add animation to timeline items when they come into view
+
+        // Animación para la línea de tiempo
         const timelineItems = document.querySelectorAll('.timeline-item');
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -249,22 +256,24 @@
                 }
             });
         }, { threshold: 0.1 });
-        
+
         timelineItems.forEach(item => {
             item.style.opacity = '0';
             item.style.transition = 'all 0.5s ease';
-            
+
             if (item.classList.contains('left')) {
                 item.style.transform = 'translateX(-50px)';
             } else {
                 item.style.transform = 'translateX(50px)';
             }
-            
+
             observer.observe(item);
         });
     </script>
 
+    <script src="{{ url_for('static', filename='../static/JS/sobrenosotros.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
 </body>
+
 </html>
