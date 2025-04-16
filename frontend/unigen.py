@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for, jsonify
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify, flash
 import requests
 
 app = Flask(__name__)
@@ -76,7 +76,8 @@ def login():
         
         return redirect(url_for("inicio"))
     elif response.status_code == 401:
-        return "Error: Usuario o contraseña incorrectos", 401
+        flash("Usuario o contraseña incorrectos", "danger")
+        return render_template("login.html")
     else:
         return f"Error en la conexión con la API: {response.text}", response.status_code
     
@@ -105,7 +106,11 @@ def registro():
         response = requests.post(f"{API_BASE_URL}/auth/registro", json=data)
 
         if response.status_code == 200:
+            flash("¡Usuario registrado correctamente!", "success")
             return redirect(url_for("index"))  # Redirige a inicio
+        elif response.status_code == 409:
+            flash("Ese correo electrónico ya está en uso. Intenta con otro.", "danger")
+            return render_template("registro.html")
         else:
             return f"Error al registrar usuario: {response.text}", response.status_code
 
