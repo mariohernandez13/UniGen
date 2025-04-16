@@ -45,7 +45,8 @@ def dashboard():
 
 @app.route("/sobrenosotros")
 def sobre_nosotros():
-    return render_template("sobrenosotros.html")
+    usuario = session.get("usuario")
+    return render_template("sobrenosotros.html", usuario=usuario)
 
 
 @app.route("/tienda")
