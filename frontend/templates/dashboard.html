@@ -38,21 +38,25 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="image-container">
-                        <img src="../static/IMAGES/actividad_cocina.avif" class="card-img" alt="...">
+                <div class="card" style="width: 18rem;" id="Cocina">
+                    <div class="image-container position-relative" id="zona_imagen">
+                        <img src="../static/IMAGES/actividad_cocina.avif" class="card-img" alt="..." id="imagen">
+                        <div id="descripcion_cocina" class="descripcion text-center">Aquí va la descripción</div>
                         <div class="overlay">
-                            <div class="title-bg">
-                                <h5 class="card-title">Cocina</h5>
+                            <div class="title-bg" id="fondo">
+                                <h5 class="card-title" id="titulo">Cocina</h5>
                             </div>
                         </div>
                     </div>
                     <div class="card-body small">
-                        <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
-                        <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
-                        <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <a href="#" class="btn btn-primary">Apuntarse</a>
-                    </div>                    
+                        <p class="mb-1" id="hora"><strong>🕒 Hora:</strong> 18:00</p>
+                        <p class="mb-1" id="lugar"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
+                        <p class="mb-3" id="organizador"><strong>👤 Organiza:</strong> Ana González</p>
+                        <div class="d-flex gap-2">
+                          <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
+                          <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                        </div>
+                    </div>                                         
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
@@ -69,8 +73,11 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <a href="#" class="btn btn-primary">Apuntarse</a>
-                    </div>                   
+                        <div class="d-flex gap-2">
+                          <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
+                          <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                        </div>
+                    </div>                                        
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
@@ -87,8 +94,11 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <a href="#" class="btn btn-primary">Apuntarse</a>
-                    </div>                   
+                        <div class="d-flex gap-2">
+                          <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
+                          <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                        </div>
+                    </div>                                        
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
@@ -105,8 +115,11 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <a href="#" class="btn btn-primary">Apuntarse</a>
-                    </div>                   
+                        <div class="d-flex gap-2">
+                          <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
+                          <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                        </div>
+                    </div>                                        
                 </div>
             </div>
         </div>
@@ -125,8 +138,11 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <a href="#" class="btn btn-primary">Apuntarse</a>
-                    </div>                    
+                        <div class="d-flex gap-2">
+                          <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
+                          <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                        </div>
+                    </div>                                          
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
@@ -143,8 +159,11 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <a href="#" class="btn btn-primary">Apuntarse</a>
-                    </div>                   
+                        <div class="d-flex gap-2">
+                            <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
+                            <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                        </div>                          
+                    </div>                                       
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
@@ -161,8 +180,13 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <a href="#" class="btn btn-primary">Apuntarse</a>
-                    </div>                   
+                        <div class="d-flex gap-2">
+                            <div class="d-flex gap-2">
+                                <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
+                                <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                            </div>
+                        </div>
+                    </div>                                        
                 </div>
             </div>
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
@@ -179,17 +203,33 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <a href="#" class="btn btn-primary">Apuntarse</a>
-                    </div>                   
+                        <div class="d-flex gap-2">
+                          <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
+                          <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                        </div>
+                      </div>                                       
                 </div>
             </div>
         </div>
     </div>
-    
-    
-    
-
-    <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
+    <div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmarModalLabel">¿Quieres apuntarte?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas apuntarte a <strong id="nombreActividadModal">esta actividad</strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarBtn">Sí, apuntarme</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='../static/JS/dashboard.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
 </body>
