@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for, jsonify
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify, flash
 import requests
 
 app = Flask(__name__)
@@ -31,7 +31,10 @@ def recuperar_contraseña():
 # Página de actividades
 @app.route('/actividad')
 def actividad():
-    return render_template('actividad.html')
+    # Llamar al endpoint de la API para obtener todas las actividades
+    response = requests.get(f"{API_BASE_URL}/activity/all")
+    actividades = response.json() if response.status_code == 200 else []
+    return render_template("actividad.html", actividades=actividades)
 
 
 # Dashboard del usuario
@@ -42,7 +45,8 @@ def dashboard():
 
 @app.route("/sobrenosotros")
 def sobre_nosotros():
-    return render_template("sobrenosotros.html")
+    usuario = session.get("usuario")
+    return render_template("sobrenosotros.html", usuario=usuario)
 
 
 @app.route("/tienda")
@@ -72,7 +76,8 @@ def login():
         
         return redirect(url_for("inicio"))
     elif response.status_code == 401:
-        return "Error: Usuario o contraseña incorrectos", 401
+        flash("Usuario o contraseña incorrectos", "danger")
+        return render_template("login.html")
     else:
         return f"Error en la conexión con la API: {response.text}", response.status_code
     
@@ -101,7 +106,11 @@ def registro():
         response = requests.post(f"{API_BASE_URL}/auth/registro", json=data)
 
         if response.status_code == 200:
+            flash("¡Usuario registrado correctamente!", "success")
             return redirect(url_for("index"))  # Redirige a inicio
+        elif response.status_code == 409:
+            flash("Ese correo electrónico ya está en uso. Intenta con otro.", "danger")
+            return render_template("registro.html")
         else:
             return f"Error al registrar usuario: {response.text}", response.status_code
 

@@ -52,8 +52,18 @@
           </p>
       </form>
     </div>
-  </body>
-  
-  
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="container mt-1">
+            <div class="alert alert-{{ category }} animate__animated animate__fadeInDown" role="alert">
+              {{ message }}
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+  </body>
 </html>

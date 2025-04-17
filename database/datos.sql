@@ -12,44 +12,6 @@ INSERT INTO usuario (username, email, password, telefono, pais, edad) VALUES
 ('marito', 'mario@correo.com', 'marito', '655443322', 'Colombia', 22),
 ('super', 'gonyi@correo.com', 'super', '645675465', 'España', 22);
 
-<<<<<<< HEAD
--- Crear la tabla de actividad
-CREATE TABLE IF NOT EXISTS actividad (
-    idactividad INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100),
-    fecha DATE,
-    lugar VARCHAR(255),
-    descripcion TEXT,
-    duracion INT
-);
-
--- Crear la tabla de participacion
-CREATE TABLE IF NOT EXISTS participacion (
-    idusuario INT,
-    idactividad INT,
-    puntos INT DEFAULT 0,
-    PRIMARY KEY (idusuario, idactividad),
-    FOREIGN KEY (idusuario) REFERENCES usuario(idusuario) ON DELETE CASCADE,
-    FOREIGN KEY (idactividad) REFERENCES actividad(idactividad) ON DELETE CASCADE
-);
-
--- Crear la tabla de creacion
-CREATE TABLE IF NOT EXISTS creacion (
-    idusuario INT,
-    idactividad INT,
-    PRIMARY KEY (idusuario, idactividad),
-    FOREIGN KEY (idusuario) REFERENCES usuario(idusuario) ON DELETE CASCADE,
-    FOREIGN KEY (idactividad) REFERENCES actividad(idactividad) ON DELETE CASCADE
-);
-
-INSERT INTO usuario (idUsuario, username, email, password, telefono, pais, edad) 
-VALUES 
-(1, 'Juan Perez', 'juan.perez@example.com', 'password123', '123456789', 'Mexico', 30),
-(2, 'Maria Lopez', 'maria.lopez@example.com', 'password123', '987654321', 'Argentina', 25),
-(3, 'Carlos Gomez', 'carlos.gomez@example.com', 'password123', '456789123', 'Chile', 35),
-(4, 'Ana Torres', 'ana.torres@example.com', 'password123', '789123456', 'Colombia', 28);
-=======
->>>>>>> 98675a87e7bd6f48d8d431b09af81f4ffb616a54
 
 -- Insertar actividades de prueba
 INSERT INTO actividad (nombre,fecha, hora, lugar, tipo, descripcion, duracion)
