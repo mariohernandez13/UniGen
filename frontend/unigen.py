@@ -16,10 +16,26 @@ def index():
     usuarios = response.json() if response.status_code == 200 else []
     return render_template("login.html")
 
-
+# Página Principal de Inicio
 @app.route('/inicio')
 def inicio():
     usuario = session.get("usuario")
+    if usuario:
+        # Obtener los IDs de las actividades inscritas del usuario
+        response = requests.get(f"{API_BASE_URL}/activity/user/{usuario['idusuario']}/subscriptions")
+        actividad_ids = response.json() if response.status_code == 200 else []
+
+        # Obtener los detalles de todas las actividades en una sola solicitud
+        detalle_response = requests.post(
+            f"{API_BASE_URL}/activity/details",
+            json=actividad_ids
+        )
+        actividades = detalle_response.json() if detalle_response.status_code == 200 else []
+
+        # Agregar las actividades al usuario
+        usuario["actividades"] = actividades
+        session["usuario"] = usuario  # Actualizar la sesión
+
     return render_template('inicio.html', usuario=usuario)
 
 
@@ -31,11 +47,22 @@ def recuperar_contraseña():
 # Página de actividades
 @app.route('/actividad')
 def actividad():
+    # Obtener el ID del usuario desde la sesión
+    usuario_id = session.get("usuario", {}).get("idusuario")
+    if not usuario_id:
+        flash("Debes iniciar sesión para ver las actividades.", "danger")
+        return redirect(url_for("index"))
+
     # Llamar al endpoint de la API para obtener todas las actividades
     response = requests.get(f"{API_BASE_URL}/activity/all")
     actividades = response.json() if response.status_code == 200 else []
-    return render_template("actividad.html", actividades=actividades)
 
+    # Llamar al endpoint de la API para obtener las actividades en las que el usuario está inscrito
+    response_inscripciones = requests.get(f"{API_BASE_URL}/activity/user/{usuario_id}/subscriptions")
+    inscripciones = response_inscripciones.json() if response_inscripciones.status_code == 200 else []
+
+    # Pasar ambas listas a la plantilla
+    return render_template("actividad.html", actividades=actividades, inscripciones=inscripciones, usuario=usuario_id)
 
 # Dashboard del usuario
 @app.route("/dashboard")
@@ -74,17 +101,22 @@ def desinscribirse(actividad_id):
         return redirect(url_for("index"))
 
     # Enviar la solicitud a la API
-    response = requests.delete(
-        f"{API_BASE_URL}/activity/{actividad_id}/unsubscribe",
-        json=usuario_id
-    )
+    try:
+        response = requests.delete(
+            f"{API_BASE_URL}/activity/{actividad_id}/unsubscribe",
+            json=usuario_id
+        )
+        print(f"API Response: {response.status_code}, {response.text}")  # Depuración
 
-    # Manejar la respuesta de la API
-    if response.status_code == 200:
-        flash(response.json().get("message", "¡Desinscripción exitosa!"), "success")
-    else:
-        error_message = response.json().get("message", "Error al desinscribirse")
-        flash(error_message, "danger")
+        # Manejar la respuesta de la API
+        if response.status_code == 200:
+            flash(response.json().get("message", "¡Desinscripción exitosa!"), "success")
+        else:
+            error_message = response.json().get("message", "Error al desinscribirse")
+            flash(error_message, "danger")
+    except Exception as e:
+        print(f"Error al conectar con la API: {e}")
+        flash("Error al conectar con la API.", "danger")
 
     return redirect(url_for("actividad"))
 

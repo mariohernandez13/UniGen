@@ -30,6 +30,22 @@ public class ActivityController : ControllerBase
     }
 
     /// <summary>
+    /// Obtener los IDs de las actividades en las que un usuario está inscrito.
+    /// </summary>
+    /// <param name="idUsuario">ID del usuario.</param>
+    /// <returns>Lista de IDs de actividades.</returns>
+    [HttpGet("user/{idUsuario}/subscriptions")]
+    public async Task<IActionResult> ObtenerInscripciones(int idUsuario)
+    {
+        var inscripciones = await _context.participacion
+            .Where(p => p.idusuario == idUsuario)
+            .Select(p => p.idactividad) // Solo selecciona los IDs de las actividades
+            .ToListAsync();
+
+        return Ok(inscripciones);
+    }
+
+    /// <summary>
     /// Obtener una actividad por ID.
     /// </summary>
     /// <param name="actividad"></param>
@@ -46,43 +62,18 @@ public class ActivityController : ControllerBase
     }
 
     /// <summary>
-    /// Actualizar una actividad.
+    /// Obtener detalles de actividades por IDs.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="actividad"></param>
+    /// <param name="actividadIds"></param>
     /// <returns></returns>
-    [HttpPut("update/{id}")]
-    public async Task<IActionResult> EditarActividad(int id, [FromBody] Actividad actividad)
+    [HttpPost("details")]
+    public async Task<IActionResult> ObtenerDetallesActividades([FromBody] List<int> actividadIds)
     {
-        var actividadExistente = await _context.actividad.FindAsync(id);
-        if (actividadExistente == null)
-            return NotFound(new { message = "Actividad no encontrada" });
+        var actividades = await _context.actividad
+            .Where(a => actividadIds.Contains(a.idactividad))
+            .ToListAsync();
 
-        actividadExistente.nombre = actividad.nombre;
-        actividadExistente.descripcion = actividad.descripcion;
-        actividadExistente.fecha = actividad.fecha;
-        actividadExistente.lugar = actividad.lugar;
-        actividadExistente.duracion = actividad.duracion;
-
-        await _context.SaveChangesAsync();
-        return Ok(new { message = "Actividad actualizada exitosamente", actividadExistente });
-    }
-
-    /// <summary>
-    /// Eliminar una actividad.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> BorrarActividad(int id)
-    {
-        var actividad = await _context.actividad.FindAsync(id);
-        if (actividad == null)
-            return NotFound(new { message = "Actividad no encontrada" });
-
-        _context.actividad.Remove(actividad);
-        await _context.SaveChangesAsync();
-        return Ok(new { message = "Actividad eliminada exitosamente" });
+        return Ok(actividades);
     }
 
     /// <summary>
@@ -119,6 +110,49 @@ public class ActivityController : ControllerBase
         return Ok(new { message = "Inscripción exitosa" });
     }
 
+
+    /// <summary>
+    /// Actualizar una actividad.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="actividad"></param>
+    /// <returns></returns>
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> EditarActividad(int id, [FromBody] Actividad actividad)
+    {
+        var actividadExistente = await _context.actividad.FindAsync(id);
+        if (actividadExistente == null)
+            return NotFound(new { message = "Actividad no encontrada" });
+
+        actividadExistente.nombre = actividad.nombre;
+        actividadExistente.descripcion = actividad.descripcion;
+        actividadExistente.fecha = actividad.fecha;
+        actividadExistente.hora = actividad.hora;
+        actividadExistente.lugar = actividad.lugar;
+        actividadExistente.duracion = actividad.duracion;
+        actividadExistente.tipo = actividad.tipo;
+
+        await _context.SaveChangesAsync();
+        return Ok(new { message = "Actividad actualizada exitosamente", actividadExistente });
+    }
+
+    /// <summary>
+    /// Eliminar una actividad.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> BorrarActividad(int id)
+    {
+        var actividad = await _context.actividad.FindAsync(id);
+        if (actividad == null)
+            return NotFound(new { message = "Actividad no encontrada" });
+
+        _context.actividad.Remove(actividad);
+        await _context.SaveChangesAsync();
+        return Ok(new { message = "Actividad eliminada exitosamente" });
+    }
+
     /// <summary>
     /// Borrarse de una actividad.
     /// </summary>
@@ -138,4 +172,5 @@ public class ActivityController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok(new { message = "Desinscripción exitosa" });
     }
+
 }

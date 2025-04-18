@@ -18,6 +18,8 @@ namespace API.Models
 
         public string pais { get; set; }
 
-        public int edad { get; set; } 
+        public int edad { get; set; }
+        // Propiedad de navegación
+        public ICollection<Participacion> Participaciones { get; set; }
     }
 }

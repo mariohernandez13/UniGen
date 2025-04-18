@@ -157,6 +157,40 @@
         </div>
     </div>
 
+    
+    <div class="container mt-5">
+        <!-- Mensaje de bienvenida -->
+        <div class="text-center mb-5">
+            <h1 class="display-4">¡Bienvenido, {{ usuario.username }}!</h1>
+            <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo que UniGen tiene para ofrecerte.</p>
+        </div>
+
+        <!-- Apartado de Mis Actividades -->
+        <div class="mt-4">
+            <h2 class="mb-4"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
+            <div class="row">
+                {% if usuario.actividades %}
+                    {% for actividad in usuario.actividades %}
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ actividad.nombre }}</h5>
+                                <p class="card-text">{{ actividad.descripcion }}</p>
+                                <p><strong>Fecha:</strong> {{ actividad.fecha }}</p>
+                                <p><strong>Hora:</strong> {{ actividad.hora }}</p>
+                                <p><strong>Lugar:</strong> {{ actividad.lugar }}</p>
+                                <p><strong>Duración:</strong> {{ actividad.duracion }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No tienes actividades inscritas actualmente. ¡Explora las actividades disponibles y comienza a participar!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>

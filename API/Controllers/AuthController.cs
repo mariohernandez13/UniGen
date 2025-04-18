@@ -19,6 +19,17 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
+    /// Obtiene todos los usuarios.
+    /// </summary>
+    /// <returns>OK y lista de usuarios</returns>
+    [HttpGet("users")]
+    public async Task<IActionResult> GetUsers()
+    {
+        var usuarios = await _context.usuario.ToListAsync();
+        return Ok(usuarios);
+    }
+
+    /// <summary>
     /// Registro de un nuevo usuario.
     /// </summary>
     /// <param name="userDto"></param>
@@ -81,16 +92,6 @@ public class AuthController : ControllerBase
         });
     }
 
-    /// <summary>
-    /// Obtiene todos los usuarios.
-    /// </summary>
-    /// <returns>OK y lista de usuarios</returns>
-    [HttpGet("users")]
-    public async Task<IActionResult> GetUsers()
-    {
-        var usuarios = await _context.usuario.ToListAsync();
-        return Ok(usuarios);
-    }
 
     /// <summary>
     /// Actualiza un usuario existente.
