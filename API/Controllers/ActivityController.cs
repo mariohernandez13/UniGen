@@ -21,6 +21,7 @@ public class ActivityController : ControllerBase
     /// <summary>
     /// Obtener todas las actividades.
     /// </summary>
+    /// <returns></returns>
     [HttpGet("all")]
     public async Task<IActionResult> GetActividades()
     {
@@ -29,8 +30,10 @@ public class ActivityController : ControllerBase
     }
 
     /// <summary>
-    /// Crear una nueva actividad.
+    /// Obtener una actividad por ID.
     /// </summary>
+    /// <param name="actividad"></param>
+    /// <returns></returns>
     [HttpPost("create")]
     public async Task<IActionResult> CrearActividad([FromBody] Actividad actividad)
     {
@@ -43,8 +46,11 @@ public class ActivityController : ControllerBase
     }
 
     /// <summary>
-    /// Editar una actividad existente.
+    /// Actualizar una actividad.
     /// </summary>
+    /// <param name="id"></param>
+    /// <param name="actividad"></param>
+    /// <returns></returns>
     [HttpPut("update/{id}")]
     public async Task<IActionResult> EditarActividad(int id, [FromBody] Actividad actividad)
     {
@@ -63,8 +69,10 @@ public class ActivityController : ControllerBase
     }
 
     /// <summary>
-    /// Borrar una actividad.
+    /// Eliminar una actividad.
     /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> BorrarActividad(int id)
     {
@@ -80,6 +88,9 @@ public class ActivityController : ControllerBase
     /// <summary>
     /// Inscribirse a una actividad.
     /// </summary>
+    /// <param name="id"></param>
+    /// <param name="idUsuario"></param>
+    /// <returns></returns>
     [HttpPost("{id}/subscribe")]
     public async Task<IActionResult> Inscribirse(int id, [FromBody] int idUsuario)
     {
@@ -90,6 +101,12 @@ public class ActivityController : ControllerBase
         var usuario = await _context.usuario.FindAsync(idUsuario);
         if (usuario == null)
             return NotFound(new { message = "Usuario no encontrado" });
+
+        // Verificar si ya está inscrito
+        var participacionExistente = await _context.participacion
+            .FirstOrDefaultAsync(p => p.idusuario == idUsuario && p.idactividad == id);
+        if (participacionExistente != null)
+            return Conflict(new { message = "El usuario ya está inscrito en esta actividad" });
 
         var participacion = new Participacion
         {
@@ -103,8 +120,11 @@ public class ActivityController : ControllerBase
     }
 
     /// <summary>
-    /// Desinscribirse de una actividad.
+    /// Borrarse de una actividad.
     /// </summary>
+    /// <param name="id">ID de la actividad.</param>
+    /// <param name="idUsuario">ID del usuario que desea desinscribirse.</param>
+    /// <returns>Mensaje de éxito o error.</returns>
     [HttpDelete("{id}/unsubscribe")]
     public async Task<IActionResult> Desinscribirse(int id, [FromBody] int idUsuario)
     {

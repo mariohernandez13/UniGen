@@ -81,7 +81,10 @@ public class AuthController : ControllerBase
         });
     }
 
-
+    /// <summary>
+    /// Obtiene todos los usuarios.
+    /// </summary>
+    /// <returns>OK y lista de usuarios</returns>
     [HttpGet("users")]
     public async Task<IActionResult> GetUsers()
     {
@@ -89,6 +92,12 @@ public class AuthController : ControllerBase
         return Ok(usuarios);
     }
 
+    /// <summary>
+    /// Actualiza un usuario existente.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="usuario"></param>
+    /// <returns></returns>
     [HttpPut("update/{id}")]
     public async Task<IActionResult> UpdateUser(int id, [FromBody] Usuario usuario)
     {
@@ -106,7 +115,11 @@ public class AuthController : ControllerBase
         return Ok(existingUser);
     }
 
-
+    /// <summary>
+    /// Elimina un usuario existente.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("delete/{id}")]
     public async Task<IActionResult> DeleteUser(int id)
     {

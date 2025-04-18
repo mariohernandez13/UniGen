@@ -42,6 +42,51 @@ def actividad():
 def dashboard():
     return render_template("dashboard.html")
 
+@app.route("/inscribirse/<int:actividad_id>", methods=["POST"])
+def inscribirse(actividad_id):
+    # Obtener el ID del usuario desde la sesión
+    usuario_id = session.get("usuario", {}).get("idusuario")
+    if not usuario_id:
+        flash("Debes iniciar sesión para inscribirte en una actividad.", "danger")
+        return redirect(url_for("index"))
+
+    # Enviar la solicitud a la API
+    response = requests.post(
+        f"{API_BASE_URL}/activity/{actividad_id}/subscribe",
+        json=usuario_id
+    )
+
+    # Manejar la respuesta de la API
+    if response.status_code == 200:
+        flash("¡Inscripción exitosa!", "success")
+    else:
+        error_message = response.json().get("message", "Error al inscribirse")
+        flash(error_message, "danger")
+
+    return redirect(url_for("actividad"))
+
+@app.route("/desinscribirse/<int:actividad_id>", methods=["POST"])
+def desinscribirse(actividad_id):
+    # Obtener el ID del usuario desde la sesión
+    usuario_id = session.get("usuario", {}).get("idusuario")
+    if not usuario_id:
+        flash("Debes iniciar sesión para desinscribirte de una actividad.", "danger")
+        return redirect(url_for("index"))
+
+    # Enviar la solicitud a la API
+    response = requests.delete(
+        f"{API_BASE_URL}/activity/{actividad_id}/unsubscribe",
+        json=usuario_id
+    )
+
+    # Manejar la respuesta de la API
+    if response.status_code == 200:
+        flash(response.json().get("message", "¡Desinscripción exitosa!"), "success")
+    else:
+        error_message = response.json().get("message", "Error al desinscribirse")
+        flash(error_message, "danger")
+
+    return redirect(url_for("actividad"))
 
 @app.route("/sobrenosotros")
 def sobre_nosotros():
@@ -67,6 +112,7 @@ def login():
         
         # Guardar todo en la sesión
         session["usuario"] = {
+            "idusuario": usuario["idusuario"],
             "username": usuario["username"],
             "email": usuario.get("email"),
             "telefono": usuario.get("telefono"),

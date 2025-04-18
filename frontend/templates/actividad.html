@@ -71,7 +71,7 @@
 </html>
  -->
 
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -104,6 +104,22 @@
     </nav>
 
     <div class="container mt-4">
+        <!-- Mostrar mensajes flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="alert-container">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container mt-4">
         <h1 class="mb-4">Actividades Disponibles</h1>
         <div class="row">
             {% for actividad in actividades %}
@@ -117,6 +133,9 @@
                         <p><strong>Hora:</strong> {{ actividad.hora }}</p>
                         <p><strong>Duración:</strong> {{ actividad.duracion }}</p>
                         <p><strong>Lugar:</strong> {{ actividad.lugar }}</p>
+                        <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST">
+                            <button type="submit" class="btn btn-primary">Inscribirse</button>
+                        </form>
                         <button class="btn btn-primary">Ver Detalles</button>
                     </div>
                 </div>
@@ -124,6 +143,7 @@
             {% endfor %}
         </div>
     </div>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+</body>
 </html>
