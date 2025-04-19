@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
+using API.Models.DTOs;
 
 /// <summary>
 /// Controlador para gestionar actividades.
@@ -51,10 +52,23 @@ public class ActivityController : ControllerBase
     /// <param name="actividad"></param>
     /// <returns></returns>
     [HttpPost("create")]
-    public async Task<IActionResult> CrearActividad([FromBody] Actividad actividad)
+    public async Task<IActionResult> CrearActividad([FromBody] ActividadDTO actividadDTO)
     {
         if (!ModelState.IsValid)
             return BadRequest(new { message = "Datos inválidos", errors = ModelState });
+
+        // Convertir el DTO en una entidad Actividad
+        var actividad = new Actividad
+        {
+            nombre = actividadDTO.Nombre,
+            descripcion = actividadDTO.Descripcion,
+            tipo = actividadDTO.Tipo,
+            fecha = actividadDTO.Fecha,
+            hora = actividadDTO.Hora,
+            lugar = actividadDTO.Lugar,
+            duracion = actividadDTO.Duracion
+        };
+
 
         _context.actividad.Add(actividad);
         await _context.SaveChangesAsync();

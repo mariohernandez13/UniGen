@@ -44,28 +44,8 @@ def recuperar_contraseña():
     return render_template("RecuperarConstraseña.html")
 
 
-# Página de actividades
-@app.route('/actividad')
-def actividad():
-    # Obtener el ID del usuario desde la sesión
-    usuario_id = session.get("usuario", {}).get("idusuario")
-    if not usuario_id:
-        flash("Debes iniciar sesión para ver las actividades.", "danger")
-        return redirect(url_for("index"))
-
-    # Llamar al endpoint de la API para obtener todas las actividades
-    response = requests.get(f"{API_BASE_URL}/activity/all")
-    actividades = response.json() if response.status_code == 200 else []
-
-    # Llamar al endpoint de la API para obtener las actividades en las que el usuario está inscrito
-    response_inscripciones = requests.get(f"{API_BASE_URL}/activity/user/{usuario_id}/subscriptions")
-    inscripciones = response_inscripciones.json() if response_inscripciones.status_code == 200 else []
-
-    # Pasar ambas listas a la plantilla
-    return render_template("actividad.html", actividades=actividades, inscripciones=inscripciones, usuario=usuario_id)
-
 # Dashboard del usuario
-@app.route("/dashboard")
+@app.route("/dashboard") 
 def dashboard():
     # Obtener el ID del usuario desde la sesión
     usuario = session.get("usuario")
@@ -78,10 +58,12 @@ def dashboard():
     actividades = response.json() if response.status_code == 200 else []
 
     # Llamar al endpoint de la API para obtener las actividades en las que el usuario está inscrito
-    response_inscripciones = requests.get(f"{API_BASE_URL}/activity/user/{session.get("idusuario")}/subscriptions")
+    usuario_id = usuario["idusuario"]
+    response_inscripciones = requests.get(f"{API_BASE_URL}/activity/user/{usuario_id}/subscriptions")
     inscripciones = response_inscripciones.json() if response_inscripciones.status_code == 200 else []
 
     return render_template("dashboard.html", actividades=actividades, inscripciones=inscripciones, usuario=usuario)
+
 
 @app.route("/inscribirse/<int:actividad_id>", methods=["POST"])
 def inscribirse(actividad_id):
@@ -106,12 +88,13 @@ def inscribirse(actividad_id):
 
     return redirect(url_for("dashboard"))
 
+
 @app.route("/desinscribirse/<int:actividad_id>", methods=["POST"])
 def desinscribirse(actividad_id):
     # Obtener el ID del usuario desde la sesión
     usuario_id = session.get("usuario", {}).get("idusuario")
     if not usuario_id:
-        flash("Debes iniciar sesión para desinscribirte de una actividad.", "danger")
+        flash("Debes iniciar sesión para borrarte de una actividad.", "danger")
         return redirect(url_for("index"))
 
     # Enviar la solicitud a la API
@@ -120,19 +103,42 @@ def desinscribirse(actividad_id):
             f"{API_BASE_URL}/activity/{actividad_id}/unsubscribe",
             json=usuario_id
         )
-        print(f"API Response: {response.status_code}, {response.text}")  # Depuración
-
+        
         # Manejar la respuesta de la API
         if response.status_code == 200:
-            flash(response.json().get("message", "¡Desinscripción exitosa!"), "success")
+            flash(response.json().get("message", "¡Te has borrado de la actividad con éxito!"), "success")
         else:
-            error_message = response.json().get("message", "Error al desinscribirse")
+            error_message = response.json().get("message", "Error al borrarse de la actividad")
             flash(error_message, "danger")
     except Exception as e:
-        print(f"Error al conectar con la API: {e}")
         flash("Error al conectar con la API.", "danger")
 
     return redirect(url_for("dashboard"))
+
+
+@app.route("/crear_actividad", methods=["POST"])
+def crear_actividad():
+    # Obtener los datos del formulario enviados desde el frontend
+    data = {
+        "Nombre": request.form.get("nombre"),
+        "Descripcion": request.form.get("descripcion"),
+        "Tipo": request.form.get("tipo"),
+        "Fecha": request.form.get("fecha"),
+        "Hora": request.form.get("hora"),
+        "Lugar": request.form.get("lugar"),
+        "Duracion": int(request.form.get("duracion"))
+    }
+
+    # Enviar los datos al backend
+    response = requests.post(f"{API_BASE_URL}/activity/create", json=data)
+
+     # Manejar la respuesta del backend
+    if response.status_code == 200:
+        flash("¡Actividad creada exitosamente!", "success")
+    else:
+        flash(response.json().get("message", "Error al crear la actividad"), "danger")
+    return redirect(url_for("dashboard"))
+
 
 @app.route("/sobrenosotros")
 def sobre_nosotros():
