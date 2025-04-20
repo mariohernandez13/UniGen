@@ -38,6 +38,14 @@
     /* oculto por defecto */
 }
 
+.mapa {
+    display: none;
+    width: 100%;
+    height: "200";
+    border: 0;
+    border-radius: 8px;
+}
+
 .image-container {
     position: relative;
     overflow: hidden;

@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function(){
         event.preventDefault();
         let carta = event.target.closest(".card");
         let titulo = carta.querySelector(".title-bg");
+        let descripcion = carta.querySelector(".descripcion");
+        let mapa = carta.querySelector(".mapa");
         let imagen = carta.querySelector(".card-img");
         let hora_lugar = carta.querySelectorAll(".mb-1");
         let organizador = carta.querySelector(".mb-3");
@@ -22,6 +24,10 @@ document.addEventListener('DOMContentLoaded', function(){
             carta.style.transform = "rotateY(180deg)";
             carta.style.transformStyle = "preserve-3d";
             titulo.style.display = "none";
+            descripcion.style.display = "block";
+            descripcion.style.transform = "rotateY(180deg)";
+            mapa.style.display = "block";
+            mapa.style.transform = "rotateY(180deg)";
             imagen.style.display = "none";
             hora_lugar[0].style.display = "none";
             hora_lugar[1].style.display = "none";
@@ -35,6 +41,10 @@ document.addEventListener('DOMContentLoaded', function(){
             carta.style.transform = "rotateY(0deg)";
             carta.style.transformStyle = "preserve-3d";
             titulo.style.display = "block";
+            descripcion.style.display = "none";
+            descripcion.style.transform = "rotateY(0deg)";
+            mapa.style.display = "none";
+            mapa.style.transform = "rotateY(0deg)";
             imagen.style.display = "block";
             hora_lugar[0].style.display = "block";
             hora_lugar[1].style.display = "block";
