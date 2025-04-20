@@ -153,7 +153,8 @@ def sobre_nosotros():
 
 @app.route("/tienda")
 def tienda():
-    return render_template("tienda.html")
+    usuario = session.get("usuario")
+    return render_template("tienda.html", usuario=usuario)
 
 
 # Procesa el login
