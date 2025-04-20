@@ -171,11 +171,11 @@ def login():
         session["usuario"] = {
             "idusuario": usuario["idusuario"],
             "username": usuario["username"],
+            "password": data["password"],
             "email": usuario.get("email"),
             "telefono": usuario.get("telefono"),
             "pais": usuario.get("pais"),
             "edad": usuario.get("edad"),
-            # "foto": usuario.get("foto")
             "foto": usuario.get("foto", "default-avatar.svg")
         }
         
@@ -250,16 +250,31 @@ def subir_foto():
 
         usuario = session.get("usuario")
         usuario["foto"] = filename
-        session["usuario"] = usuario
+        
+        # Construir el payload con toda la información del usuario
+        usuarioCompleto = {
+            "idusuario": usuario["idusuario"],
+            "username": usuario["username"],
+            "password": usuario["password"], 
+            "email": usuario["email"],
+            "telefono": usuario["telefono"],
+            "pais": usuario["pais"],
+            "edad": usuario["edad"],
+            "foto": usuario["foto"] 
+        }
 
-        requests.put(f"{API_BASE_URL}/auth/update/{usuario['idusuario']}", json = usuario)
-        print(usuario)
-        flash("Foto de perfil actualizada", "success")
+        # Enviar la solicitud PUT al backend para actualizar el usuario
+        response = requests.put(f"{API_BASE_URL}/auth/update/{usuario['idusuario']}", json=usuarioCompleto)
 
+        if response.status_code == 200:
+            session["usuario"] = usuarioCompleto  # Actualizar la sesión con los nuevos datos
+            flash("Foto de perfil actualizada correctamente", "success")
+        else:
+            print("Error:", response.text)
+            flash("Error al actualizar la foto de perfil en el servidor", "danger")
     return redirect(url_for("inicio"))
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 

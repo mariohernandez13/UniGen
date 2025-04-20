@@ -10,7 +10,8 @@ CREATE TABLE usuario (
     password VARCHAR(100),
     telefono VARCHAR(20),
     pais VARCHAR(50),
-    edad INT
+    edad INT,
+    foto VARCHAR(255)
 );
 
 CREATE TABLE actividad (
@@ -40,7 +41,3 @@ CREATE TABLE creacion (
     FOREIGN KEY (idusuario) REFERENCES usuario(idusuario),
     FOREIGN KEY (idactividad) REFERENCES actividad(idactividad)
 );
-
--- CORRER ESTO SOLO
-ALTER TABLE usuario
-ADD COLUMN foto;
