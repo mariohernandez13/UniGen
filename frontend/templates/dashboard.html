@@ -56,45 +56,40 @@
         {% endif %}
         {% endwith %}
     </div>
+    <div class="container mt-5 justify-content-center align-items-center">   
+        <form class="form" action="{{ url_for('crear_actividad') }}" method="POST">
+            <p class="title">Crear Actividad</p>
+            <p class="message">Crea tu actividad aquí mismo!</p>
+            <label>
+                <input required="" placeholder="" type="text" class="input">
+                <span>Nombre de la actividad</span>
+            </label>
 
-    <!-- Formulario para Crear Actividad -->
-    <div class="container mt-5">
-        <h2>Crear Actividad</h2>
-        <form action="{{ url_for('crear_actividad') }}" method="POST">
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre de la Actividad:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
-            </div>
-            <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción:</label>
-                <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo:</label>
-                <input type="text" class="form-control" id="tipo" name="tipo" required>
-            </div>
-            <div class="mb-3">
-                <label for="fecha" class="form-label">Fecha:</label>
-                <input type="date" class="form-control" id="fecha" name="fecha" required>
-            </div>
-            <div class="mb-3">
-                <label for="hora" class="form-label">Hora:</label>
-                <input type="time" class="form-control" id="hora" name="hora" required>
-            </div>
-            <div class="mb-3">
-                <label for="lugar" class="form-label">Lugar:</label>
-                <input type="text" class="form-control" id="lugar" name="lugar" required>
-            </div>
-            <div class="mb-3">
-                <label for="duracion" class="form-label">Duración (en minutos):</label>
-                <input type="number" class="form-control" id="duracion" name="duracion" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Crear Actividad</button>
+            <label>
+                <input required="" placeholder="" type="text" class="input">
+                <span>Descripción</span>
+            </label>     
+            <label>
+                <input required="" placeholder="" type="text" class="input">
+                <span>Tipo</span>
+            </label> 
+                
+            <label>
+                <input required="" placeholder="" type="date" class="input">
+            </label>
+            <label>
+                <input required="" placeholder="" type="time" class="input">
+            </label>
+            <label>
+                <input required="" placeholder="" type="number" class="input">
+                <span>Duración (en minutos)</span>
+            </label>
+            <button class="submit">Crear Actividad</button>
         </form>
     </div>
 
     <div class="container mt-4">
-        <h1 class="mb-4">Actividades Disponibles</h1>
+        <h1 class="mb-0">Actividades Disponibles</h1>
         <div class="row">
             {% for actividad in actividades %}
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
@@ -192,7 +187,7 @@
                         <p class="mb-3" id="organizador"><strong>👤 Organiza:</strong> Ana González</p>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -213,7 +208,7 @@
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -234,7 +229,7 @@
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -255,7 +250,7 @@
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -278,7 +273,7 @@
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -299,7 +294,7 @@
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
                         </div>
                     </div>
                 </div>
@@ -321,7 +316,7 @@
                         <div class="d-flex gap-2">
                             <div class="d-flex gap-2">
                                 <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
-                                <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                                <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
                             </div>
                         </div>
                     </div>
@@ -343,7 +338,7 @@
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
                         </div>
                     </div>
                 </div>
