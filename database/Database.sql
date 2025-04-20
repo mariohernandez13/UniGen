@@ -10,7 +10,8 @@ CREATE TABLE usuario (
     password VARCHAR(100),
     telefono VARCHAR(20),
     pais VARCHAR(50),
-    edad INT
+    edad INT,
+    foto VARCHAR(255)
 );
 
 CREATE TABLE actividad (

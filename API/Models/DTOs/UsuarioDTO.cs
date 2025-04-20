@@ -18,5 +18,7 @@ namespace API.Models
         public string pais { get; set; }
 
         public int edad { get; set; }
+        public string foto { get; set; }
+
     }
 }

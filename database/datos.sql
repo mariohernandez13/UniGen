@@ -4,13 +4,13 @@ CREATE DATABASE IF NOT EXISTS UniGen;
 USE UniGen;
 
 -- usuarios de prueba
-INSERT INTO usuario (username, email, password, telefono, pais, edad) VALUES
-('admin', 'admin@unigen.com', 'admin', '600000001', 'España', 40),
-('chusito', 'chusox@example.com', 'chuso', '612345678', 'México', 28),
-('pasitos', 'pazix@example.com', 'pazos', '622334455', 'Argentina', 35),
-('niklas', 'nico@gmail.com', 'ellolo', '611998877', 'Chile', 31),
-('marito', 'mario@correo.com', 'marito', '655443322', 'Colombia', 22),
-('super', 'gonyi@correo.com', 'super', '645675465', 'España', 22);
+INSERT INTO usuario (username, email, password, telefono, pais, edad, foto) VALUES
+('admin', 'admin@unigen.com', 'admin', '600000001', 'España', 40, 'default-avatar.svg'),
+('chusito', 'chusox@example.com', 'chuso', '612345678', 'México', 28, 'default-avatar.svg'),
+('pasitos', 'pazix@example.com', 'pazos', '622334455', 'Argentina', 35, 'default-avatar.svg'),
+('niklas', 'nico@gmail.com', 'ellolo', '611998877', 'Chile', 31, 'default-avatar.svg'),
+('marito', 'mario@correo.com', 'marito', '655443322', 'Colombia', 22, 'default-avatar.svg'),
+('super', 'gonyi@correo.com', 'super', '645675465', 'España', 22, 'default-avatar.svg');
 
 
 -- Insertar actividades de prueba

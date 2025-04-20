@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify, flash
 import requests
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -7,6 +9,9 @@ app = Flask(__name__)
 app.secret_key = "miclavesecreta123"
 
 API_BASE_URL = "http://localhost:5001"
+UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "static", "IMAGES", "perfiles")
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Página principal: Login
 @app.route("/")
@@ -148,7 +153,8 @@ def sobre_nosotros():
 
 @app.route("/tienda")
 def tienda():
-    return render_template("tienda.html")
+    usuario = session.get("usuario")
+    return render_template("tienda.html", usuario=usuario)
 
 
 # Procesa el login
@@ -166,10 +172,12 @@ def login():
         session["usuario"] = {
             "idusuario": usuario["idusuario"],
             "username": usuario["username"],
+            "password": data["password"],
             "email": usuario.get("email"),
             "telefono": usuario.get("telefono"),
             "pais": usuario.get("pais"),
-            "edad": usuario.get("edad")
+            "edad": usuario.get("edad"),
+            "foto": usuario.get("foto", "default-avatar.svg")
         }
         
         return redirect(url_for("inicio"))
@@ -198,7 +206,8 @@ def registro():
             "password": password,
             "telefono": telefono,
             "pais": pais,
-            "edad": int(edad)
+            "edad": int(edad),
+            "foto": "default-avatar.svg" 
         }
 
         response = requests.post(f"{API_BASE_URL}/auth/registro", json=data)
@@ -214,8 +223,59 @@ def registro():
 
     return render_template("registro.html")
 
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/subir_foto", methods=["POST"])
+def subir_foto():
+
+    if "foto" not in request.files:
+        flash("No se seleccionó ninguna imagen", "danger")
+        return redirect(url_for("inicio"))
+
+    file = request.files["foto"]
+
+    if file.filename == "":
+        flash("Nombre de archivo vacio", "danger")
+        return redirect(url_for("inicio"))
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+
+        if not os.path.exists(app.config["UPLOAD_FOLDER"]):
+            os.makedirs(app.config["UPLOAD_FOLDER"])
+
+
+        filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        file.save(filepath)
+
+        usuario = session.get("usuario")
+        usuario["foto"] = filename
+        
+        # Construir el payload con toda la información del usuario
+        usuarioCompleto = {
+            "idusuario": usuario["idusuario"],
+            "username": usuario["username"],
+            "password": usuario["password"], 
+            "email": usuario["email"],
+            "telefono": usuario["telefono"],
+            "pais": usuario["pais"],
+            "edad": usuario["edad"],
+            "foto": usuario["foto"] 
+        }
+
+        # Enviar la solicitud PUT al backend para actualizar el usuario
+        response = requests.put(f"{API_BASE_URL}/auth/update/{usuario['idusuario']}", json=usuarioCompleto)
+
+        if response.status_code == 200:
+            session["usuario"] = usuarioCompleto  # Actualizar la sesión con los nuevos datos
+            flash("Foto de perfil actualizada correctamente", "success")
+        else:
+            print("Error:", response.text)
+            flash("Error al actualizar la foto de perfil en el servidor", "danger")
+    return redirect(url_for("inicio"))
+
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 
