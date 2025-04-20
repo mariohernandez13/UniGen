@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify, flash
 import requests
+import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -7,6 +9,9 @@ app = Flask(__name__)
 app.secret_key = "miclavesecreta123"
 
 API_BASE_URL = "http://localhost:5001"
+UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "static", "IMAGES", "perfiles")
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Página principal: Login
 @app.route("/")
@@ -169,7 +174,9 @@ def login():
             "email": usuario.get("email"),
             "telefono": usuario.get("telefono"),
             "pais": usuario.get("pais"),
-            "edad": usuario.get("edad")
+            "edad": usuario.get("edad"),
+            # "foto": usuario.get("foto")
+            "foto": usuario.get("foto", "default-avatar.svg")
         }
         
         return redirect(url_for("inicio"))
@@ -198,7 +205,8 @@ def registro():
             "password": password,
             "telefono": telefono,
             "pais": pais,
-            "edad": int(edad)
+            "edad": int(edad),
+            "foto": "default-avatar.svg" 
         }
 
         response = requests.post(f"{API_BASE_URL}/auth/registro", json=data)
@@ -213,6 +221,42 @@ def registro():
             return f"Error al registrar usuario: {response.text}", response.status_code
 
     return render_template("registro.html")
+
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/subir_foto", methods=["POST"])
+def subir_foto():
+
+    if "foto" not in request.files:
+        flash("No se seleccionó ninguna imagen", "danger")
+        return redirect(url_for("inicio"))
+
+    file = request.files["foto"]
+
+    if file.filename == "":
+        flash("Nombre de archivo vacio", "danger")
+        return redirect(url_for("inicio"))
+
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+
+        if not os.path.exists(app.config["UPLOAD_FOLDER"]):
+            os.makedirs(app.config["UPLOAD_FOLDER"])
+
+
+        filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        file.save(filepath)
+
+        usuario = session.get("usuario")
+        usuario["foto"] = filename
+        session["usuario"] = usuario
+
+        requests.put(f"{API_BASE_URL}/auth/update/{usuario['idusuario']}", json = usuario)
+        print(usuario)
+        flash("Foto de perfil actualizada", "success")
+
+    return redirect(url_for("inicio"))
 
 if __name__ == "__main__":
     app.run(debug=True)

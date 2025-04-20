@@ -55,7 +55,8 @@ public class AuthController : ControllerBase
             password = userDto.password,
             telefono = userDto.telefono,
             pais = userDto.pais,
-            edad = userDto.edad
+            edad = userDto.edad,
+            foto = "default-avatar.svg"
         };
 
         _context.usuario.Add(usuario);
@@ -87,7 +88,8 @@ public class AuthController : ControllerBase
                 usuario.email,
                 usuario.telefono,
                 usuario.pais,
-                usuario.edad
+                usuario.edad,
+                foto = usuario.foto ?? "default-avatar.svg"
             }
         });
     }
@@ -100,7 +102,7 @@ public class AuthController : ControllerBase
     /// <param name="usuario"></param>
     /// <returns></returns>
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateUser(int id, [FromBody] Usuario usuario)
+    public async Task<IActionResult> UpdateUser(int id, [FromBody] UsuarioDTO usuario)
     {
         var existingUser = await _context.usuario.FindAsync(id);
         if (existingUser == null) return NotFound();
@@ -111,6 +113,8 @@ public class AuthController : ControllerBase
         existingUser.telefono = usuario.telefono;
         existingUser.pais = usuario.pais;
         existingUser.edad = usuario.edad;
+        existingUser.foto = usuario.foto ?? existingUser.foto;
+
 
         await _context.SaveChangesAsync();
         return Ok(existingUser);

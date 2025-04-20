@@ -19,7 +19,10 @@ namespace API.Models
         public string pais { get; set; }
 
         public int edad { get; set; }
+        public string foto { get; set; }  // Nombre de archivo o ruta
+
         // Propiedad de navegación
         public ICollection<Participacion> Participaciones { get; set; }
+
     }
 }

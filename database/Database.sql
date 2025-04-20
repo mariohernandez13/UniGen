@@ -40,3 +40,7 @@ CREATE TABLE creacion (
     FOREIGN KEY (idusuario) REFERENCES usuario(idusuario),
     FOREIGN KEY (idactividad) REFERENCES actividad(idactividad)
 );
+
+-- CORRER ESTO SOLO
+ALTER TABLE usuario
+ADD COLUMN foto;
