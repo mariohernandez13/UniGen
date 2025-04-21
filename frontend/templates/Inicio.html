@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Incio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,11 +12,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
     <link rel="icon" href="../static/IMAGES/logo_unigen.svg" class="imagen">
 
-    
-    </head>
+
+</head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-expand-md px-4">
-        <a class="navbar-brand" href="inicio"><img src="../static/IMAGES/logo_unigen.svg" width="50px" height="auto"></a>
+        <a class="navbar-brand" href="inicio"><img src="../static/IMAGES/logo_unigen.svg" width="50px"
+                height="auto"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -23,23 +26,45 @@
         <div class="ms-auto collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-5">
                 <a class="nav-link px-3 active" href="inicio" id="link1"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a class="nav-link px-3 " href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i></i> Actividades</a>
+                <a class="nav-link px-3 " href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i></i>
+                    Actividades</a>
                 <a class="nav-link px-3" href="tienda" id="link3"><i class="fa-solid fa-cart-shopping"></i> Tienda</a>
-                <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre nosotros</a>
-                <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i class="fa-solid fa-paper-plane"></i> Contacto</a>
-                <a class="nav-link px-3" href="" id="link6" data-bs-toggle="modal" data-bs-target="#perfilModal"><i class="fa-solid fa-user"></i> Mi perfil</a>
-                
-               
+                <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre
+                    nosotros</a>
+                <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i
+                        class="fa-solid fa-paper-plane"></i> Contacto</a>
+                <a class="nav-link px-3" href="" id="link6" data-bs-toggle="modal" data-bs-target="#perfilModal"><i
+                        class="fa-solid fa-user"></i> Mi perfil</a>
+
+
             </div>
-            <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
+            <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
+                    class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
         </div>
     </nav>
+
+    <div class="container mt-4">
+        <!-- Mostrar mensajes flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="alert-container">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
     
     <div class="container mt-5">
         <!-- Mensaje de bienvenida -->
         <div class="text-center mb-5">
             <h1 class="display-4">¡Bienvenido, {{ usuario.username }}!</h1>
-            <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo que UniGen tiene para ofrecerte.</p>
+            <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo que
+                UniGen tiene para ofrecerte.</p>
         </div>
 
         <!-- Apartado de Mis Actividades -->
@@ -54,31 +79,25 @@
     <div class="container mt-5">
         {% if usuario.actividades %}
             <div class="row">
+                {% if usuario.actividades %}
                 {% for actividad in usuario.actividades %}
-                    <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
-                        <div class="card" style="width: 18rem;" id="Cocina">
-                            <div class="image-container position-relative" id="zona_imagen">
-                                <img src=".." class="card-img" alt="..." id="imagen">
-                                <div id="descripcion_cocina" class="descripcion text-center">{{ actividad.descripcion }}</div>
-                                <div class="overlay">
-                                    <div class="title-bg" id="fondo">
-                                        <h5 class="card-title" id="titulo">{{ actividad.nombre }}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body small">
-                                <p class="mb-1" id="hora"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
-                                <p class="mb-1" id="lugar"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
-                                <p class="mb-3" id="organizador"><strong>👤 Organiza:</strong></p>
-                                <iframe class="mapa mb-3"></iframe>
-                                <div class="d-flex gap-2">
-                                    <a href="#" class="btn btn-primary desapuntarse-btn" id="Desapuntarse">Desapuntarse</a>
-                                    <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
-                                </div>
-                            </div>
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ actividad.nombre }}</h5>
+                            <p class="card-text">{{ actividad.descripcion }}</p>
+                            <p><strong>Fecha:</strong> {{ actividad.fecha }}</p>
+                            <p><strong>Hora:</strong> {{ actividad.hora }}</p>
+                            <p><strong>Lugar:</strong> {{ actividad.lugar }}</p>
+                            <p><strong>Duración:</strong> {{ actividad.duracion }}</p>
                         </div>
                     </div>
+                </div>
                 {% endfor %}
+                {% else %}
+                <p class="text-muted">No tienes actividades inscritas actualmente. ¡Explora las actividades disponibles
+                    y comienza a participar!</p>
+                {% endif %}
             </div>
         {% endif %}
     </div>   
@@ -88,8 +107,10 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="contactModalLabel"><i class="fas fa-envelope me-2"></i>Formulario de Contacto</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="contactModalLabel"><i class="fas fa-envelope me-2"></i>Formulario de
+                        Contacto</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="contactForm" class="contact-form">
@@ -97,12 +118,12 @@
                             <label for="name" class="form-label">Nombre:</label>
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
-                        
+
                         <div class="form-group mb-3">
                             <label for="email" class="form-label">Correo Electrónico:</label>
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
-                        
+
                         <div class="form-group mb-3">
                             <label for="subject" class="form-label">Asunto:</label>
                             <select class="form-select" id="subject" name="subject" required>
@@ -113,7 +134,7 @@
                                 <option value="other">Otro</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group mb-3">
                             <label for="message" class="form-label">Mensaje:</label>
                             <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
@@ -140,4 +161,5 @@
     <script src="{{ url_for('static', filename='../static/JS/Inicio.js') }}"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

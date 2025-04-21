@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +14,11 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/navbar.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/style.css') }}">
-        
-    
+
+
     </head>
 </head>
+
 <body>
 
     <!-- Modal Usuario -->
@@ -31,96 +34,102 @@
         <div class="ms-auto collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-5">
                 <a class="nav-link px-3" href="inicio" id="link1"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a class="nav-link px-3" href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i></i> Actividades</a>
-                <a class="nav-link px-3 active" href="tienda" id="link3"><i class="fa-solid fa-cart-shopping"></i> Tienda</a>
-                <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre nosotros</a>
+                <a class="nav-link px-3" href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i></i>
+                    Actividades</a>
+                <a class="nav-link px-3 active" href="tienda" id="link3"><i class="fa-solid fa-cart-shopping"></i>
+                    Tienda</a>
+                <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre
+                    nosotros</a>
                 <a class="nav-link px-3" href="#" id="link5"><i class="fa-solid fa-paper-plane"></i> Contacto</a>
-                <a class="nav-link px-3" href="#" id="link6" data-bs-toggle="modal" data-bs-target="#perfilModal"><i class="fa-solid fa-user"></i> Mi perfil</a>
+                <a class="nav-link px-3" href="#" id="link6" data-bs-toggle="modal" data-bs-target="#perfilModal"><i
+                        class="fa-solid fa-user"></i> Mi perfil</a>
             </div>
-            <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
+            <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
+                    class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
         </div>
     </nav>
 
     <div class="loader"></div>
 
-<div class="centro">
-    <!-- From Uiverse.io by htwarriors108 --> 
-<div class="cube">
-    <div class="cube__face" id="cube__face--front">
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-    </div>
+    <div class="centro">
+        <!-- From Uiverse.io by htwarriors108 -->
+        <div class="cube">
+            <div class="cube__face" id="cube__face--front">
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+            </div>
 
-    <div class="cube__face" id="cube__face--back">
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-    </div>
+            <div class="cube__face" id="cube__face--back">
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+            </div>
 
-    <div class="cube__face" id="cube__face--right">
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-    </div>
+            <div class="cube__face" id="cube__face--right">
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+            </div>
 
-    <div class="cube__face" id="cube__face--left">
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-    </div>
+            <div class="cube__face" id="cube__face--left">
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+            </div>
 
-    <div class="cube__face" id="cube__face--top">
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-    </div>
+            <div class="cube__face" id="cube__face--top">
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+            </div>
 
-    <div class="cube__face" id="cube__face--bottom">
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
-        <span class="faceBox"></span>
+            <div class="cube__face" id="cube__face--bottom">
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+                <span class="faceBox"></span>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
 </body>
+
 </html>
