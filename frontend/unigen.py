@@ -10,7 +10,7 @@ app.secret_key = "miclavesecreta123"
 
 API_BASE_URL = "http://localhost:5001"
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "static", "IMAGES", "perfiles")
-ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "svg"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Página principal: Login

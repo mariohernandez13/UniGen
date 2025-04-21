@@ -56,7 +56,7 @@
         {% endif %}
         {% endwith %}
     </div>
-    <div class="container mt-5 justify-content-center align-items-center">   
+    <div class="container mt-5 justify-content-center align-items-center">
         <form class="form" action="{{ url_for('crear_actividad') }}" method="POST">
             <p class="title">Crear Actividad</p>
             <p class="message">Crea tu actividad aquí mismo!</p>
@@ -68,7 +68,7 @@
             <label>
                 <input required="" placeholder="" type="text" class="input" name="descripcion">
                 <span>Descripción</span>
-            </label>     
+            </label>
             <!-- <label>
                 <input required="" placeholder="" type="text" class="input" name="tipo">
                 <span>Tipo</span>
@@ -90,7 +90,7 @@
             <label>
                 <input required="" placeholder="" type="text" class="input" name="lugar">
                 <span>Lugar</span>
-            </label>  
+            </label>
             <label>
                 <input required="" placeholder="" type="date" class="input" name="fecha">
             </label>
@@ -121,15 +121,10 @@
                         <p><strong>Hora:</strong> {{ actividad.hora }}</p>
                         <p><strong>Duración:</strong> {{ actividad.duracion }}</p>
                         <p><strong>Lugar:</strong> {{ actividad.lugar }}</p>
-                        <iframe
-                        src="https://www.google.com/maps/embed?q={{ actividad.lugar | urlencode }}"
-                        width="100%"
-                        height="200"
-                        style="border:0;"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                        <iframe src="https://www.google.com/maps/embed?q={{ actividad.lugar | urlencode }}" width="100%"
+                            height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                         {% if actividad.idactividad in inscripciones %}
                         <!-- Botón para desapuntarse -->
                         <form action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
@@ -170,25 +165,26 @@
                     <div class="card-body small">
                         <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
-                        <p class="mb-3"><strong>👤 Organizador: </strong> </p> 
+                        <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
+                        <p class="mb-3"><strong>👤 Organizador: </strong> </p>
                         <iframe class="mapa mb-3"></iframe>
                         <div class="d-flex gap-2">
                             {% if actividad.idactividad in inscripciones %}
                             <!-- Botón para desapuntarse -->
                             <form action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
                                 method="POST">
-                                <input type="hidden" name="idusuario" value="{{ usuario }}">
+                                <input type="hidden" name="idusuario" value="{{ usuario.idusuario }}">
                                 <button type="submit" class="btn btn-danger">Desapuntarse</button>
                             </form>
                             {% else %}
                             <!-- Botón para inscribirse -->
                             <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}"
                                 method="POST">
-                                <input type="hidden" name="idusuario" value="{{ usuario }}">
-                                <button type="submit" class="btn btn-primary apuntarse-btn">Apuntarse</button>
+                                <input type="hidden" name="idusuario" value="{{ usuario.idusuario }}">
+                                <button type="submit" class="btn btn-primary">Inscribirse</button>
                             </form>
                             {% endif %}
-                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                            <button class="btn btn-primary">Ver Detalles</button>
                         </div>
                     </div>
                 </div>
@@ -203,7 +199,9 @@
                 <div class="card" style="width: 18rem;" id="Cocina">
                     <div class="image-container position-relative" id="zona_imagen">
                         <img src="../static/IMAGES/actividad_cocina.avif" class="card-img" alt="..." id="imagen">
-                        <div id="descripcion_cocina" class="descripcion text-center">Una tarde para compartir recetas, risas y sabores. Jóvenes y mayores se unen en la cocina para preparar platos tradicionales y modernos, aprendiendo unos de otros y creando así conexiones.</div>
+                        <div id="descripcion_cocina" class="descripcion text-center">Una tarde para compartir recetas,
+                            risas y sabores. Jóvenes y mayores se unen en la cocina para preparar platos tradicionales y
+                            modernos, aprendiendo unos de otros y creando así conexiones.</div>
                         <div class="overlay">
                             <div class="title-bg" id="fondo">
                                 <h5 class="card-title" id="titulo">Cocinamos Juntos</h5>
@@ -214,13 +212,14 @@
                         <p class="mb-1" id="hora"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1" id="lugar"><strong>📍 Lugar:</strong> Centro Cultural La Marina</p>
                         <p class="mb-3" id="organizador"><strong>👤 Organiza:</strong> Ana González</p>
-                        <iframe class="mapa mb-3" 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3057.690861189399!2d0.007809775820187348!3d39.970663882668006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x129fffefdfcb7ed9%3A0x1e5f28ffe5dbcf3e!2sCentro%20Cultural%20La%20Marina!5e0!3m2!1ses!2ses!4v1745175016988!5m2!1ses!2ses" 
-      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+                        <iframe class="mapa mb-3"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3057.690861189399!2d0.007809775820187348!3d39.970663882668006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x129fffefdfcb7ed9%3A0x1e5f28ffe5dbcf3e!2sCentro%20Cultural%20La%20Marina!5e0!3m2!1ses!2ses!4v1745175016988!5m2!1ses!2ses"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
+                                información</a>
                         </div>
                     </div>
                 </div>
@@ -229,7 +228,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="image-container">
                         <img src="../static/IMAGES/actividad_tecnología.avif" class="card-img" alt="...">
-                        <div id="descripcion_cocina" class="descripcion text-center">Un espacio donde jóvenes y mayores se unen para descubrir juntos el mundo digital. Desde aprender a usar el móvil o el ordenador, hasta crear un perfil en redes sociales.</div>
+                        <div id="descripcion_cocina" class="descripcion text-center">Un espacio donde jóvenes y mayores
+                            se unen para descubrir juntos el mundo digital. Desde aprender a usar el móvil o el
+                            ordenador, hasta crear un perfil en redes sociales.</div>
                         <div class="overlay">
                             <div class="title-bg">
                                 <h5 class="card-title">Conectando Generaciones</h5>
@@ -240,10 +241,12 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 10:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Centro Cultural Usera</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Juan Pérez</p>
-                        <iframe class="mapa mb-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.2522512646324!2d-3.715702369809149!3d40.38110159040579!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227b03ae98279%3A0xa35928246bf6d218!2sCentro%20Cultural%20Usera!5e0!3m2!1ses!2ses!4v1745176361504!5m2!1ses!2ses"></iframe>
+                        <iframe class="mapa mb-3"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.2522512646324!2d-3.715702369809149!3d40.38110159040579!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227b03ae98279%3A0xa35928246bf6d218!2sCentro%20Cultural%20Usera!5e0!3m2!1ses!2ses!4v1745176361504!5m2!1ses!2ses"></iframe>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
+                                información</a>
                         </div>
                     </div>
                 </div>
@@ -252,7 +255,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="image-container">
                         <img src="../static/IMAGES/actividad_cultura.jpg" class="card-img" alt="...">
-                        <div id="descripcion_cocina" class="descripcion text-center">Jóvenes y mayores se reúnen para intercambiar historias: desde novelas clásicas hasta anécdotas reales que merecen ser contadas. Una sesión de lectura y conversación para descubrir puntos en común.</div>
+                        <div id="descripcion_cocina" class="descripcion text-center">Jóvenes y mayores se reúnen para
+                            intercambiar historias: desde novelas clásicas hasta anécdotas reales que merecen ser
+                            contadas. Una sesión de lectura y conversación para descubrir puntos en común.</div>
                         <div class="overlay">
                             <div class="title-bg">
                                 <h5 class="card-title">Historias Cruzadas</h5>
@@ -263,10 +268,12 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 8:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Biblioteca San Julián</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Carlos Gómez</p>
-                        <iframe class="mapa mb-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d311633.53374967293!2d-6.054883316641896!3d37.46341492675524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126c01ddf92be5%3A0xfe5869add80f1326!2sBiblioteca%20P%C3%BAblica%20Municipal%20San%20Juli%C3%A1n!5e0!3m2!1ses!2ses!4v1745176714259!5m2!1ses!2ses"></iframe>
+                        <iframe class="mapa mb-3"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d311633.53374967293!2d-6.054883316641896!3d37.46341492675524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126c01ddf92be5%3A0xfe5869add80f1326!2sBiblioteca%20P%C3%BAblica%20Municipal%20San%20Juli%C3%A1n!5e0!3m2!1ses!2ses!4v1745176714259!5m2!1ses!2ses"></iframe>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
+                                información</a>
                         </div>
                     </div>
                 </div>
@@ -275,7 +282,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="image-container">
                         <img src="../static/IMAGES/actividad_arte.webp" class="card-img" alt="...">
-                        <div id="descripcion_cocina" class="descripcion text-center">Un taller intergeneracional de pintura al aire libre donde mayores y jóvenes comparten técnicas, estilos y emociones. Una forma creativa de expresarse y disfrutar juntos del arte.</div>
+                        <div id="descripcion_cocina" class="descripcion text-center">Un taller intergeneracional de
+                            pintura al aire libre donde mayores y jóvenes comparten técnicas, estilos y emociones. Una
+                            forma creativa de expresarse y disfrutar juntos del arte.</div>
                         <div class="overlay">
                             <div class="title-bg">
                                 <h5 class="card-title">Pinceladas</h5>
@@ -286,10 +295,12 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Parque Grande (Madrid)</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <iframe class="mapa mb-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3040.739264637265!2d-3.815366924162338!3d40.34812965981201!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ef7343790f%3A0xe4ce1849a39b7e74!2sParque%20Grande!5e0!3m2!1ses!2ses!4v1745177309941!5m2!1ses!2ses"></iframe>
+                        <iframe class="mapa mb-3"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3040.739264637265!2d-3.815366924162338!3d40.34812965981201!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189ef7343790f%3A0xe4ce1849a39b7e74!2sParque%20Grande!5e0!3m2!1ses!2ses!4v1745177309941!5m2!1ses!2ses"></iframe>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
+                                información</a>
                         </div>
                     </div>
                 </div>
@@ -300,7 +311,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="image-container">
                         <img src="../static/IMAGES/actividad_excursión.jpeg" class="card-img" alt="...">
-                        <div id="descripcion_cocina" class="descripcion text-center">Caminaremos entre senderos, descubriremos rincones ocultos y al caer la tarde, montaremos campamento para compartir historias junto al fuego. ¡Una escapada perfecta para reconectar.</div>
+                        <div id="descripcion_cocina" class="descripcion text-center">Caminaremos entre senderos,
+                            descubriremos rincones ocultos y al caer la tarde, montaremos campamento para compartir
+                            historias junto al fuego. ¡Una escapada perfecta para reconectar.</div>
                         <div class="overlay">
                             <div class="title-bg">
                                 <h5 class="card-title">Exploradores por un Día</h5>
@@ -311,10 +324,12 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 12:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Sierra de Grazalema (Cádiz)</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <iframe class="mapa mb-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6393.976906621553!2d-5.3792521059826965!3d36.74684823594762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0d3cffffffffe3%3A0xd7adbbbdc46df519!2sParque%20Natural%20Sierra%20de%20Grazalema!5e0!3m2!1ses!2ses!4v1745228350363!5m2!1ses!2ses"></iframe>
+                        <iframe class="mapa mb-3"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6393.976906621553!2d-5.3792521059826965!3d36.74684823594762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0d3cffffffffe3%3A0xd7adbbbdc46df519!2sParque%20Natural%20Sierra%20de%20Grazalema!5e0!3m2!1ses!2ses!4v1745228350363!5m2!1ses!2ses"></iframe>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
+                                información</a>
                         </div>
                     </div>
                 </div>
@@ -323,7 +338,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="image-container">
                         <img src="../static/IMAGES/actividad_ebook.webp" class="card-img" alt="...">
-                        <div id="descripcion_cocina" class="descripcion text-center">Mayores eligen un texto que les guste (poema, recuerdo, receta, relato) y, con ayuda del joven, lo convierten en un pequeño ebook o póster digital con imágenes.</div>
+                        <div id="descripcion_cocina" class="descripcion text-center">Mayores eligen un texto que les
+                            guste (poema, recuerdo, receta, relato) y, con ayuda del joven, lo convierten en un pequeño
+                            ebook o póster digital con imágenes.</div>
                         <div class="overlay">
                             <div class="title-bg">
                                 <h5 class="card-title">Mi primer ebook</h5>
@@ -334,10 +351,12 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 16:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> La Casa Encendida (Madrid)</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <iframe class="mapa mb-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7339.199372694022!2d-3.7030879946687945!3d40.40407729336766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42262c501652cd%3A0x610543bed2cd3041!2sLa%20Casa%20Encendida!5e0!3m2!1ses!2ses!4v1745228882478!5m2!1ses!2ses"></iframe>
+                        <iframe class="mapa mb-3"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7339.199372694022!2d-3.7030879946687945!3d40.40407729336766!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42262c501652cd%3A0x610543bed2cd3041!2sLa%20Casa%20Encendida!5e0!3m2!1ses!2ses!4v1745228882478!5m2!1ses!2ses"></iframe>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
+                                información</a>
                         </div>
                     </div>
                 </div>
@@ -346,8 +365,11 @@
                 <div class="card" style="width: 18rem;">
                     <div class="image-container">
                         <img src="../static/IMAGES/actividad_memoriaDigital.jpg" class="card-img" alt="...">
-                        <div id="descripcion_cocina" class="descripcion text-center">Prepárate para una experiencia única que une generaciones. Compartiremos recuerdos, anécdotas y aprendizajes mientras creamos juntos un recuerdo
-                            digital para toda la vida. Jóvenes y mayores conectarán a través de historias, tecnología y mucha emoción.</div>
+                        <div id="descripcion_cocina" class="descripcion text-center">Prepárate para una experiencia
+                            única que une generaciones. Compartiremos recuerdos, anécdotas y aprendizajes mientras
+                            creamos juntos un recuerdo
+                            digital para toda la vida. Jóvenes y mayores conectarán a través de historias, tecnología y
+                            mucha emoción.</div>
                         <div class="overlay">
                             <div class="title-bg">
                                 <h5 class="card-title">Memoria Digital</h5>
@@ -358,11 +380,13 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 17:30</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Medialab Matadero (Madrid)</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <iframe class="mapa mb-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.7823155538913!2d-3.6998463241603017!3d40.39151695717378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4226288a4fb7f7%3A0xd69ac9ed8a94df3d!2sMedialab%20Matadero!5e0!3m2!1ses!2ses!4v1745229923776!5m2!1ses!2ses"></iframe>
+                        <iframe class="mapa mb-3"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.7823155538913!2d-3.6998463241603017!3d40.39151695717378!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4226288a4fb7f7%3A0xd69ac9ed8a94df3d!2sMedialab%20Matadero!5e0!3m2!1ses!2ses!4v1745229923776!5m2!1ses!2ses"></iframe>
                         <div class="d-flex gap-2">
                             <div class="d-flex gap-2">
                                 <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                                <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                                <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
+                                    información</a>
                             </div>
                         </div>
                     </div>
@@ -372,7 +396,9 @@
                 <div class="card" style="width: 18rem;">
                     <div class="image-container">
                         <img src="../static/IMAGES/actividad_cine.jpg" class="card-img" alt="...">
-                        <div id="descripcion_cocina" class="descripcion text-center">Disfruta del cine como punto de encuentro entre jóvenes y mayores. Veremos juntos una película y compartiremos opiniones, recuerdos y curiosidades. Después, crearemos un pequeño vídeo.</div>
+                        <div id="descripcion_cocina" class="descripcion text-center">Disfruta del cine como punto de
+                            encuentro entre jóvenes y mayores. Veremos juntos una película y compartiremos opiniones,
+                            recuerdos y curiosidades. Después, crearemos un pequeño vídeo.</div>
                         <div class="overlay">
                             <div class="title-bg">
                                 <h5 class="card-title">Cine entre Generaciones</h5>
@@ -383,10 +409,12 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> Civicán (Pamplona)</p>
                         <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                        <iframe class="mapa mb-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.8228471061047!2d-1.6579108240443874!3d42.813229506351604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5092f56145b21f%3A0x6d92a0c90f1f3ded!2sCIVICAN%20-%20espacio%20de%20pensamiento%20y%20cultura%20compartida%20de%20Fundaci%C3%B3n%20Caja%20Navarra!5e0!3m2!1ses!2ses!4v1745230538454!5m2!1ses!2ses"></iframe>
+                        <iframe class="mapa mb-3"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.8228471061047!2d-1.6579108240443874!3d42.813229506351604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5092f56145b21f%3A0x6d92a0c90f1f3ded!2sCIVICAN%20-%20espacio%20de%20pensamiento%20y%20cultura%20compartida%20de%20Fundaci%C3%B3n%20Caja%20Navarra!5e0!3m2!1ses!2ses!4v1745230538454!5m2!1ses!2ses"></iframe>
                         <div class="d-flex gap-2">
                             <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                            <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
+                                información</a>
                         </div>
                     </div>
                 </div>
