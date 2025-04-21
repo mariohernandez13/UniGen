@@ -96,12 +96,12 @@
 }
 
 
-.btn-primary {
+#Apuntarse {
     background-color: #25D366 !important;
     border-color: #25D366 !important;
 }
 
-.btn-primary:hover {
+#Apuntarse:hover {
     background-color: #25D366 !important;
 }
 
