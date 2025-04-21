@@ -131,7 +131,7 @@ def crear_actividad():
         "Fecha": request.form.get("fecha"),
         "Hora": request.form.get("hora"),
         "Lugar": request.form.get("lugar"),
-        "Duracion": int(request.form.get("duracion"))
+        "Duracion": request.form.get("duracion")
     }
 
     # Enviar los datos al backend
