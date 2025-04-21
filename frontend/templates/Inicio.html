@@ -6,6 +6,7 @@
     <title>Incio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/Inicio.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
     <link rel="icon" href="../static/IMAGES/logo_unigen.svg" class="imagen">
@@ -44,28 +45,43 @@
         <!-- Apartado de Mis Actividades -->
         <div class="mt-4">
             <h2 class="mb-4"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
+        </div>
+        {%if usuario.actividades|length == 0 %}
+            <p class="text-muted">No tienes actividades inscritas actualmente. ¡Explora las actividades disponibles y comienza a participar!</p>
+        {% endif %}
+    </div>
+
+    <div class="container mt-5">
+        {% if usuario.actividades %}
             <div class="row">
-                {% if usuario.actividades %}
-                    {% for actividad in usuario.actividades %}
-                    <div class="col-md-4">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ actividad.nombre }}</h5>
-                                <p class="card-text">{{ actividad.descripcion }}</p>
-                                <p><strong>Fecha:</strong> {{ actividad.fecha }}</p>
-                                <p><strong>Hora:</strong> {{ actividad.hora }}</p>
-                                <p><strong>Lugar:</strong> {{ actividad.lugar }}</p>
-                                <p><strong>Duración:</strong> {{ actividad.duracion }}</p>
+                {% for actividad in usuario.actividades %}
+                    <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
+                        <div class="card" style="width: 18rem;" id="Cocina">
+                            <div class="image-container position-relative" id="zona_imagen">
+                                <img src=".." class="card-img" alt="..." id="imagen">
+                                <div id="descripcion_cocina" class="descripcion text-center">{{ actividad.descripcion }}</div>
+                                <div class="overlay">
+                                    <div class="title-bg" id="fondo">
+                                        <h5 class="card-title" id="titulo">{{ actividad.nombre }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body small">
+                                <p class="mb-1" id="hora"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
+                                <p class="mb-1" id="lugar"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
+                                <p class="mb-3" id="organizador"><strong>👤 Organiza:</strong></p>
+                                <iframe class="mapa mb-3"></iframe>
+                                <div class="d-flex gap-2">
+                                    <a href="#" class="btn btn-primary desapuntarse-btn" id="Desapuntarse">Desapuntarse</a>
+                                    <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más información</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                {% else %}
-                    <p class="text-muted">No tienes actividades inscritas actualmente. ¡Explora las actividades disponibles y comienza a participar!</p>
-                {% endif %}
+                {% endfor %}
             </div>
-        </div>
-    </div>
+        {% endif %}
+    </div>   
 
     <!-- Modal de Contacto - Ahora usando Bootstrap -->
     <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
@@ -121,6 +137,7 @@
 
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='../static/JS/Inicio.js') }}"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
 </body>
 </html>
