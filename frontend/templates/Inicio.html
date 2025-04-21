@@ -58,7 +58,8 @@
         {% endif %}
         {% endwith %}
     </div>
-    
+ 
+  
     <div class="container mt-5">
         <!-- Mensaje de bienvenida -->
         <div class="text-center mb-5">
@@ -66,41 +67,217 @@
             <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo que
                 UniGen tiene para ofrecerte.</p>
         </div>
-
-        <!-- Apartado de Mis Actividades -->
-        <div class="mt-4">
-            <h2 class="mb-4"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
-        </div>
-        {%if usuario.actividades|length == 0 %}
-            <p class="text-muted">No tienes actividades inscritas actualmente. ¡Explora las actividades disponibles y comienza a participar!</p>
-        {% endif %}
+    
+      <!-- CARROUSEL -->
+   
+<div id="carouselExampleCaptions" class="carousel  slide">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
     </div>
-
-    <div class="container mt-5">
-        {% if usuario.actividades %}
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="../static/IMAGES/taller-de-cocina.webp" class=" hola d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h2>​</h2>
+          <p></p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="../static/IMAGES/jogging.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 >​​</h5>
+          <p></p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="../static/IMAGES/pintura.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 ></h5>
+          <p></p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="../static/IMAGES/negocios.png" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5></h5>
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+    <div class="container mt-5"> 
+        
+        <!-- Apartado de Noticias -->
+        <div class="mt-5">
+            <h2 class="mb-4 text-center"><i class="bi bi-newspaper text-primary me-2"></i>Últimas Noticias</h2>
             <div class="row">
-                {% if usuario.actividades %}
-                {% for actividad in usuario.actividades %}
-                <div class="col-md-4">
-                    <div class="card mb-3">
+            <!-- Primera noticia -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                <img src="../static/IMAGES/noticia1.jpg" class="card-img-top" alt="Noticia 1">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 1</h5>
+                    <p class="card-text text-muted">Breve descripción de la noticia 1. Mantente informado con las últimas novedades.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                </div>
+                </div>
+            </div>
+            <!-- Segunda noticia -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                <img src="../static/IMAGES/noticia2.jpg" class="card-img-top" alt="Noticia 2">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 2</h5>
+                    <p class="card-text text-muted">Breve descripción de la noticia 2. Descubre lo que está sucediendo.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                </div>
+                </div>
+            </div>
+            <!-- Tercera noticia -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                <img src="../static/IMAGES/noticia3.jpg" class="card-img-top" alt="Noticia 3">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 3</h5>
+                    <p class="card-text text-muted">Breve descripción de la noticia 3. Entérate de los eventos más recientes.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                </div>
+                </div>
+            </div>
+            <!-- Cuarta noticia -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                <img src="../static/IMAGES/noticia4.jpg" class="card-img-top" alt="Noticia 4">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 4</h5>
+                    <p class="card-text text-muted">Breve descripción de la noticia 4. No te pierdas las últimas actualizaciones.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                </div>
+                </div>
+            </div>
+            <!-- Quinta noticia -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                <img src="../static/IMAGES/noticia5.jpg" class="card-img-top" alt="Noticia 5">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 5</h5>
+                    <p class="card-text text-muted">Breve descripción de la noticia 5. Mantente al día con las novedades más recientes.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                </div>
+                </div>
+            </div>
+            <!-- Sexta noticia -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                <img src="../static/IMAGES/noticia6.jpg" class="card-img-top" alt="Noticia 6">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 6</h5>
+                    <p class="card-text text-muted">Breve descripción de la noticia 6. Descubre lo que está pasando en el mundo.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <!-- Apartado de Redes Sociales -->
+        <div class="mt-5">
+            <h2 class="mb-4 text-center"><i class="bi bi-share text-primary me-2"></i>Conéctate con Nosotros</h2>
+            <div class="row text-center">
+                <!-- Facebook -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0">
                         <div class="card-body">
-                            <h5 class="card-title">{{ actividad.nombre }}</h5>
-                            <p class="card-text">{{ actividad.descripcion }}</p>
-                            <p><strong>Fecha:</strong> {{ actividad.fecha }}</p>
-                            <p><strong>Hora:</strong> {{ actividad.hora }}</p>
-                            <p><strong>Lugar:</strong> {{ actividad.lugar }}</p>
-                            <p><strong>Duración:</strong> {{ actividad.duracion }}</p>
+                            <img src="../static/IMAGES/facebook.png" alt="Facebook" class="img-fluid mb-3" style="width: 80px; transition: transform 0.3s;">
+                            <h5 class="card-title">Síguenos en Facebook</h5>
+                            <p class="card-text text-muted">Únete a nuestra comunidad en Facebook y mantente al día con nuestras novedades.</p>
+                            <a href="#" class="btn btn-primary btn-sm"><i class="bi bi-facebook me-1"></i>Visítanos</a>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
-                {% else %}
-                <p class="text-muted">No tienes actividades inscritas actualmente. ¡Explora las actividades disponibles
-                    y comienza a participar!</p>
-                {% endif %}
+                <!-- Instagram -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        <div class="card-body">
+                            <img src="../static/IMAGES/instagram.png" alt="Instagram" class="img-fluid mb-3" style="width: 80px; transition: transform 0.3s;">
+                            <h5 class="card-title">Síguenos en Instagram</h5>
+                            <p class="card-text text-muted">Descubre contenido exclusivo y comparte tus momentos con nosotros.</p>
+                            <a href="#" class="btn btn-danger btn-sm"><i class="bi bi-instagram me-1"></i>Visítanos</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Twitter -->
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0">
+                        <div class="card-body">
+                            <img src="../static/IMAGES/twitter.png" alt="Twitter" class="img-fluid mb-3" style="width: 80px; transition: transform 0.3s;">
+                            <h5 class="card-title">Síguenos en Twitter</h5>
+                            <p class="card-text text-muted">Entérate de las últimas noticias y participa en nuestras conversaciones.</p>
+                            <a href="#" class="btn btn-info btn-sm text-white"><i class="bi bi-twitter me-1"></i>Visítanos</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        {% endif %}
-    </div>   
+        </div>
+        <script>
+            // Add hover effect for social media images
+            document.querySelectorAll('.card-body img').forEach(img => {
+                img.addEventListener('mouseover', () => {
+                    img.style.transform = 'scale(1.2)';
+                });
+                img.addEventListener('mouseout', () => {
+                    img.style.transform = 'scale(1)';
+                });
+            });
+        </script>
+
+
+
+        <!-- Apartado de Mis Actividades -->
+        <div class="mt-4">
+            <h2 class="mb-4 text-center"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
+            {% if usuario.actividades|length == 0 %}
+                <div class="text-center p-4 bg-light rounded shadow-sm">
+                    <p class="text-muted mb-0">No tienes actividades inscritas actualmente.</p>
+                    <p class="text-muted">¡Explora las actividades disponibles y comienza a participar!</p>
+                    <a href="dashboard" class="btn btn-primary mt-3"><i class="bi bi-search me-2"></i>Explorar Actividades</a>
+                </div>
+            {% else %}
+                <div class="row">
+                    {% for actividad in usuario.actividades %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">{{ actividad.nombre }}</h5>
+                                <p class="card-text text-muted">{{ actividad.descripcion }}</p>
+                                <ul class="list-unstyled mb-3">
+                                    <li><strong>Fecha:</strong> {{ actividad.fecha }}</li>
+                                    <li><strong>Hora:</strong> {{ actividad.hora }}</li>
+                                    <li><strong>Lugar:</strong> {{ actividad.lugar }}</li>
+                                    <li><strong>Duración:</strong> {{ actividad.duracion }}</li>
+                                </ul>
+                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="bi bi-info-circle me-1"></i>Más Información</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
 
     <!-- Modal de Contacto - Ahora usando Bootstrap -->
     <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
@@ -161,5 +338,74 @@
     <script src="{{ url_for('static', filename='../static/JS/Inicio.js') }}"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
 </body>
+<footer class="bg-dark text-center text-lg-start mt-5 text-white">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0 d-flex align-items-center">
+                <img src="../static/IMAGES/logo_unigen.svg" alt="UniGen Logo" width="50px" height="auto" class="me-3" style="filter: invert(1);">
+                <div>
+                    <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">UniGen</h5>
+                    <p class="fst-italic">
+                        UniGen es una plataforma diseñada para conectar personas y fomentar el aprendizaje a través de actividades únicas.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Enlaces</h5>
+                <ul class="list-unstyled mb-0">
+                    <li><a href="inicio" class="text-white text-decoration-none">Inicio</a></li>
+                    <li><a href="dashboard" class="text-white text-decoration-none">Actividades</a></li>
+                    <li><a href="tienda" class="text-white text-decoration-none">Tienda</a></li>
+                    <li><a href="sobrenosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Síguenos</h5>
+                <ul class="list-unstyled d-flex justify-content-start">
+                    <li>
+                        <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                            <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                            <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                            <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white" style="transition: transform 0.3s;">
+                            <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white ms-3" style="transition: transform 0.3s;">
+                            <i class="bi bi-youtube" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3 bg-primary text-white">
+        © 2023 <span class="fw-bold">UniGen</span>. Todos los derechos reservados.
+    </div>
+</footer>
+
+<script>
+    // Add hover effect for social media icons
+    document.querySelectorAll('footer .bi').forEach(icon => {
+        icon.parentElement.addEventListener('mouseover', () => {
+            icon.parentElement.style.transform = 'scale(1.2)';
+        });
+        icon.parentElement.addEventListener('mouseout', () => {
+            icon.parentElement.style.transform = 'scale(1)';
+        });
+    });
+</script>
 
 </html>
