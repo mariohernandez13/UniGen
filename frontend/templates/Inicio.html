@@ -15,32 +15,36 @@
 
 </head>
 
-<nav class="navbar navbar-expand-lg navbar-expand-md px-4">
-    <a class="navbar-brand d-flex align-items-center" href="inicio">
-        <img src="../static/IMAGES/logo_unigen.svg" width="50px" height="auto">
-        <span class="ms-2 fw-bold text-primary" style="font-size: 1.5rem; letter-spacing: 1px; font-family: 'Arial', sans-serif;">UniGen</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="ms-auto collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ms-5">
-            <a class="nav-link px-3 active" href="inicio" id="link1"><i class="fa-solid fa-house"></i> Inicio</a>
-            <a class="nav-link px-3 " href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i> Actividades</a>
-            <a class="nav-link px-3" href="tienda" id="link3"><i class="fa-solid fa-cart-shopping"></i> Tienda</a>
-            <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre nosotros</a>
-            <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i
-                    class="fa-solid fa-paper-plane"></i> Contacto</a>
-            <a class="nav-link px-3" href="" id="link6" data-bs-toggle="modal" data-bs-target="#perfilModal"><i
-                    class="fa-solid fa-user"></i> Mi perfil</a>
-        </div>
-        <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
-                class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
-    </div>
-</nav>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-expand-md px-4">
+        <a class="navbar-brand" href="inicio"><img src="../static/IMAGES/logo_unigen.svg" width="50px"
+                height="auto"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="ms-auto collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-5">
+                <a class="nav-link px-3 active" href="inicio" id="link1"><i class="fa-solid fa-house"></i> Inicio</a>
+                <a class="nav-link px-3 " href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i></i>
+                    Actividades</a>
+                <a class="nav-link px-3" href="tienda" id="link3"><i class="fa-solid fa-cart-shopping"></i> Tienda</a>
+                <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre
+                    nosotros</a>
+                <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i
+                        class="fa-solid fa-paper-plane"></i> Contacto</a>
+                <a class="nav-link px-3" href="" id="link6" data-bs-toggle="modal" data-bs-target="#perfilModal"><i
+                        class="fa-solid fa-user"></i> Mi perfil</a>
 
-    <div class="container mt-4">
+
+            </div>
+            <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
+                    class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4 ">
         <!-- Mostrar mensajes flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -57,17 +61,24 @@
     </div>
  
   
-    <div class="container mt-5">
-        <!-- Mensaje de bienvenida -->
-        <div class="text-center mb-5">
-            <h1 class="display-4">¡Bienvenido, {{ usuario.username }}!</h1>
-            <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo que
-                UniGen tiene para ofrecerte.</p>
-        </div>
+    <div class="container mt-5 text-center">
+        <!-- Mensaje de bienvenida con estilo minimalista -->
+        <h1 class="display-4 fw-bold text-primary" style="font-family: 'Playfair Display', serif; letter-spacing: 2px;">
+            ¡Bienvenido, <span style="color: #007bff;">{{ usuario.username }}</span>!
+        </h1>
+        <p class="lead text-muted mt-3" style="font-family: 'Roboto', sans-serif; font-size: 1.2rem;">
+            Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo que UniGen tiene para ofrecerte.
+        </p>
+        <a href="dashboard" class="btn btn-outline-primary btn-lg mt-4" style="border-radius: 50px; padding: 10px 30px; font-size: 1.1rem;">
+            <i class="bi bi-arrow-right-circle me-2"></i>Explorar Actividades
+        </a>
     
+    
+
+    <!-- Agregar enlace a la librería de animaciones -->
       <!-- CARROUSEL -->
    
-<div id="carouselExampleCaptions" class="carousel  slide">
+<div id="carouselExampleCaptions" class="carousel mt-5 slide">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
         aria-current="true" aria-label="Slide 1"></button>
