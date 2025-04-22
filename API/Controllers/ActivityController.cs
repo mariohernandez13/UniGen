@@ -27,6 +27,19 @@ public class ActivityController : ControllerBase
     public async Task<IActionResult> GetActividades()
     {
         var actividades = await _context.actividad.ToListAsync();
+        // .Select(a => new ActividadDTO
+        // {
+        //     Nombre = a.nombre,
+        //     Descripcion = a.descripcion,
+        //     Tipo = a.tipo,
+        //     Fecha = a.fecha,
+        //     Hora = a.hora,
+        //     Lugar = a.lugar,
+        //     Duracion = a.duracion,
+        //     //IdOrganizador = a.organizador,
+        // })
+        // .ToListAsync();
+
         return Ok(actividades);
     }
 
@@ -57,6 +70,12 @@ public class ActivityController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(new { message = "Datos inválidos", errors = ModelState });
 
+        // Verificar que el usuario organizador existe
+        // var usuario = await _context.usuario.FindAsync(actividadDTO.IdOrganizador);
+        // if (usuario == null)
+        //     return NotFound(new { message = "Usuario organizador no encontrado" });
+
+
         // Convertir el DTO en una entidad Actividad
         var actividad = new Actividad
         {
@@ -67,6 +86,8 @@ public class ActivityController : ControllerBase
             hora = actividadDTO.Hora,
             lugar = actividadDTO.Lugar,
             duracion = actividadDTO.Duracion
+            //organizador = actividadDTO.IdOrganizador
+            // foto = actividadDTO.Foto
         };
 
 
@@ -184,7 +205,7 @@ public class ActivityController : ControllerBase
 
         _context.participacion.Remove(participacion);
         await _context.SaveChangesAsync();
-        return Ok(new { message = "Desinscripción exitosa" });
+        return Ok(new { message = "Te has borrado de la actividad con éxito" });
     }
 
 }

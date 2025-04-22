@@ -133,6 +133,7 @@ def crear_actividad():
         "Lugar": request.form.get("lugar"),
         "Duracion": request.form.get("duracion")
     }
+        #"IdOrganizador": request.form.get("idOrganizador"),
 
     # Enviar los datos al backend
     response = requests.post(f"{API_BASE_URL}/activity/create", json=data)
