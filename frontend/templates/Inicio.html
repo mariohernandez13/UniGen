@@ -281,15 +281,10 @@
         <!-- Apartado de Mis Actividades -->
         <div class="container mt-5">
             <!-- Mensaje de bienvenida -->
-            <div class="text-center mb-5">
-                <h1 class="display-4">¡Bienvenido, {{ usuario.username }}!</h1>
-                <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo
-                    que UniGen tiene para ofrecerte.</p>
-            </div>
 
             <!-- Título de la sección -->
-            <div class="mt-4">
-                <h2 class="mb-4"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
+            <div class="mt-4 text-center"></div>
+                <h2 class="mb-4 text-center"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
             </div>
 
             {% if usuario.actividades|length == 0 %}
