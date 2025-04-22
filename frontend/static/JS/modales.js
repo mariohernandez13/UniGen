@@ -64,16 +64,40 @@
 
 
 // Manejar envío del formulario de contacto
+// document.getElementById('contactForm').addEventListener('submit', function(e) {
+//     e.preventDefault();
+    
+//     // Aquí iría la lógica para enviar el formulario
+//     const formData = new FormData(this);
+//     const data = Object.fromEntries(formData.entries());
+    
+//     console.log("Formulario enviado:", data);
+    
+//     // Mostrar mensaje de éxito (simulado)
+//     alert("¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.");
+    
+//     // Resetear formulario y cerrar modal
+//     this.reset();
+//     bootstrap.Modal.getInstance(document.getElementById('contactModal')).hide();
+// });
+
+
+// Manejar envío del formulario de contacto
 document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Aquí iría la lógica para enviar el formulario
+    // Validar el formulario antes de continuar
+    if (!this.checkValidity()) {
+        // Mostrar errores de validación HTML5 (como "Campo obligatorio")
+        this.reportValidity();
+        return; // Detener el envío si no es válido
+    }
+    
+    // Solo procesar si el formulario es válido
     const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries());
     
     console.log("Formulario enviado:", data);
-    
-    // Mostrar mensaje de éxito (simulado)
     alert("¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.");
     
     // Resetear formulario y cerrar modal
@@ -81,5 +105,9 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     bootstrap.Modal.getInstance(document.getElementById('contactModal')).hide();
 });
 
-// Los modales ahora se manejan automáticamente por Bootstrap
-// No necesitamos el código personalizado anterior
+// Estilizar errores con clases de Bootstrap (opcional)
+document.querySelectorAll('.form-control').forEach(input => {
+    input.addEventListener('input', function() {
+        this.classList.toggle('is-invalid', !this.checkValidity());
+    });
+});
