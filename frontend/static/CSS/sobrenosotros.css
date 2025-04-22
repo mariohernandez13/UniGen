@@ -248,3 +248,19 @@ footer {
         text-align: left;
     }
 }
+
+/* Estilo para logo en header */
+.title-with-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.team-logo {
+    height: 80px;
+    width: auto;
+}
+
+
