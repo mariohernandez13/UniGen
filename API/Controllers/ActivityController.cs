@@ -85,7 +85,7 @@ public class ActivityController : ControllerBase
             fecha = actividadDTO.Fecha,
             hora = actividadDTO.Hora,
             lugar = actividadDTO.Lugar,
-            duracion = actividadDTO.Duracion,
+            duracion = actividadDTO.Duracion
             //organizador = actividadDTO.IdOrganizador
             // foto = actividadDTO.Foto
         };
