@@ -256,37 +256,47 @@
 
 
         <!-- Apartado de Mis Actividades -->
-        <div class="mt-4">
-            <h2 class="mb-4 text-center"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
+        <div class="container mt-5">
+            <!-- Mensaje de bienvenida -->
+            <div class="text-center mb-5">
+                <h1 class="display-4">¡Bienvenido, {{ usuario.username }}!</h1>
+                <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo que UniGen tiene para ofrecerte.</p>
+            </div>
+        
+            <!-- Título de la sección -->
+            <div class="mt-4">
+                <h2 class="mb-4"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
+            </div>
+        
             {% if usuario.actividades|length == 0 %}
-                <div class="text-center p-4 bg-light rounded shadow-sm">
-                    <p class="text-muted mb-0">No tienes actividades inscritas actualmente.</p>
-                    <p class="text-muted">¡Explora las actividades disponibles y comienza a participar!</p>
-                    <a href="dashboard" class="btn btn-primary mt-3"><i class="bi bi-search me-2"></i>Explorar Actividades</a>
-                </div>
-            {% else %}
+                <p class="text-muted">No tienes actividades inscritas actualmente. ¡Explora las actividades disponibles y comienza a participar!</p>
+            {%else%}
                 <div class="row">
                     {% for actividad in usuario.actividades %}
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body">
-                                <h5 class="card-title text-primary">{{ actividad.nombre }}</h5>
-                                <p class="card-text text-muted">{{ actividad.descripcion }}</p>
-                                <ul class="list-unstyled mb-3">
-                                    <li><strong>Fecha:</strong> {{ actividad.fecha }}</li>
-                                    <li><strong>Hora:</strong> {{ actividad.hora }}</li>
-                                    <li><strong>Lugar:</strong> {{ actividad.lugar }}</li>
-                                    <li><strong>Duración:</strong> {{ actividad.duracion }}</li>
-                                </ul>
-                                <a href="#" class="btn btn-outline-primary btn-sm"><i class="bi bi-info-circle me-1"></i>Más Información</a>
+                        <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
+                            <div class="card" style="width: 18rem;">
+                                <div class="image-container position-relative">
+                                    <img class="card-img" src="..">
+                                    <div class="descripcion text-center">{{ actividad.descripcion }}</div>
+                                    <div class="overlay">
+                                        <div class="title-bg">
+                                            <h5 class="card-title">{{ actividad.nombre }}</h5>
+                                        </div>
+                                    </div>´
+                                </div>
+                                <div class="card-body small">
+                                    <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
+                                    <p class="mb-1"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
+                                    <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
+                                    <p class="mb-3"><strong>👤 Organizador: </strong> </p>
+                                    <iframe class="mapa mb-3"></iframe>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {% endfor %}
+                    {%endfor%}
                 </div>
             {% endif %}
         </div>
-    </div>
 
 
     <!-- Modal de Contacto - Ahora usando Bootstrap -->
