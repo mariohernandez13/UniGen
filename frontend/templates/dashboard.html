@@ -59,6 +59,7 @@
         <form class="form" action="{{ url_for('crear_actividad') }}" method="POST">
             <p class="title">Crear Actividad</p>
             <p class="message">Crea tu actividad aquí mismo!</p>
+            <input type="hidden" name="IdOrganizador" value="{{ usuario.idusuario }}">
             <label>
                 <input required="" placeholder="" type="text" class="input" name="nombre">
                 <span>Nombre de la actividad</span>
@@ -68,13 +69,8 @@
                 <input required="" placeholder="" type="text" class="input" name="descripcion">
                 <span>Descripción</span>
             </label>
-            <!-- <label>
-                <input required="" placeholder="" type="text" class="input" name="tipo">
-                <span>Tipo</span>
-            </label> -->
             <label>
                 <select required class="input" name="tipo">
-                    <!-- <option value="" disabled selected></option> -->
                     <option value="" disabled selected style="display: none;"></option>
                     <option value="" disabled>Selecciona un tipo</option>
                     <option value="Ocio">Ocio</option>
