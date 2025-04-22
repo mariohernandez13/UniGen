@@ -186,10 +186,12 @@
                     <div class="card shadow-sm h-100">
                         <img src="../static/IMAGES/noticia4.jpg" class="card-img-top" alt="Noticia 4">
                         <div class="card-body">
-                            <h5 class="card-title">Título de la Noticia 4</h5>
-                            <p class="card-text text-muted">Breve descripción de la noticia 4. No te pierdas las últimas
-                                actualizaciones.</p>
-                            <a href="#" target="_blank" class="btn btn-primary btn-sm">Leer más</a>
+                            <h5 class="card-title">La brecha digital: Qué es y cómo reducirla</h5>
+                            <p class="card-text text-muted">Explora cómo la brecha digital afecta a las comunidades y
+                                descubre estrategias clave para reducirla, fomentando la inclusión tecnológica y el
+                                acceso equitativo a los recursos digitales.</p>
+                            <a href="https://www.epitech-it.es/brecha-digital/" target="_blank"
+                                class="btn btn-primary btn-sm">Leer más</a>
                         </div>
                     </div>
                 </div>
@@ -198,10 +200,12 @@
                     <div class="card shadow-sm h-100">
                         <img src="../static/IMAGES/noticia5.jpg" class="card-img-top" alt="Noticia 5">
                         <div class="card-body">
-                            <h5 class="card-title">Título de la Noticia 5</h5>
-                            <p class="card-text text-muted">Breve descripción de la noticia 5. Mantente al día con las
-                                novedades más recientes.</p>
-                            <a href="#" target="_blank" class="btn btn-primary btn-sm">Leer más</a>
+                            <h5 class="card-title">Tiempo libre con Mayores</h5>
+                            <p class="card-text text-muted">Descubre actividades diseñadas para fomentar el bienestar y
+                                la inclusión de personas mayores y dependientes, promoviendo su participación activa y
+                                mejorando su calidad de vida.</p>
+                            <a href="https://www.bienestaris.com/blog/ocio-para-mayores-y-dependientes/" target="_blank"
+                                class="btn btn-primary btn-sm">Leer más</a>
                         </div>
                     </div>
                 </div>
@@ -210,10 +214,11 @@
                     <div class="card shadow-sm h-100">
                         <img src="../static/IMAGES/noticia6.jpg" class="card-img-top" alt="Noticia 6">
                         <div class="card-body">
-                            <h5 class="card-title">Título de la Noticia 6</h5>
-                            <p class="card-text text-muted">Breve descripción de la noticia 6. Descubre lo que está
-                                pasando en el mundo.</p>
-                            <a href="#" target="_blank" class="btn btn-primary btn-sm">Leer más</a>
+                            <h5 class="card-title">No hay edades, sino experiencias</h5>
+                            <p class="card-text text-muted">Descubre actividades para colaborar entre generaciones,
+                                fomentando interacción y compartiendo experiencias</p>
+                            <a href="https://www.hablandoenplata.es/experiencia/actividades-intergeneracionales-que-han-vivido-mayores-residencia-ninos-primaria-hay-edades-sino-experiencias_202406076662f7c5fc83ee0001daf162.html"
+                                target="_blank" class="btn btn-primary btn-sm">Leer más</a>
                         </div>
                     </div>
                 </div>
@@ -284,14 +289,15 @@
             <!-- Mensaje de bienvenida -->
             <div class="text-center mb-5">
                 <h1 class="display-4">¡Bienvenido, {{ usuario.username }}!</h1>
-                <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo que UniGen tiene para ofrecerte.</p>
+                <p class="lead">Nos alegra tenerte aquí. Explora tus actividades, acumula puntos y disfruta de todo lo
+                    que UniGen tiene para ofrecerte.</p>
             </div>
-        
+
             <!-- Título de la sección -->
             <div class="mt-4">
                 <h2 class="mb-4"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
             </div>
-        
+
             {% if usuario.actividades|length == 0 %}
             <div class="text-center p-4 bg-light rounded shadow-sm">
                 <p class="text-muted mb-0">No tienes actividades inscritas actualmente.</p>
