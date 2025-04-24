@@ -25,6 +25,7 @@ function Girar(event) {
         imagen.style.display = "none";
         hora_lugar[0].style.display = "none";
         hora_lugar[1].style.display = "none";
+        hora_lugar[2].style.display = "none";
         organizador.style.display = "none";
         apuntarse.style.display = "none";
         event.target.style.transform = "rotateY(180deg)";
@@ -42,6 +43,7 @@ function Girar(event) {
         imagen.style.display = "block";
         hora_lugar[0].style.display = "block";
         hora_lugar[1].style.display = "block";
+        hora_lugar[2].style.display = "block";
         organizador.style.display = "block";
         apuntarse.style.display = "block";
         event.target.style.transform = "rotateY(0deg)";

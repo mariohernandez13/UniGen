@@ -299,71 +299,33 @@
             {% else %}
             <div class="row">
                 {% for actividad in usuario.actividades %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title text-primary">{{ actividad.nombre }}</h5>
-                            <p class="card-text text-muted">{{ actividad.descripcion }}</p>
-                            <ul class="list-unstyled mb-3">
-                                <li><strong>Fecha:</strong> {{ actividad.fecha }}</li>
-                                <li><strong>Hora:</strong> {{ actividad.hora }}</li>
-                                <li><strong>Lugar:</strong> {{ actividad.lugar }}</li>
-                                <li><strong>Duración:</strong> {{ actividad.duracion }}</li>
-                            </ul>
-                            <a href="#" class="btn btn-outline-primary btn-sm mas_informacion"><i class="bi bi-info-circle me-1"></i>Más
-                                Información</a>
+                <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
+                    <div class="card" style="width: 18rem";>
+                        <div class="image-container position-relative">
+                            <img class="card-img" src="..">
+                            <div class="descripcion text-center">{{ actividad.descripcion }}</div>
+                            <div class="overlay">
+                                <div class="title-bg">
+                                    <h5 class="card-title">{{ actividad.nombre }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body small">
+                            <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
+                            <p class="mb-1"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
+                            <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
+                            <p class="mb-3"><strong>👤 Organizador: </strong> </p>
+                            <iframe class="mapa mb-3"></iframe>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary desapuntarse-btn" id="Desapuntarse">Desapuntarse</button>
+                                <button class="btn btn-primary mas_informacion">Ver Detalles</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
-        </div>
-    </div>
-
-
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            {% for actividad in usuario.actividades %}
-            <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="image-container position-relative">
-                        <img class="card-img" src="..">
-                        <div class="descripcion text-center">{{ actividad.descripcion }}</div>
-                        <div class="overlay">
-                            <div class="title-bg">
-                                <h5 class="card-title">{{ actividad.nombre }}</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body small">
-                        <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
-                        <p class="mb-1"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
-                        <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
-                        <p class="mb-3"><strong>👤 Organizador: </strong> </p>
-                        <iframe class="mapa mb-3"></iframe>
-                        <div class="d-flex gap-2">
-                            {% if actividad.idactividad in inscripciones %}
-                            <!-- Botón para desapuntarse -->
-                            <form action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
-                                method="POST">
-                                <input type="hidden" name="idusuario" value="{{ usuario.idusuario }}">
-                                <button type="submit" class="btn btn-danger">Desapuntarse</button>
-                            </form>
-                            {% else %}
-                            <!-- Botón para inscribirse -->
-                            <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}"
-                                method="POST">
-                                <input type="hidden" name="idusuario" value="{{ usuario.idusuario }}">
-                                <button type="submit" class="btn btn-primary">Inscribirse</button>
-                            </form>
-                            {% endif %}
-                            <button class="btn btn-primary">Ver Detalles</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
         </div>
     </div>
 
