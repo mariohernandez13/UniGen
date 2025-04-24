@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', function(){
         let carta = event.target.closest(".card");
         let titulo = carta.querySelector(".title-bg");
         let descripcion = carta.querySelector(".descripcion");
-        let mapa = carta.querySelector(".mapa");
         let imagen = carta.querySelector(".card-img");
         let hora_lugar = carta.querySelectorAll(".mb-1");
         let organizador = carta.querySelector(".mb-3");
+        let mapa = carta.querySelector(".mapa");
         let apuntarse = carta.querySelector(".apuntarse-btn");
         let girada = carta.classList.contains("carta_girada");
         if (!girada) {
@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function(){
             imagen.style.display = "none";
             hora_lugar[0].style.display = "none";
             hora_lugar[1].style.display = "none";
+            hora_lugar[2].style.display = "none";
             organizador.style.display = "none";
             apuntarse.style.display = "none";
             event.target.style.transform = "rotateY(180deg)";
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function(){
             imagen.style.display = "block";
             hora_lugar[0].style.display = "block";
             hora_lugar[1].style.display = "block";
+            hora_lugar[2].style.display = "block";
             organizador.style.display = "block";
             apuntarse.style.display = "block";
             event.target.style.transform = "rotateY(0deg)";
