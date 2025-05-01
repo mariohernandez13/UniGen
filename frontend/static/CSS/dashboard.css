@@ -250,3 +250,41 @@
         opacity: 0;
     }
 }
+
+/* Ocultar form de crear actividades */
+ 
+/* Ocultar el checkbox */
+.toggle-checkbox {
+    display: none;
+}
+
+/* Contenedor del formulario con altura inicial */
+.form-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+    padding: 0;
+}
+
+/* Mostrar el formulario cuando el checkbox está marcado */
+.toggle-checkbox:checked ~ .form-container {
+    max-height: 1000px; /* Un valor suficientemente grande para acomodar el contenido */
+    padding: 1rem 0; /* Agregar espacio cuando se despliega */
+}
+
+/* Estilo del label que actúa como botón */
+.toggle-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Cambiar el ícono de la flecha según el estado del checkbox */
+.toggle-checkbox:checked + .d-flex .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
