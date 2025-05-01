@@ -27,18 +27,6 @@ public class ActivityController : ControllerBase
     public async Task<IActionResult> GetActividades()
     {
         var actividades = await _context.actividad.ToListAsync();
-        // .Select(a => new ActividadDTO
-        // {
-        //     Nombre = a.nombre,
-        //     Descripcion = a.descripcion,
-        //     Tipo = a.tipo,
-        //     Fecha = a.fecha,
-        //     Hora = a.hora,
-        //     Lugar = a.lugar,
-        //     Duracion = a.duracion,
-        //     //IdOrganizador = a.organizador,
-        // })
-        // .ToListAsync();
 
         return Ok(actividades);
     }
@@ -70,11 +58,17 @@ public class ActivityController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(new { message = "Datos inválidos", errors = ModelState });
 
-        // Verificar que el usuario organizador existe
-        // var usuario = await _context.usuario.FindAsync(actividadDTO.IdOrganizador);
-        // if (usuario == null)
-        //     return NotFound(new { message = "Usuario organizador no encontrado" });
-
+        // Asignar una foto dependiendo del tipo de actividad
+        string fotoAsignada = actividadDTO.Tipo.ToLower() switch
+        {
+            "ocio" => "ocio.jpg",
+            "deporte" => "deporte.jpg",
+            "curso" => "curso.jpg",
+            "taller" => "taller.jpg",
+            "charla" => "charla.jpg",
+            "ayuda" => "ayuda.jpg",
+            _ => "default.jpg"
+        };
 
         // Convertir el DTO en una entidad Actividad
         var actividad = new Actividad
@@ -85,9 +79,8 @@ public class ActivityController : ControllerBase
             fecha = actividadDTO.Fecha,
             hora = actividadDTO.Hora,
             lugar = actividadDTO.Lugar,
-            duracion = actividadDTO.Duracion
-            //organizador = actividadDTO.IdOrganizador
-            // foto = actividadDTO.Foto
+            duracion = actividadDTO.Duracion,
+            foto = fotoAsignada
         };
 
 

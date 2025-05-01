@@ -13,6 +13,7 @@ namespace API.Models
         public TimeSpan hora { get; set; }
         public string lugar { get; set; }
         public int duracion { get; set; }
+        public string foto { get; set; }
 
         // Propiedad de navegación
         public ICollection<Participacion> Participaciones { get; set; }

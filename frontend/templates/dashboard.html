@@ -118,7 +118,8 @@
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
                 <div class="card" style="width: 18rem;">
                     <div class="image-container position-relative">
-                        <img class="card-img" src="..">
+                        <img class="card-img" src="{{ url_for('static', filename='IMAGES/' + actividad.foto) }}"
+                            alt="Imagen de la actividad">
                         <div class="descripcion text-center">{{ actividad.descripcion }}</div>
                         <div class="overlay">
                             <div class="title-bg">
@@ -127,10 +128,10 @@
                         </div>
                     </div>
                     <div class="card-body small">
-                        <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
                         <p class="mb-1"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
+                        <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
                         <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
-                        <p class="mb-3"><strong>👤 Organizador: </strong> </p>
+                        <p class="mb-3"><strong>⌛ Fecha:</strong> {{ actividad.fecha }} </p>
                         <iframe class="mapa mb-3"></iframe>
                         <div class="d-flex gap-2">
                             {% if actividad.idactividad in inscripciones %}
@@ -157,34 +158,6 @@
         </div>
     </div>
 
-
-    <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
-        <div class="card" style="width: 18rem;">
-            <div class="image-container">
-                <img src="../static/IMAGES/actividad_cine.jpg" class="card-img" alt="...">
-                <div id="descripcion_cocina" class="descripcion text-center">Disfruta del cine como punto de
-                    encuentro entre jóvenes y mayores. Veremos juntos una película y compartiremos opiniones,
-                    recuerdos y curiosidades. Después, crearemos un pequeño vídeo.</div>
-                <div class="overlay">
-                    <div class="title-bg">
-                        <h5 class="card-title">Cine entre Generaciones</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body small">
-                <p class="mb-1"><strong>🕒 Hora:</strong> 18:00</p>
-                <p class="mb-1"><strong>📍 Lugar:</strong> Civicán (Pamplona)</p>
-                <p class="mb-3"><strong>👤 Organiza:</strong> Ana González</p>
-                <iframe class="mapa mb-3"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2926.8228471061047!2d-1.6579108240443874!3d42.813229506351604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5092f56145b21f%3A0x6d92a0c90f1f3ded!2sCIVICAN%20-%20espacio%20de%20pensamiento%20y%20cultura%20compartida%20de%20Fundaci%C3%B3n%20Caja%20Navarra!5e0!3m2!1ses!2ses!4v1745230538454!5m2!1ses!2ses"></iframe>
-                <div class="d-flex gap-2">
-                    <a href="#" class="btn btn-primary apuntarse-btn" id="Apuntarse">Apuntarse</a>
-                    <a href="#" class="btn btn-info text-white mas_informacion" id="mas_informacion">Más
-                        información</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
