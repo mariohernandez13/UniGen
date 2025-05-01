@@ -22,7 +22,14 @@ CREATE TABLE actividad (
     lugar VARCHAR(255),
     tipo VARCHAR(100),
     descripcion TEXT,
-    duracion INT
+    duracion INT,
+    foto VARCHAR(255)
+);
+
+CREATE TABLE tipo (
+    idtipo INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    imagen VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE participacion (

@@ -9,8 +9,8 @@ namespace API.Models.DTOs
         public TimeSpan Hora { get; set; }
         public string Lugar { get; set; }
         public int Duracion { get; set; }
+        //public string Foto { get; set; }
         // public string Organizador { get; set; }
-        // public string Foto { get; set; }
 
     }
 }

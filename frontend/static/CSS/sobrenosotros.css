@@ -263,4 +263,16 @@ footer {
     width: auto;
 }
 
+.team-photo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.team-photo {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+}
+
 
