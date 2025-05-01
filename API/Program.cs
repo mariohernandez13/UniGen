@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -38,6 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API UniGen v1"));
 }
 
+
 //  IMPORTANTE: CORS va antes de Authorization o cualquier otro middleware
 app.UseCors("AllowFrontend");
 
@@ -45,8 +47,17 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    var flaskUrl = "http://localhost:5000"; // URL del frontend en Flask
+    Process.Start(new ProcessStartInfo
+    {
+        FileName = flaskUrl,
+        UseShellExecute = true //  abre el navegador predeterminado
+    });
+});
 
+app.Run();
 
 
 
