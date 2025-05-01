@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function(){
         let organizador = carta.querySelector(".mb-3");
         let mapa = carta.querySelector(".mapa");
         let apuntarse = carta.querySelector(".apuntarse-btn");
+        let desapuntarse = carta.querySelector(".btn-danger");
         let girada = carta.classList.contains("carta_girada");
         if (!girada) {
             carta.style.transform = "rotateY(180deg)";
@@ -33,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function(){
             hora_lugar[1].style.display = "none";
             hora_lugar[2].style.display = "none";
             organizador.style.display = "none";
-            apuntarse.style.display = "none";
+            if(apuntarse){apuntarse.style.display = "none";}
+            if(desapuntarse){desapuntarse.style.display = "none";}
             event.target.style.transform = "rotateY(180deg)";
             event.target.textContent = "Volver";
             carta.classList.add("carta_girada");
@@ -51,9 +53,10 @@ document.addEventListener('DOMContentLoaded', function(){
             hora_lugar[1].style.display = "block";
             hora_lugar[2].style.display = "block";
             organizador.style.display = "block";
-            apuntarse.style.display = "block";
+            if(apuntarse){apuntarse.style.display = "block";}
+            if(desapuntarse){desapuntarse.style.display = "block";}
             event.target.style.transform = "rotateY(0deg)";
-            event.target.textContent = "Más información";
+            event.target.textContent = "Ver Detalles";
             carta.classList.remove("carta_girada");
         }
     }
@@ -61,24 +64,6 @@ document.addEventListener('DOMContentLoaded', function(){
     for (i = 0; i < botones.length; i++) {
         botones[i].addEventListener("click", Girar);
     }
-
-    // Aplica solo a los botones de apuntarse (no al de más información)
-    document.querySelectorAll('.apuntarse-btn').forEach(boton => {
-        boton.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const card = this.closest('.card');
-            const nombreActividad = card.querySelector('.card-title').textContent;
-
-            actividadSeleccionada = nombreActividad;
-            botonSeleccionado = this;
-
-            document.getElementById('nombreActividadModal').textContent = nombreActividad;
-
-            const modal = new bootstrap.Modal(document.getElementById('confirmarModal'));
-            modal.show();
-        });
-    });
 
     // Al confirmar el modal
     document.getElementById('confirmarBtn').addEventListener('click', function () {
