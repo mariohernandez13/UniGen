@@ -268,11 +268,24 @@ footer {
     margin-bottom: 20px;
 }
 
+.team-photo-container .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espaciado entre las imágenes */
+}
+
 .team-photo {
-    max-width: 100%;
-    height: auto;
+    width: 280px; /* Ancho uniforme */
+    height: 280px; /* Alto uniforme */
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
     border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+    transition: transform 0.3s ease; /* Efecto de hover */
+}
+
+.team-photo:hover {
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el cursor */
 }
 
 
