@@ -48,6 +48,29 @@ public class ActivityController : ControllerBase
     }
 
     /// <summary>
+    /// Obtener participantes por id de actividad.
+    /// </summary>
+    /// <param name="idActividad">ID de la actividad.</param>
+    /// <returns>Lista de participantes.</returns>
+    [HttpGet("{idActividad}/participantes")]
+    public async Task<IActionResult> ObtenerParticipantes(int idActividad)
+    {
+        var participantes = await _context.participacion
+            .Where(p => p.idactividad == idActividad)
+            .Select(p => new
+            {
+                p.idusuario,
+                Nombre = _context.usuario
+                    .Where(u => u.idusuario == p.idusuario)
+                    .Select(u => u.username)
+                    .FirstOrDefault()
+            })
+            .ToListAsync();
+        
+        return Ok(participantes);
+    }
+
+    /// <summary>
     /// Obtener una actividad por ID.
     /// </summary>
     /// <param name="actividad"></param>

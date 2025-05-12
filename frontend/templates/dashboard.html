@@ -132,7 +132,39 @@
                         <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
                         <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
                         <p class="mb-3"><strong>⌛ Fecha:</strong> {{ actividad.fecha }} </p>
-                        
+                        <p class="mb-3"><strong>👥 Participantes:</strong>
+                            {% if actividad.num_participantes > 0 %}
+                            {{ actividad.num_participantes }} inscritos
+                            {% else %}
+                            No hay participantes aún.
+                            {% endif %}
+                        </p>
+
+                        <!-- Tabla de participantes -->
+                        {% if actividad.num_participantes > 0 %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Nombre</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for participante in actividad.participantes %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td> <!-- loop.index es 1-based (1, 2, 3...) -->
+                                        <td>{{ participante }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                        <!-- Fin de la tabla de participantes -->
+
+
+                        <iframe class="mapa mb-3"></iframe>
                         <div class="d-flex gap-2">
                             {% if actividad.idactividad in inscripciones %}
                             <!-- Botón para desapuntarse -->

@@ -67,6 +67,19 @@ def dashboard():
     response_inscripciones = requests.get(f"{API_BASE_URL}/activity/user/{usuario_id}/subscriptions")
     inscripciones = response_inscripciones.json() if response_inscripciones.status_code == 200 else []
 
+    # Obtener los participantes de todas las actividades
+    for actividad in actividades:
+        participantes_response = requests.get(f"{API_BASE_URL}/activity/{actividad['idactividad']}/participantes")
+        participantes = participantes_response.json() if participantes_response.status_code == 200 else []
+
+        # Contador de participantes
+        actividad["num_participantes"] = len(participantes)
+
+        # Crear un array con solo los nombres de los usuarios
+        nombres_participantes = [participante["nombre"] for participante in participantes]
+        actividad["participantes"] = nombres_participantes  # Asignar solo los nombres
+        print(f"Actividad {actividad['idactividad']} participantes: {actividad['participantes']}")
+
     return render_template("dashboard.html", actividades=actividades, inscripciones=inscripciones, usuario=usuario)
 
 

@@ -15,7 +15,7 @@ namespace API.Models
         public int duracion { get; set; }
         public string foto { get; set; }
 
-        // Propiedad de navegación
+        // Relación con Participaciones
         public ICollection<Participacion> Participaciones { get; set; }
     }
 }

@@ -14,18 +14,18 @@ INSERT INTO usuario (username, email, password, telefono, pais, edad, foto) VALU
 
 
 -- Insertar actividades de prueba
-INSERT INTO actividad (nombre,fecha, hora, lugar, tipo, descripcion, duracion)
+INSERT INTO actividad (nombre, fecha, hora, lugar, tipo, descripcion, duracion)
 VALUES
-('Clase Magistral de Inteligencia Artificial', '2025-07-10', '10:00:00', 'Sala 102', 'charla', 'Explora los fundamentos y aplicaciones de la inteligencia artificial.', 150),
-('Taller de Robótica', '2025-07-12', '14:00:00', 'Laboratorio 3', 'taller', 'Aprende a construir y programar robots con Arduino.', 120),
-('Cine Científico', '2025-07-15', '18:00:00', 'Sala Audiovisual', 'ocio', 'Proyección de documental sobre ciencia y tecnología.', 90),
-('Hackatón Universitaria', '2025-07-20', '08:00:00', 'Sala Multiusos', 'ocio', 'Desafío de programación intensivo de 12 horas.', 720),
-('Sesión de Meditación Guiada', '2025-07-22', '16:30:00', 'Sala Zen', 'ayuda', 'Espacio de relajación y mindfulness para estudiantes.', 60),
-('Torneo de Videojuegos', '2025-07-25', '13:00:00', 'Sala de Juegos', 'ocio', 'Competencia de FIFA, Smash Bros y más.', 180),
-('Feria de Proyectos', '2025-07-28', '10:00:00', 'Pasillos de Ingeniería', 'taller', 'Estudiantes presentan sus trabajos finales.', 240),
-('Charla sobre Energías Renovables', '2025-07-30', '11:00:00', 'Auditorio B', 'charla', 'Análisis del futuro de la energía sostenible.', 120),
-('Taller de Diseño 3D', '2025-08-02', '15:00:00', 'Laboratorio CAD', 'taller', 'Aprende a modelar en 3D con Blender.', 150),
-('Rally de Conocimientos', '2025-08-05', '09:00:00', 'Explanada Central', 'ocio', 'Actividad lúdica de preguntas y desafíos.', 180),
+('Clase Magistral de Inteligencia Artificial', '2025-07-10', '10:00:00', 'Sala 102', 'charla', 'Explora los fundamentos y aplicaciones de la inteligencia artificial. Aprende sobre redes neuronales, aprendizaje automático y su impacto en la sociedad.', 150),
+('Taller de Robótica', '2025-07-12', '14:00:00', 'Laboratorio 3', 'taller', 'Aprende a construir y programar robots con Arduino. Diseña circuitos básicos y programa movimientos autónomos.', 120),
+('Cine Científico', '2025-07-15', '18:00:00', 'Sala Audiovisual', 'ocio', 'Proyección de documental sobre ciencia y tecnología. Reflexiona sobre los avances científicos y su influencia en el mundo moderno.', 90),
+('Hackatón Universitaria', '2025-07-20', '08:00:00', 'Sala Multiusos', 'ocio', 'Desafío de programación intensivo de 12 horas. Trabaja en equipo para resolver problemas reales y crea soluciones innovadoras.', 720),
+('Sesión de Meditación Guiada', '2025-07-22', '16:30:00', 'Sala Zen', 'ayuda', 'Espacio de relajación y mindfulness para estudiantes. Aprende técnicas de respiración y meditación para reducir el estrés.', 60),
+('Torneo de Videojuegos', '2025-07-25', '13:00:00', 'Sala de Juegos', 'ocio', 'Competencia de FIFA, Smash Bros y más. Demuestra tus habilidades y compite por premios en un ambiente divertido.', 180),
+('Feria de Proyectos', '2025-07-28', '10:00:00', 'Pasillos de Ingeniería', 'taller', 'Estudiantes presentan sus trabajos finales. Descubre proyectos innovadores y colabora con otros estudiantes.', 240),
+('Charla sobre Energías Renovables', '2025-07-30', '11:00:00', 'Auditorio B', 'charla', 'Análisis del futuro de la energía sostenible. Aprende sobre paneles solares, energía eólica y su impacto ambiental.', 120),
+('Taller de Diseño 3D', '2025-08-02', '15:00:00', 'Laboratorio CAD', 'taller', 'Aprende a modelar en 3D con Blender. Crea objetos y escenas realistas desde cero.', 150),
+('Rally de Conocimientos', '2025-08-05', '09:00:00', 'Explanada Central', 'ocio', 'Actividad lúdica de preguntas y desafíos. Pon a prueba tus conocimientos en diversas áreas académicas.', 180),
 ('Exposición de Arte Digital', '2025-08-07', '13:00:00', 'Galería Campus', 'ocio', 'Muestra de arte creado por estudiantes con herramientas digitales.', 240),
 ('Orientación Vocacional', '2025-10-12', '10:30:00', 'Sala de Orientación', 'ayuda', 'Ayuda a los estudiantes a elegir su camino profesional.', 120),
 ('Taller de Ciberseguridad', '2025-08-12', '12:30:00', 'Aula TIC', 'taller', 'Conceptos básicos para protegerse en internet.', 120),
