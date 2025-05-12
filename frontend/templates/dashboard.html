@@ -184,6 +184,69 @@
     <!-- Modal de Perfil -->
     {% include 'modalUsuario.html' %}
 
+    <footer class="bg-dark text-center text-lg-start mt-5 text-white">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0 d-flex align-items-center">
+                    <img src="../static/IMAGES/logo_unigen.svg" alt="UniGen Logo" width="50px" height="auto" class="me-3"
+                        style="filter: invert(1);">
+                    <div>
+                        <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">UniGen</h5>
+                        <p class="fst-italic">
+                            UniGen es una plataforma diseñada para conectar personas y fomentar el aprendizaje a través de
+                            actividades únicas.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Enlaces</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li><a href="inicio" class="text-white text-decoration-none">Inicio</a></li>
+                        <li><a href="dashboard" class="text-white text-decoration-none">Actividades</a></li>
+                        <li><a href="tienda" class="text-white text-decoration-none">Tienda</a></li>
+                        <li><a href="sobrenosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Síguenos</h5>
+                    <ul class="list-unstyled d-flex justify-content-start">
+                        <li>
+                            <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                                <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                                <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/unigen_ufv/" class="text-white me-3"
+                                style="transition: transform 0.3s;">
+                                <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white" style="transition: transform 0.3s;">
+                                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-white ms-3" style="transition: transform 0.3s;">
+                                <i class="bi bi-youtube" style="font-size: 1.5rem;"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.5);">
+        <div class="text-center p-3 text-white">
+            <p>&copy; 2025 ROAR SL - Ingeniería Informática UFV</p>
+            <p>Proyecto UniGen</p>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ url_for('static', filename='../static/JS/dashboard.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
