@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function(){
         let imagen = carta.querySelector(".card-img");
         let hora_lugar = carta.querySelectorAll(".mb-1");
         let organizador = carta.querySelector(".mb-3");
-        let mapa = carta.querySelector(".mapa");
         let apuntarse = carta.querySelector(".apuntarse-btn");
         let desapuntarse = carta.querySelector(".btn-danger");
         let girada = carta.classList.contains("carta_girada");
@@ -27,8 +26,6 @@ document.addEventListener('DOMContentLoaded', function(){
             titulo.style.display = "none";
             descripcion.style.display = "block";
             descripcion.style.transform = "rotateY(180deg)";
-            mapa.style.display = "block";
-            mapa.style.transform = "rotateY(180deg)";
             imagen.style.display = "none";
             hora_lugar[0].style.display = "none";
             hora_lugar[1].style.display = "none";
@@ -38,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function(){
             if(desapuntarse){desapuntarse.style.display = "none";}
             event.target.style.transform = "rotateY(180deg)";
             event.target.textContent = "Volver";
+            event.target.style.marginTop = "100px";
             carta.classList.add("carta_girada");
         }
         else {
@@ -46,8 +44,6 @@ document.addEventListener('DOMContentLoaded', function(){
             titulo.style.display = "block";
             descripcion.style.display = "none";
             descripcion.style.transform = "rotateY(0deg)";
-            mapa.style.display = "none";
-            mapa.style.transform = "rotateY(0deg)";
             imagen.style.display = "block";
             hora_lugar[0].style.display = "block";
             hora_lugar[1].style.display = "block";
@@ -57,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function(){
             if(desapuntarse){desapuntarse.style.display = "block";}
             event.target.style.transform = "rotateY(0deg)";
             event.target.textContent = "Ver Detalles";
+            event.target.style.marginTop = "0px";
             carta.classList.remove("carta_girada");
         }
     }
