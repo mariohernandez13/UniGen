@@ -1,5 +1,15 @@
 .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Hace que todas las tarjetas tengan la misma altura */
     transition: 0.5s;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye contenido verticalmente */
+    flex-grow: 1;
 }
 
 .card:hover {
@@ -119,6 +129,10 @@
 .apuntarse-btn[aria-disabled="true"] {
     opacity: 1;
     cursor: default;
+}
+
+.table-responsive {
+    display: none;
 }
 
 .bloqueado {
