@@ -312,8 +312,8 @@
             <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
                 <div class="card" style="width: 18rem" ;>
                     <div class="image-container position-relative">
-                        <img class="card-img" src="{{ url_for('static', filename='IMAGES/' + actividad.foto) }}" alt="Imagen de la actividad"
-                            style="width: 100%; height: 200px; object-fit: cover;">
+                        <img class="card-img" src="{{ url_for('static', filename='IMAGES/' + actividad.foto) }}"
+                            alt="Imagen de la actividad" style="width: 100%; height: 200px; object-fit: cover;">
                         <div class="descripcion text-center">{{ actividad.descripcion }}</div>
                         <div class="overlay">
                             <div class="title-bg">
@@ -326,10 +326,13 @@
                         <p class="mb-1"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
                         <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
                         <p class="mb-3"><strong>⌛ Fecha:</strong> {{ actividad.fecha }} </p>
-                        <iframe class="mapa mb-3"></iframe>
                         <div class="d-flex gap-2">
-                            <button type="submit" class="btn btn-primary desapuntarse-btn"
-                                id="Desapuntarse">Desapuntarse</button>
+                            <!-- Botón para desapuntarse -->
+                            <form action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
+                                method="POST">
+                                <input type="hidden" name="idusuario" value="{{ usuario.idusuario }}">
+                                <button type="submit" class="btn btn-danger">Desapuntarse</button>
+                            </form>
                             <button class="btn btn-primary mas_informacion">Ver Detalles</button>
                         </div>
                     </div>

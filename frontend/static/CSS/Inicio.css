@@ -1,19 +1,21 @@
 .card {
-  transition: 0.5s;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  height: 100%;
+  /* Hace que todas las tarjetas tengan la misma altura */
+  transition: 0.5s;
 }
 
 .card-body {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /* Distribuye contenido verticalmente */
+  flex-grow: 1;
 }
 
 .card-body .btn {
-  margin-top: auto; 
+  margin-top: auto;
 }
 
 .card:hover {
@@ -345,9 +347,11 @@
 }
 
 .contact-card img {
-  width: 80px; /* Ajusta el tamaño de la imagen */
+  width: 80px;
+  /* Ajusta el tamaño de la imagen */
   height: 80px;
-  border-radius: 50%; /* Hace que la imagen sea circular */
+  border-radius: 50%;
+  /* Hace que la imagen sea circular */
   margin-bottom: 1rem;
   object-fit: cover;
 }
@@ -370,24 +374,29 @@
 }
 
 .carousel-caption {
-  background-color: rgba(0, 0, 0, 0.6); /* Fondo translúcido */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Fondo translúcido */
   padding: 1rem;
   border-radius: 10px;
   text-align: center;
-  max-width: 80%; /* Limita el ancho del texto */
-  margin: 0 auto; /* Centra el texto */
+  max-width: 80%;
+  /* Limita el ancho del texto */
+  margin: 0 auto;
+  /* Centra el texto */
 }
 
 .carousel-caption h5 {
   font-size: 1.8rem;
   font-weight: bold;
   color: #fff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Sombra para destacar el texto */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  /* Sombra para destacar el texto */
   margin-bottom: 0.5rem;
 }
 
 .carousel-caption p {
   font-size: 1.2rem;
   color: #ddd;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8); /* Sombra para destacar el texto */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  /* Sombra para destacar el texto */
 }
