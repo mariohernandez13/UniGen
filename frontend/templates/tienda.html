@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/navbar.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/tienda.css') }}">
+        
    
 
     </head>
@@ -25,9 +26,7 @@
     <!-- Modal de Contacto -->
     {% include 'modal_contacto.html' %}
 
-    <!-- Modal de Perfil -->
-    {% include 'modalUsuario.html' %}
-
+   
     <nav class="navbar navbar-expand-lg navbar-expand-md px-4">
         <a class="navbar-brand d-flex align-items-center" href="inicio">
             <img src="../static/IMAGES/logo_unigen.svg" width="50px" height="auto">
@@ -45,14 +44,15 @@
                 <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre nosotros</a>
                 <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i
                         class="fa-solid fa-paper-plane"></i> Contacto</a>
-                <a class="nav-link px-3" href="" id="link6" data-bs-toggle="modal" data-bs-target="#perfilModal"><i
+                  <a class="nav-link px-3" href="modal_Usuario" id="link6" ><i
                         class="fa-solid fa-user"></i> Mi perfil</a>
             </div>
             <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
                     class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
         </div>
     </nav>
-    <div class="tienda-container container my-5">
+
+    <div class="tienda-container container my-5" style="max-width: 1800px; font-size: 1.5rem;">
         <!-- Encabezado de la tienda -->
         <section class="tienda-header text-center mb-5">
             <h1 class="display-4 fw-bold tienda-title">Bienvenido a la Tienda UniGen</h1>
@@ -213,7 +213,7 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6">
                     <div class="card donacion-card h-100">
-                        <img src="../static/IMAGES/caridad1.png" class="card-img-top" alt="Caridad 1">
+                        <img src="../static/IMAGES/tienda/classroom.png" class="card-img-top" alt="Caridad 1">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Educación para Todos</h5>
                             <p class="card-text">Ayuda a niños a acceder a una educación de calidad. Tu donación se destina a becas y materiales escolares.</p>
@@ -223,7 +223,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card donacion-card h-100">
-                        <img src="../static/IMAGES/caridad2.png" class="card-img-top" alt="Caridad 2">
+                        <img src="../static/IMAGES/tienda/healthcare.png" class="card-img-top" alt="Caridad 2">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Salud y Bienestar</h5>
                             <p class="card-text">Contribuye a proyectos de salud y nutrición. Apoya campañas de vacunación y alimentación saludable.</p>
@@ -233,7 +233,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card donacion-card h-100">
-                        <img src="../static/IMAGES/caridad3.png" class="card-img-top" alt="Caridad 3">
+                        <img src="../static/IMAGES/tienda/footprint.png" class="card-img-top" alt="Caridad 3">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Protección Animal</h5>
                             <p class="card-text">Apoya refugios y rescates de animales. Tu ayuda permite alimentar, cuidar y buscar hogar a mascotas necesitadas.</p>
@@ -244,7 +244,7 @@
                 <!-- Donación adicional de prueba -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card donacion-card h-100">
-                        <img src="../static/IMAGES/caridad4.png" class="card-img-top" alt="Caridad 4">
+                        <img src="../static/IMAGES/tienda/save-the-planet.png" class="card-img-top" alt="Caridad 4">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Medio Ambiente</h5>
                             <p class="card-text">Contribuye a la reforestación y limpieza de espacios naturales. Ayuda a crear un mundo más verde para todos.</p>
@@ -256,76 +256,7 @@
         </section>
     </div>
 
-    <style>
-    .section-title i {
-        margin-right: 0.5rem;
-    }
-    .card {
-        border-radius: 1rem;
-    }
-    .card-img-top {
-        border-radius: 1rem 1rem 0 0;
-        background: #f8fafc;
-    }
-    .card .btn, .btn-xl {
-        transition: transform 0.2s, box-shadow 0.2s;
-        font-size: 1.5rem;
-        padding-top: 1.2rem;
-        padding-bottom: 1.2rem;
-    }
-    .card .btn:hover, .btn-xl:hover {
-        transform: translateY(-2px) scale(1.06);
-        box-shadow: 0 4px 16px rgba(0,0,0,0.14);
-    }
-    /* Ajuste para igualar altura de las tarjetas de ofertas y artículos */
-    .tienda-ofertas .card,
-    .tienda-articulos .card {
-        min-height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-    .tienda-ofertas .card-body,
-    .tienda-articulos .card-body {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .tienda-articulos .card-img-top {
-        width: 120px !important;
-        height: 120px !important;
-        object-fit: contain;
-        margin-bottom: 1rem;
-    }
-    .tienda-articulos .card-title {
-        font-size: 2rem;
-    }
-    .tienda-articulos .card-text {
-        font-size: 1.25rem;
-    }
-    @media (max-width: 1200px) {
-        .tienda-articulos .card,
-        .tienda-ofertas .card {
-            min-height: 540px;
-        }
-    }
-    @media (max-width: 992px) {
-        .tienda-articulos .card,
-        .tienda-ofertas .card {
-            min-height: 560px;
-        }
-    }
-    @media (max-width: 768px) {
-        .tienda-articulos .card,
-        .tienda-ofertas .card {
-            min-height: 480px;
-        }
-        .tienda-articulos .card-img-top {
-            width: 90px !important;
-            height: 90px !important;
-        }
-    }
-    </style>
+  
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

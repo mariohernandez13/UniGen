@@ -1,0 +1,68 @@
+ .section-title i {
+        margin-right: 0.5rem;
+    }
+    .card {
+        border-radius: 1rem;
+    }
+    .card-img-top {
+        border-radius: 1rem 1rem 0 0;
+        background: #f8fafc;
+    }
+    .card .btn, .btn-xl {
+        transition: transform 0.2s, box-shadow 0.2s;
+        font-size: 1.5rem;
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
+    }
+    .card .btn:hover, .btn-xl:hover {
+        transform: translateY(-2px) scale(1.06);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+    }
+    /* Ajuste para igualar altura de las tarjetas de ofertas y artículos */
+    .tienda-ofertas .card,
+    .tienda-articulos .card {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .tienda-ofertas .card-body,
+    .tienda-articulos .card-body {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .tienda-articulos .card-img-top {
+        width: 120px !important;
+        height: 120px !important;
+        object-fit: contain;
+        margin-bottom: 1rem;
+    }
+    .tienda-articulos .card-title {
+        font-size: 2rem;
+    }
+    .tienda-articulos .card-text {
+        font-size: 1.25rem;
+    }
+    @media (max-width: 1200px) {
+        .tienda-articulos .card,
+        .tienda-ofertas .card {
+            min-height: 540px;
+        }
+    }
+    @media (max-width: 992px) {
+        .tienda-articulos .card,
+        .tienda-ofertas .card {
+            min-height: 560px;
+        }
+    }
+    @media (max-width: 768px) {
+        .tienda-articulos .card,
+        .tienda-ofertas .card {
+            min-height: 480px;
+        }
+        .tienda-articulos .card-img-top {
+            width: 90px !important;
+            height: 90px !important;
+        }
+    }

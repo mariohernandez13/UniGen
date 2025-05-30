@@ -13,6 +13,7 @@ UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "static", "IMAGES", "per
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "svg", "webp"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+
 # Página principal: Login
 @app.route("/")
 def index():
@@ -44,6 +45,16 @@ def inicio():
     return render_template('inicio.html', usuario=usuario)
 
 
+
+@app.route("/modal_Usuario")
+def modal_usuario():
+    usuario = session.get("usuario")
+    if not usuario:
+        flash("Debes iniciar sesión para ver tu perfil.", "danger")
+        return redirect(url_for("index"))
+    return render_template("modalUsuario.html", usuario=usuario)
+
+# ...existing code...
 @app.route("/RecuperarContraseña")
 def recuperar_contraseña():
     return render_template("RecuperarConstraseña.html")
@@ -163,6 +174,8 @@ def crear_actividad():
 def sobre_nosotros():
     usuario = session.get("usuario")
     return render_template("sobrenosotros.html", usuario=usuario)
+
+
 
 
 @app.route("/tienda")
