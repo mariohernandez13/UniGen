@@ -1,256 +1,199 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-      <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniGen | Perfil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-        <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/n') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/n') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/Perfil.css') }}">
     <link rel="icon" href="../static/IMAGES/logo_unigen.svg" class="imagen">
-    
+     
 </head>
 <body>
-        <nav class="navbar navbar-expand-lg navbar-expand-md px-4">
-        <a class="navbar-brand d-flex align-items-center" href="inicio">
-            <img src="../static/IMAGES/logo_unigen.svg" width="50px" height="auto">
-            <span class="ms-2 fw-bold logo-text" style="font-size: 1.5rem; letter-spacing: 1px;">UniGen</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="ms-auto collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ms-5">
-                <a class="nav-link px-3" href="inicio" id="link1"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a class="nav-link px-3 " href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i></i>
-                    Actividades</a>
-                <a class="nav-link px-3" href="tienda" id="link3"><i class="fa-solid fa-cart-shopping"></i> Tienda</a>
-                <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre
-                    nosotros</a>
-                <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i
-                        class="fa-solid fa-paper-plane"></i> Contacto</a>
-                <a class="nav-link px-3 active" href="modal_Usuario" id="link6" ><i
-                        class="fa-solid fa-user"></i> Mi perfil</a>
+      <nav class="navbar navbar-expand-lg navbar-expand-md px-4">
+      <a class="navbar-brand d-flex align-items-center" href="inicio">
+        <img src="../static/IMAGES/logo_unigen.svg" width="50px" height="auto">
+        <span class="ms-2 fw-bold logo-text" style="font-size: 1.5rem; letter-spacing: 1px;">UniGen</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="ms-auto collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ms-5">
+            <a class="nav-link px-3" href="inicio" id="link1"><i class="fa-solid fa-house"></i> Inicio</a>
+            <a class="nav-link px-3 " href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i></i>
+              Actividades</a>
+            <a class="nav-link px-3" href="tienda" id="link3"><i class="fa-solid fa-cart-shopping"></i> Tienda</a>
+            <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre
+              nosotros</a>
+            <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i
+                class="fa-solid fa-paper-plane"></i> Contacto</a>
+            <a class="nav-link px-3 active" href="modal_Usuario" id="link6" ><i
+                class="fa-solid fa-user"></i> Mi perfil</a>
 
 
-            </div>
-            <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
-                    class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
         </div>
+        <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
+              class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
+      </div>
     </nav>
-    <div class="container-fluid mt-5">
-        <div class="row justify-content-center align-items-center" style="min-height: 85vh;">
-            <div class="col-12 col-lg-10">
-                <div class="bg-gradient rounded-5 shadow-lg p-5 p-lg-6 text-white text-center" style="background: linear-gradient(135deg, #3a8dde 0%, #6f42c1 100%); position: relative;">
-                    <!-- Puntos destacados arriba a la derecha (más grande y visual) -->
-                    <div class="points-badge-lg position-absolute top-0 end-0 mt-4 me-4 d-flex flex-column align-items-center justify-content-center shadow-lg px-5 py-4 rounded-5"
-                        style="background: rgba(255,255,255,0.97); color: #6f42c1; font-weight: 900; font-size: 2.5rem; z-index: 10; min-width: 320px; min-height: 170px; border: 4px solid #FFD700; box-shadow: 0 8px 32px rgba(58,141,222,0.18);">
-                        <div class="mb-2">
-                            <i class="bi bi-trophy-fill" style="color: #FFD700; font-size: 4.5rem; text-shadow: 0 2px 12px #FFD70077;"></i>
-                        </div>
-                        <div class="points-value" style="font-size: 3.2rem; color: #3a8dde; line-height: 1;">
-                            {{ usuario.puntos if usuario.puntos is defined else '0' }}
-                        </div>
-                        <div class="points-label" style="font-size: 1.5rem; color: #6f42c1; letter-spacing: 2px; font-weight: 700;">
-                            PUNTOS
-                        </div>
+  
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 rounded-4" style="font-size: 2.3rem;">
+              <div class="card-body p-5">
+                <div class="d-flex flex-column flex-md-row align-items-center mb-5">
+                    <div class="me-md-5 mb-4 mb-md-0 text-center">
+                      <img src="{{ url_for('static', filename='IMAGES/perfiles/' + usuario.foto) }}"
+                         alt="Foto de perfil"
+                         class="rounded-circle border border-3 border-primary shadow"
+                         style="width: 260px; height: 260px; object-fit: cover;">
+                      <form action="{{ url_for('subir_foto') }}" method="POST" enctype="multipart/form-data" class="mt-4">
+                        <label for="foto" class="form-label fw-semibold fs-5 fs-md-4 fs-lg-3">Actualizar foto</label>
+                        <input type="file" id="foto" name="foto" accept="image/*" class="form-control form-control-lg mb-3 fs-6 fs-md-5 fs-lg-4" required>
+                        <button class="btn btn-outline-primary btn-lg w-100 fs-6 fs-md-5 fs-lg-4" type="submit">
+                            <i class="bi bi-upload"></i> Subir
+                        </button>
+                      </form>
                     </div>
-                    <h1 class="display-2 mb-4 fw-bold" style="letter-spacing:2px;">
-                        <i class="fas fa-user-circle me-3"></i>Bienvenido a tu Perfil
-                    </h1>
-                    <p class="lead mb-5 fs-4">Aquí puedes ver y actualizar tu información personal.<br>¡Mantén tus datos al día para una mejor experiencia en UniGen!</p>
-                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center mb-5">
-                        <div class="position-relative mb-4 mb-md-0 me-md-5">
-                            <div class="profile-img-wrapper shadow-lg rounded-circle border border-5 border-white" style="width: 220px; height: 220px; overflow: hidden; margin: auto;">
-                                <img src="{{ url_for('static', filename='IMAGES/perfiles/' + usuario.foto) }}"
-                                    class="w-100 h-100"
-                                    style="object-fit:cover; border-radius: 50%;">
-                            </div>
-                            <span class="position-absolute bottom-0 end-0 translate-middle p-2 bg-success border border-light rounded-circle" style="box-shadow: 0 0 0 4px #fff;">
-                                <i class="fas fa-check text-white"></i>
+                    <div class="flex-grow-1 text-center text-md-start">
+                      <h2 class="fw-bold mb-2 fs-2 fs-md-1">{{ usuario.username }}</h2>
+                      <span class="badge bg-primary fs-5 fs-md-4 fs-lg-3 mb-4 px-4 py-3">Activo</span>
+                      <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-4 mb-4">
+                        <div class="bg-light rounded-3 px-5 py-4 shadow-sm d-flex align-items-center gap-3">
+                            <i class="bi bi-trophy-fill text-warning fs-1"></i>
+                            <span class="fw-bold text-primary fs-2">
+                              {{ usuario.puntos if usuario.puntos is defined else '0' }}
                             </span>
+                            <span class="text-secondary fw-semibold ms-2 fs-5">puntos</span>
                         </div>
-                        <div class="text-md-start text-center ms-md-4">
-                            <h2 class="fw-bold mb-2" style="font-size:2.7rem; letter-spacing:1px;">{{ usuario.username }}</h2>
-                            <span class="badge bg-success fs-5 mb-3 px-4 py-2 shadow" style="font-size:1.1rem;">Usuario Activo</span>
-                            <form action="{{ url_for('subir_foto') }}" method="POST" enctype="multipart/form-data" class="mt-3">
-                                <label class="form-label fw-semibold mb-2" for="foto" style="font-size:1.1rem;">Cambiar foto de perfil</label>
-                                <input type="file" id="foto" name="foto" accept="image/*" class="form-control form-control-lg mb-2" required>
-                                <button class="btn btn-light btn-lg w-100 fw-bold shadow" type="submit">
-                                    <i class="bi bi-upload me-2"></i>Subir Nueva Foto
-                                </button>
-                            </form>
-                        </div>
+                      </div>
+                      <a href="#" class="btn btn-outline-secondary btn-lg px-5 mt-3 fs-6 fs-md-5 fs-lg-4">
+                        <i class="bi bi-pencil"></i> Editar perfil
+                      </a>
                     </div>
-                    <div class="row justify-content-center mb-4 g-4">
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="bg-white bg-opacity-25 rounded-4 p-4 h-100 shadow-sm border border-white border-opacity-25">
-                                <h5 class="fw-bold mb-2 fs-4"><i class="fas fa-envelope me-2"></i>Correo</h5>
-                                <p class="fs-5 mb-0">{{ usuario.email }}</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-3">
-                            <div class="bg-white bg-opacity-25 rounded-4 p-4 h-100 shadow-sm border border-white border-opacity-25">
-                                <h5 class="fw-bold mb-2 fs-4"><i class="fas fa-birthday-cake me-2"></i>Edad</h5>
-                                <p class="fs-5 mb-0">{{ usuario.edad }}</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="bg-white bg-opacity-25 rounded-4 p-4 h-100 border border-white border-opacity-25">
-                                <h5 class="fw-bold mb-2 fs-4"><i class="fas fa-calendar-alt me-2"></i>Miembro desde</h5>
-                                <p class="fs-5 mb-0">{{ usuario.fecha_registro if usuario.fecha_registro is defined else '---' }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Más datos del usuario -->
-                    <div class="row justify-content-center mb-4 g-4">
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="bg-white bg-opacity-25 rounded-4 p-4 h-100 border border-white border-opacity-25">
-                                <h5 class="fw-bold mb-2 fs-4"><i class="fas fa-phone me-2"></i>Teléfono</h5>
-                                <p class="fs-5 mb-0">{{ usuario.telefono if usuario.telefono is defined else 'No especificado' }}</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="bg-white bg-opacity-25 rounded-4 p-4 h-100 border border-white border-opacity-25">
-                                <h5 class="fw-bold mb-2 fs-4"><i class="fas fa-map-marker-alt me-2"></i>Ciudad</h5>
-                                <p class="fs-5 mb-0">{{ usuario.ciudad if usuario.ciudad is defined else 'No especificada' }}</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="bg-white bg-opacity-25 rounded-4 p-4 h-100 border border-white border-opacity-25">
-                                <h5 class="fw-bold mb-2 fs-4"><i class="fas fa-graduation-cap me-2"></i>Estudios</h5>
-                                <p class="fs-5 mb-0">{{ usuario.estudios if usuario.estudios is defined else 'No especificados' }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" class="btn btn-light btn-lg px-5 py-3 fw-bold mt-3 shadow d-inline-flex align-items-center gap-2" style="font-size:1.2rem;">
-                        <i class="fas fa-cog"></i>Editar Perfil
-                    </a>
                 </div>
+                <hr style="height:3px;">
+                <div class="row g-5">
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-envelope-fill text-primary me-3 fs-3"></i>
+                        <span class="fw-semibold fs-5">Correo:</span>
+                      </div>
+                      <div class="ps-5 fs-6">{{ usuario.email }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-cake2-fill text-primary me-3 fs-3"></i>
+                        <span class="fw-semibold fs-5">Edad:</span>
+                      </div>
+                      <div class="ps-5 fs-6">{{ usuario.edad }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-calendar-check-fill text-primary me-3 fs-3"></i>
+                        <span class="fw-semibold fs-5">Miembro desde:</span>
+                      </div>
+                      <div class="ps-5 fs-6">{{ usuario.fecha_registro if usuario.fecha_registro is defined else '---' }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-telephone-fill text-primary me-3 fs-3"></i>
+                        <span class="fw-semibold fs-5">Teléfono:</span>
+                      </div>
+                      <div class="ps-5 fs-6">{{ usuario.telefono if usuario.telefono is defined else 'No especificado' }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt-fill text-primary me-3 fs-3"></i>
+                        <span class="fw-semibold fs-5">Ciudad:</span>
+                      </div>
+                      <div class="ps-5 fs-6">{{ usuario.ciudad if usuario.ciudad is defined else 'No especificada' }}</div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-mortarboard-fill text-primary me-3 fs-3"></i>
+                        <span class="fw-semibold fs-5">Estudios:</span>
+                      </div>
+                      <div class="ps-5 fs-6">{{ usuario.estudios if usuario.estudios is defined else 'No especificados' }}</div>
+                    </div>
+                </div>
+              </div>
             </div>
         </div>
+      </div>
     </div>
-    <style>
-        .profile-img-wrapper {
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
-        .profile-img-wrapper:hover {
-            box-shadow: 0 0 0 8px #6f42c1, 0 8px 32px rgba(58,141,222,0.25);
-            transform: scale(1.04);
-        }
-        .bg-gradient {
-            background: linear-gradient(135deg, #3a8dde 0%, #6f42c1 100%) !important;
-        }
-        .btn-light {
-            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-        }
-        .btn-light:hover {
-            background: #3a8dde;
-            color: #fff;
-            box-shadow: 0 4px 24px rgba(58,141,222,0.2);
-        }
-        .badge.bg-success {
-            background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
-            color: #222;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(67,233,123,0.15);
-        }
-        .bg-white.bg-opacity-25 {
-            backdrop-filter: blur(2px);
-        }
-        /* Nueva versión grande y visual para los puntos */
-        .points-badge-lg {
-            animation: popInBig 0.7s cubic-bezier(.68,-0.55,.27,1.55);
-            border-radius: 2.5rem !important;
-        }
-        .points-badge-lg .bi-trophy-fill {
-            filter: drop-shadow(0 2px 12px #FFD70077);
-        }
-        .points-badge-lg .points-value {
-            font-family: 'Montserrat', 'Arial', sans-serif;
-            font-weight: 900;
-            letter-spacing: 2px;
-            margin-bottom: 0.2em;
-            text-shadow: 0 2px 12px #3a8dde33;
-        }
-        .points-badge-lg .points-label {
-            font-family: 'Montserrat', 'Arial', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 700;
-            color: #6f42c1;
-            opacity: 0.85;
-        }
-        @keyframes popInBig {
-            0% { transform: scale(0.7) translateY(-40px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
-        }
-    </style>
-
+  {% include 'modal_contacto.html' %}
     <footer class="bg-dark text-center text-lg-start mt-5 text-white">
-        <div class="container p-4">
-            <div class="row">
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0 d-flex align-items-center">
-                    <img src="../static/IMAGES/logo_unigen.svg" alt="UniGen Logo" width="50px" height="auto" class="me-3"
-                        style="filter: invert(1);">
-                    <div>
-                        <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">UniGen</h5>
-                        <p class="fst-italic">
-                            UniGen es una plataforma diseñada para conectar personas y fomentar el aprendizaje a través de
-                            actividades únicas.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Enlaces</h5>
-                    <ul class="list-unstyled mb-0">
-                        <li><a href="inicio" class="text-white text-decoration-none">Inicio</a></li>
-                        <li><a href="dashboard" class="text-white text-decoration-none">Actividades</a></li>
-                        <li><a href="tienda" class="text-white text-decoration-none">Tienda</a></li>
-                        <li><a href="sobrenosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Síguenos</h5>
-                    <ul class="list-unstyled d-flex justify-content-start">
-                        <li>
-                            <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
-                                <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
-                                <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/unigen_ufv/" class="text-white me-3"
-                                style="transition: transform 0.3s;">
-                                <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-white" style="transition: transform 0.3s;">
-                                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-white ms-3" style="transition: transform 0.3s;">
-                                <i class="bi bi-youtube" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+      <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0 d-flex align-items-center">
+              <img src="../static/IMAGES/logo_unigen.svg" alt="UniGen Logo" width="50px" height="auto" class="me-3"
+                style="filter: invert(1);">
+              <div>
+                <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">UniGen</h5>
+                <p class="fst-italic">
+                    UniGen es una plataforma diseñada para conectar personas y fomentar el aprendizaje a través de
+                    actividades únicas.
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+              <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Enlaces</h5>
+              <ul class="list-unstyled mb-0">
+                <li><a href="inicio" class="text-white text-decoration-none">Inicio</a></li>
+                <li><a href="dashboard" class="text-white text-decoration-none">Actividades</a></li>
+                <li><a href="tienda" class="text-white text-decoration-none">Tienda</a></li>
+                <li><a href="sobrenosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+              <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Síguenos</h5>
+              <ul class="list-unstyled d-flex justify-content-start">
+                <li>
+                    <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                      <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                      <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.instagram.com/unigen_ufv/" class="text-white me-3"
+                      style="transition: transform 0.3s;">
+                      <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="text-white" style="transition: transform 0.3s;">
+                      <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="text-white ms-3" style="transition: transform 0.3s;">
+                      <i class="bi bi-youtube" style="font-size: 1.5rem;"></i>
+                    </a>
+                </li>
+              </ul>
             </div>
         </div>
-        <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.5);">
-        <div class="text-center p-3 text-white">
-            <p>&copy; 2025 ROAR SL - Ingeniería Informática UFV</p>
-            <p>Proyecto UniGen</p>
-        </div>
+      </div>
+      <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.5);">
+      <div class="text-center p-3 text-white">
+        <p>&copy; 2025 ROAR SL - Ingeniería Informática UFV</p>
+        <p>Proyecto UniGen</p>
+      </div>
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
 </html>
