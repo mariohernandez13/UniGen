@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
     <link rel="icon" href="../static/IMAGES/logo_unigen.svg" class="imagen">
+ 
 </head>
 
 <body>
@@ -59,137 +60,393 @@
     </div>
 
     <!-- Creación de actividades -->
-    <div class="container mt-5 justify-content-center align-items-center">
-        <input type="checkbox" id="toggleForm" class="toggle-checkbox">
-        <div class="d-flex justify-content-between align-items-center">
-            <label for="toggleForm" class="toggle-label">
-                <p class="title mb-0">Crear Actividad</p>
-                <i class="bi bi-chevron-down toggle-icon"></i>
-            </label>
-        </div>
-        <div id="crearActividadForm" class="form-container">
-            <form class="form" action="{{ url_for('crear_actividad') }}" method="POST">
-                <p class="message">Crea tu actividad aquí mismo!</p>
-                <input type="hidden" name="IdOrganizador" value="{{ usuario.idusuario }}">
-                <label>
-                    <input required="" placeholder="" type="text" class="input" name="nombre">
-                    <span>Nombre de la actividad</span>
-                </label>
-                <label>
-                    <input required="" placeholder="" type="text" class="input" name="descripcion">
-                    <span>Descripción</span>
-                </label>
-                <label>
-                    <select required class="input" name="tipo">
-                        <option value="" disabled selected style="display: none;"></option>
-                        <option value="" disabled>Selecciona un tipo</option>
-                        <option value="Ocio">Ocio</option>
-                        <option value="Deporte">Deporte</option>
-                        <option value="Curso">Curso</option>
-                        <option value="Taller">Taller</option>
-                        <option value="Charla">Charla</option>
-                        <option value="Ayuda">Ayuda</option>
-                    </select>
-                    <span>Tipo</span>
-                </label>
-                <label>
-                    <input required="" placeholder="" type="text" class="input" name="lugar">
-                    <span>Lugar</span>
-                </label>
-                <label>
-                    <input required="" placeholder="" type="date" class="input" name="fecha">
-                </label>
-                <label>
-                    <input required="" placeholder="" type="time" class="input" name="hora">
-                </label>
-                <label>
-                    <input required="" placeholder="" type="number" class="input" name="duracion">
-                    <span>Duración (en minutos)</span>
-                </label>
-                <button class="submit">Crear Actividad</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Actividades disponibles en la app -->
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            {% for actividad in actividades %}
-            <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="image-container position-relative">
-                        <img class="card-img" src="{{ url_for('static', filename='IMAGES/' + actividad.foto) }}"
-                            alt="Imagen de la actividad">
-                        <div class="descripcion text-center">{{ actividad.descripcion }}</div>
-                        <div class="overlay">
-                            <div class="title-bg">
-                                <h5 class="card-title">{{ actividad.nombre }}</h5>
+        <!-- Navegación de secciones -->
+        <ul class="nav nav-pills mb-4 justify-content-center" id="actividadesTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="crear-tab" data-bs-toggle="pill" data-bs-target="#crear" type="button" role="tab">Crear Actividad</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="disponibles-tab" data-bs-toggle="pill" data-bs-target="#disponibles" type="button" role="tab">Disponibles</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="creadas-tab" data-bs-toggle="pill" data-bs-target="#creadas" type="button" role="tab">Mis Actividades</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="apuntado-tab" data-bs-toggle="pill" data-bs-target="#apuntado" type="button" role="tab">Apuntado</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="actividadesTabsContent">
+            <!-- Crear Actividad -->
+            <div class="tab-pane fade show active" id="crear" role="tabpanel">
+                <div class="card p-4 mb-4">
+                    <h3 class="mb-3">Crear nueva actividad</h3>
+                    <form class="form row g-3" action="{{ url_for('crear_actividad') }}" method="POST" enctype="multipart/form-data">
+                        <div class="col-md-6">
+                            <label class="form-label">Nombre</label>
+                            <input required type="text" class="form-control" name="nombre">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Tipo</label>
+                            <select required class="form-select" name="tipo">
+                                <option value="" disabled selected>Selecciona un tipo</option>
+                                <option value="Ocio">Ocio</option>
+                                <option value="Deporte">Deporte</option>
+                                <option value="Curso">Curso</option>
+                                <option value="Taller">Taller</option>
+                                <option value="Charla">Charla</option>
+                                <option value="Ayuda">Ayuda</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="form-label">Descripción</label>
+                            <textarea required class="form-control" name="descripcion" rows="2"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Lugar</label>
+                            <input required type="text" class="form-control" name="lugar">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Fecha</label>
+                            <input required type="date" class="form-control" name="fecha">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Hora</label>
+                            <input required type="time" class="form-control" name="hora">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Duración (min)</label>
+                            <input required type="number" class="form-control" name="duracion">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Imagen</label>
+                            <input type="file" class="form-control" name="foto" accept="image/*">
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-success w-100" type="submit">Crear Actividad</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Actividades Disponibles -->
+            <div class="tab-pane fade" id="disponibles" role="tabpanel">
+                <div class="card p-4 mb-4">
+                    <h3 class="mb-3">Filtrar actividades</h3>
+                    <form class="row g-3 mb-4" id="filtroForm" method="get">
+                        <div class="col-md-3">
+                            <select class="form-select" name="tipo" id="filtroTipo">
+                                <option value="">Tipo (todos)</option>
+                                <option value="Ocio">Ocio</option>
+                                <option value="Deporte">Deporte</option>
+                                <option value="Curso">Curso</option>
+                                <option value="Taller">Taller</option>
+                                <option value="Charla">Charla</option>
+                                <option value="Ayuda">Ayuda</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" name="fecha" id="filtroFecha">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" name="lugar" id="filtroLugar" placeholder="Lugar">
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-primary w-100" onclick="filtrarActividades()">Filtrar</button>
+                        </div>
+                    </form>
+                    <div id="actividadesDisponibles">
+                        <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
+                            {% for actividad in actividades_disponibles %}
+                            <div class="col">
+                                <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0" style="min-height: 260px;">
+                                    <div class="actividad-bg" style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');"></div>
+                                    <div class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
+                                        <h2 class="fw-bold mb-3" style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">{{ actividad.nombre }}</h2>
+                                        <button class="btn btn-lg btn-primary ver-mas-btn px-5 py-3 mt-2"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalActividad{{ actividad.idactividad }}"
+                                            style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(59,91,219,0.18);">
+                                            Ver más
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card-body small">
-                        <p class="mb-1"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
-                        <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
-                        <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
-                        <p class="mb-3"><strong>⌛ Fecha:</strong> {{ actividad.fecha }} </p>
-                        <p class="mb-3"><strong>👥 Participantes:</strong>
-                            {% if actividad.num_participantes > 0 %}
-                            {{ actividad.num_participantes }} inscritos
-                            {% else %}
-                            No hay participantes aún.
+
+                            <!-- Modal Detalle Actividad -->
+                            <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+                                <div class="modal-dialog modal-xl modal-dialog-centered">
+                                    <div class="modal-content rounded-4">
+                                        <div class="modal-header" style="background: #f8fafc;">
+                                            <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabel{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                                                {{ actividad.nombre }}
+                                            </h2>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                        </div>
+                                        <div class="modal-body px-5 py-4">
+                                            <div class="mb-4 text-center">
+                                                <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                                            </div>
+                                            <ul class="list-unstyled mb-4" style="font-size: 2rem;">
+                                                <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
+                                                <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha }}</span></li>
+                                                <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
+                                                <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                                            </ul>
+                                            <div class="mb-4">
+                                                <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
+                                                <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
+                                            </div>
+                                            <div class="mb-4">
+                                                <h5 class="fw-bold mb-2" style="font-size: 2rem;">Participantes inscritos</h5>
+                                                {% if actividad.num_participantes > 0 %}
+                                                <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
+                                                    {% for participante in actividad.participantes %}
+                                                    <li class="list-group-item">{{ participante }}</li>
+                                                    {% endfor %}
+                                                </ul>
+                                                {% else %}
+                                                <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
+                                                {% endif %}
+                                            </div>
+                                            <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST" class="mt-4">
+                                                <button type="submit" class="btn btn-success btn-lg w-100" style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                                    Apuntarme
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer" style="background: #f8fafc;">
+                                            <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Fin Modal -->
+                            {% endfor %}
+                            {% if actividades_disponibles|length == 0 %}
+                            <div class="col-12 text-center text-muted">No hay actividades disponibles.</div>
                             {% endif %}
-                        </p>
-
-                        <!-- Tabla de participantes -->
-                        {% if actividad.num_participantes > 0 %}
-                        <div class="table-responsive" style="max-height: 150px; overflow-y: auto;">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Nombre</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for participante in actividad.participantes %}
-                                    <tr>
-                                        <td>{{ loop.index }}</td> <!-- loop.index es 1-based (1, 2, 3...) -->
-                                        <td>{{ participante }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                        {% endif %}
-                        <!-- Fin de la tabla de participantes -->
-
-
-                        <iframe class="mapa mb-3"></iframe>
-                        <div class="d-flex gap-2">
-                            {% if actividad.idactividad in inscripciones %}
-                            <!-- Botón para desapuntarse -->
-                            <form action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
-                                method="POST">
-                                <input type="hidden" name="idusuario" value="{{ usuario.idusuario }}">
-                                <button type="submit" class="btn btn-danger">Desapuntarse</button>
-                            </form>
-                            {% else %}
-                            <!-- Botón para inscribirse -->
-                            <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}"
-                                method="POST">
-                                <input type="hidden" name="idusuario" value="{{ usuario.idusuario }}">
-                                <button type="submit" class="btn btn-primary apuntarse-btn">Inscribirse</button>
-                            </form>
-                            {% endif %}
-                            <button class="btn btn-primary mas_informacion">Ver Detalles</button>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            <!-- Actividades Creadas -->
+            <div class="tab-pane fade" id="creadas" role="tabpanel">
+                <div class="card p-4 mb-4">
+                    <h3 class="mb-3">Mis actividades creadas</h3>
+                    <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
+                        {% for actividad in actividades_creadas %}
+                        <div class="col">
+                            <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0" style="min-height: 260px;">
+                                <div class="actividad-bg" style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');"></div>
+                                <div class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
+                                    <h2 class="fw-bold mb-3" style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">{{ actividad.nombre }}</h2>
+                                    <button class="btn btn-lg btn-primary ver-mas-btn px-5 py-3 mt-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalActividad{{ actividad.idactividad }}"
+                                        style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(59,91,219,0.18);">
+                                        Ver más
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Detalle Actividad -->
+                        <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+                            <div class="modal-dialog modal-xl modal-dialog-centered">
+                                <div class="modal-content rounded-4">
+                                    <div class="modal-header" style="background: #f8fafc;">
+                                        <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabel{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                                            {{ actividad.nombre }}
+                                        </h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body px-5 py-4">
+                                        <div class="mb-4 text-center">
+                                            <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                                        </div>
+                                        <ul class="list-unstyled mb-4" style="font-size: 2rem;">
+                                            <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
+                                            <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha }}</span></li>
+                                            <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
+                                            <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                                        </ul>
+                                        <div class="mb-4">
+                                            <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
+                                            <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <h5 class="fw-bold mb-2" style="font-size: 2rem;">Participantes inscritos</h5>
+                                            {% if actividad.num_participantes > 0 %}
+                                            <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
+                                                {% for participante in actividad.participantes %}
+                                                <li class="list-group-item">{{ participante }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
+                                            {% endif %}
+                                        </div>
+                                        <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST" class="mt-4">
+                                            <button type="submit" class="btn btn-success btn-lg w-100" style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                                Apuntarme
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer" style="background: #f8fafc;">
+                                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Modal -->
+                        {% endfor %}
+                        {% if actividades_creadas|length == 0 %}
+                        <div class="col-12 text-center text-muted">No has creado ninguna actividad.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <!-- Actividades Apuntado -->
+            <div class="tab-pane fade" id="apuntado" role="tabpanel">
+                <div class="card p-4 mb-4">
+                    <h3 class="mb-3">Actividades a las que estoy apuntado</h3>
+                    <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
+                        {% for actividad in actividades_apuntado %}
+                        <div class="col">
+                            <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0" style="min-height: 260px;">
+                                <div class="actividad-bg" style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');"></div>
+                                <div class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
+                                    <h2 class="fw-bold mb-3" style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">{{ actividad.nombre }}</h2>
+                                    <button class="btn btn-lg btn-primary ver-mas-btn px-5 py-3 mt-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalActividad{{ actividad.idactividad }}"
+                                        style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(59,91,219,0.18);">
+                                        Ver más
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Detalle Actividad -->
+                        <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+                            <div class="modal-dialog modal-xl modal-dialog-centered">
+                                <div class="modal-content rounded-4">
+                                    <div class="modal-header" style="background: #f8fafc;">
+                                        <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabel{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                                            {{ actividad.nombre }}
+                                        </h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                    </div>
+                                    <div class="modal-body px-5 py-4">
+                                        <div class="mb-4 text-center">
+                                            <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                                        </div>
+                                        <ul class="list-unstyled mb-4" style="font-size: 2rem;">
+                                            <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
+                                            <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha }}</span></li>
+                                            <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
+                                            <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                                        </ul>
+                                        <div class="mb-4">
+                                            <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
+                                            <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <h5 class="fw-bold mb-2" style="font-size: 2rem;">Participantes inscritos</h5>
+                                            {% if actividad.num_participantes > 0 %}
+                                            <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
+                                                {% for participante in actividad.participantes %}
+                                                <li class="list-group-item">{{ participante }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            {% else %}
+                                            <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
+                                            {% endif %}
+                                        </div>
+                                        <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST" class="mt-4">
+                                            <button type="submit" class="btn btn-success btn-lg w-100" style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                                Apuntarme
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer" style="background: #f8fafc;">
+                                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fin Modal -->
+                        {% endfor %}
+                        {% if actividades_apuntado|length == 0 %}
+                        <div class="col-12 text-center text-muted">No estás apuntado a ninguna actividad.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Modales de actividades (fuera de las tabs para evitar duplicados) -->
+    {% for actividad in actividades_disponibles + actividades_creadas + actividades_apuntado %}
+    <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content rounded-4">
+                <div class="modal-header" style="background: #f8fafc;">
+                    <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabel{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                        {{ actividad.nombre }}
+                    </h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body px-5 py-4">
+                    <div class="mb-4 text-center">
+                        <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                    </div>
+                    <ul class="list-unstyled mb-4" style="font-size: 2rem;">
+                        <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
+                        <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha }}</span></li>
+                        <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
+                        <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                    </ul>
+                    <div class="mb-4">
+                        <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
+                        <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-2" style="font-size: 2rem;">Participantes inscritos</h5>
+                        {% if actividad.num_participantes > 0 %}
+                        <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
+                            {% for participante in actividad.participantes %}
+                            <li class="list-group-item">{{ participante }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
+                        {% endif %}
+                    </div>
+                    <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST" class="mt-4">
+                        <button type="submit" class="btn btn-success btn-lg w-100" style="font-size: 1.5rem; border-radius: 1.5rem;">
+                            Apuntarme
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer" style="background: #f8fafc;">
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <script>
+function filtrarActividades() {
+    const tipo = document.getElementById('filtroTipo').value;
+    const fecha = document.getElementById('filtroFecha').value;
+    const lugar = document.getElementById('filtroLugar').value;
+    let params = [];
+    if (tipo) params.push('tipo=' + encodeURIComponent(tipo));
+    if (fecha) params.push('fecha=' + encodeURIComponent(fecha));
+    if (lugar) params.push('lugar=' + encodeURIComponent(lugar));
+    window.location.href = '/dashboard?' + params.join('&');
+}
+</script>
 
     <div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

@@ -61,54 +61,77 @@ def recuperar_contraseña():
 
 
 # Dashboard del usuario
-@app.route("/dashboard") 
+@app.route("/dashboard")
 def dashboard():
-    # Obtener el ID del usuario desde la sesión
     usuario = session.get("usuario")
     if not usuario:
         flash("Debes iniciar sesión para ver las actividades.", "danger")
         return redirect(url_for("index"))
 
-    # Llamar al endpoint de la API para obtener todas las actividades
+    usuario_id = usuario["idusuario"]
+
+    # Obtener todas las actividades
     response = requests.get(f"{API_BASE_URL}/activity/all")
     actividades = response.json() if response.status_code == 200 else []
 
-    # Llamar al endpoint de la API para obtener las actividades en las que el usuario está inscrito
-    usuario_id = usuario["idusuario"]
+    # Obtener IDs de actividades a las que estoy apuntado
     response_inscripciones = requests.get(f"{API_BASE_URL}/activity/user/{usuario_id}/subscriptions")
     inscripciones = response_inscripciones.json() if response_inscripciones.status_code == 200 else []
 
-    # Obtener los participantes de todas las actividades
-    for actividad in actividades:
-        participantes_response = requests.get(f"{API_BASE_URL}/activity/{actividad['idactividad']}/participantes")
-        participantes = participantes_response.json() if participantes_response.status_code == 200 else []
+    # Obtener actividades creadas por el usuario (usando campo 'creador')
+    actividades_creadas = [a for a in actividades if str(a.get("creador")) == str(usuario_id)]
 
-        # Contador de participantes
-        actividad["num_participantes"] = len(participantes)
+    # Actividades disponibles (no creadas ni inscritas)
+    ids_creadas = {a["idactividad"] for a in actividades_creadas}
+    ids_inscrito = set(inscripciones)
+    actividades_disponibles = [
+        a for a in actividades
+        if a["idactividad"] not in ids_creadas and a["idactividad"] not in ids_inscrito
+    ]
 
-        # Crear un array con solo los nombres de los usuarios
-        nombres_participantes = [participante["nombre"] for participante in participantes]
-        actividad["participantes"] = nombres_participantes  # Asignar solo los nombres
-        print(f"Actividad {actividad['idactividad']} participantes: {actividad['participantes']}")
+    # Actividades a las que estoy apuntado (detalles)
+    actividades_apuntado = [a for a in actividades if a["idactividad"] in ids_inscrito]
 
-    return render_template("dashboard.html", actividades=actividades, inscripciones=inscripciones, usuario=usuario)
+    # Añadir participantes y contador a todas las actividades mostradas
+    for lista in [actividades_disponibles, actividades_creadas, actividades_apuntado]:
+        for actividad in lista:
+            participantes_response = requests.get(f"{API_BASE_URL}/activity/{actividad['idactividad']}/participantes")
+            participantes = participantes_response.json() if participantes_response.status_code == 200 else []
+            actividad["num_participantes"] = len(participantes)
+            actividad["participantes"] = [p["nombre"] for p in participantes]
 
+    # Filtros GET para actividades disponibles
+    tipo = request.args.get("tipo")
+    fecha = request.args.get("fecha")
+    lugar = request.args.get("lugar")
+    if tipo:
+        actividades_disponibles = [a for a in actividades_disponibles if a["tipo"] == tipo]
+    if fecha:
+        actividades_disponibles = [a for a in actividades_disponibles if a["fecha"] == fecha]
+    if lugar:
+        actividades_disponibles = [a for a in actividades_disponibles if lugar.lower() in a["lugar"].lower()]
 
+    return render_template(
+        "dashboard.html",
+        actividades_disponibles=actividades_disponibles,
+        actividades_creadas=actividades_creadas,
+        actividades_apuntado=actividades_apuntado,
+        usuario=usuario
+    )
+
+# Endpoint para inscribirse en una actividad
 @app.route("/inscribirse/<int:actividad_id>", methods=["POST"])
 def inscribirse(actividad_id):
-    # Obtener el ID del usuario desde la sesión
     usuario_id = session.get("usuario", {}).get("idusuario")
     if not usuario_id:
         flash("Debes iniciar sesión para inscribirte en una actividad.", "danger")
         return redirect(url_for("index"))
 
-    # Enviar la solicitud a la API
     response = requests.post(
         f"{API_BASE_URL}/activity/{actividad_id}/subscribe",
         json=usuario_id
     )
 
-    # Manejar la respuesta de la API
     if response.status_code == 200:
         flash("¡Inscripción exitosa!", "success")
     else:
@@ -117,23 +140,19 @@ def inscribirse(actividad_id):
 
     return redirect(url_for("dashboard"))
 
-
+# Endpoint para desinscribirse de una actividad
 @app.route("/desinscribirse/<int:actividad_id>", methods=["POST"])
 def desinscribirse(actividad_id):
-    # Obtener el ID del usuario desde la sesión
     usuario_id = session.get("usuario", {}).get("idusuario")
     if not usuario_id:
         flash("Debes iniciar sesión para borrarte de una actividad.", "danger")
         return redirect(url_for("index"))
 
-    # Enviar la solicitud a la API
     try:
         response = requests.delete(
             f"{API_BASE_URL}/activity/{actividad_id}/unsubscribe",
             json=usuario_id
         )
-        
-        # Manejar la respuesta de la API
         if response.status_code == 200:
             flash(response.json().get("message", "¡Te has borrado de la actividad con éxito!"), "success")
         else:
@@ -144,25 +163,27 @@ def desinscribirse(actividad_id):
 
     return redirect(url_for("dashboard"))
 
-
+# Endpoint para crear una actividad
 @app.route("/crear_actividad", methods=["POST"])
 def crear_actividad():
-    # Obtener los datos del formulario enviados desde el frontend
-    data = {
-        "Nombre": request.form.get("nombre"),
-        "Descripcion": request.form.get("descripcion"),
-        "Tipo": request.form.get("tipo"),
-        "Fecha": request.form.get("fecha"),
-        "Hora": request.form.get("hora"),
-        "Lugar": request.form.get("lugar"),
-        "Duracion": request.form.get("duracion")
-    }
-        #"IdOrganizador": request.form.get("idOrganizador"),
+    usuario = session.get("usuario")
+    if not usuario:
+        flash("Debes iniciar sesión para crear actividades.", "danger")
+        return redirect(url_for("index"))
 
-    # Enviar los datos al backend
+    data = {
+        "nombre": request.form.get("nombre"),
+        "descripcion": request.form.get("descripcion"),
+        "tipo": request.form.get("tipo"),
+        "fecha": request.form.get("fecha"),
+        "hora": request.form.get("hora"),
+        "lugar": request.form.get("lugar"),
+        "duracion": request.form.get("duracion"),
+        "creador": int(usuario["idusuario"])
+    }
+
     response = requests.post(f"{API_BASE_URL}/activity/create", json=data)
 
-     # Manejar la respuesta del backend
     if response.status_code == 200:
         flash("¡Actividad creada exitosamente!", "success")
     else:
