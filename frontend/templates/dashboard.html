@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
     <link rel="icon" href="../static/IMAGES/logo_unigen.svg" class="imagen">
- 
+
 </head>
 
 <body>
@@ -35,8 +35,7 @@
                     nosotros</a>
                 <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i
                         class="fa-solid fa-paper-plane"></i> Contacto</a>
-                  <a class="nav-link px-3" href="modal_Usuario" id="link6" ><i
-                        class="fa-solid fa-user"></i> Mi perfil</a>
+                <a class="nav-link px-3" href="modal_Usuario" id="link6"><i class="fa-solid fa-user"></i> Mi perfil</a>
             </div>
             <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
                     class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
@@ -64,24 +63,29 @@
         <!-- Navegación de secciones -->
         <ul class="nav nav-pills mb-4 justify-content-center" id="actividadesTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="crear-tab" data-bs-toggle="pill" data-bs-target="#crear" type="button" role="tab">Crear Actividad</button>
+                <button class="nav-link {% if active_tab == 'crear' %}active{% endif %}" id="crear-tab"
+                    data-bs-toggle="pill" data-bs-target="#crear" type="button" role="tab">Crear Actividad</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="disponibles-tab" data-bs-toggle="pill" data-bs-target="#disponibles" type="button" role="tab">Disponibles</button>
+                <button class="nav-link {% if active_tab == 'disponibles' %}active{% endif %}" id="disponibles-tab"
+                    data-bs-toggle="pill" data-bs-target="#disponibles" type="button" role="tab">Disponibles</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="creadas-tab" data-bs-toggle="pill" data-bs-target="#creadas" type="button" role="tab">Mis Actividades</button>
+                <button class="nav-link {% if active_tab == 'creadas' %}active{% endif %}" id="creadas-tab"
+                    data-bs-toggle="pill" data-bs-target="#creadas" type="button" role="tab">Mis Actividades</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="apuntado-tab" data-bs-toggle="pill" data-bs-target="#apuntado" type="button" role="tab">Apuntado</button>
+                <button class="nav-link {% if active_tab == 'apuntado' %}active{% endif %}" id="apuntado-tab"
+                    data-bs-toggle="pill" data-bs-target="#apuntado" type="button" role="tab">Apuntado</button>
             </li>
         </ul>
         <div class="tab-content" id="actividadesTabsContent">
             <!-- Crear Actividad -->
-            <div class="tab-pane fade show active" id="crear" role="tabpanel">
+            <div class="tab-pane fade {% if active_tab == 'crear' %}show active{% endif %}" id="crear" role="tabpanel">
                 <div class="card p-4 mb-4">
                     <h3 class="mb-3">Crear nueva actividad</h3>
-                    <form class="form row g-3" action="{{ url_for('crear_actividad') }}" method="POST" enctype="multipart/form-data">
+                    <form class="form row g-3" action="{{ url_for('crear_actividad') }}" method="POST"
+                        enctype="multipart/form-data">
                         <div class="col-md-6">
                             <label class="form-label">Nombre</label>
                             <input required type="text" class="form-control" name="nombre">
@@ -125,7 +129,8 @@
                 </div>
             </div>
             <!-- Actividades Disponibles -->
-            <div class="tab-pane fade" id="disponibles" role="tabpanel">
+            <div class="tab-pane fade {% if active_tab == 'disponibles' %}show active{% endif %}" id="disponibles"
+                role="tabpanel">
                 <div class="card p-4 mb-4">
                     <h3 class="mb-3">Filtrar actividades</h3>
                     <form class="row g-3 mb-4" id="filtroForm" method="get">
@@ -147,17 +152,24 @@
                             <input type="text" class="form-control" name="lugar" id="filtroLugar" placeholder="Lugar">
                         </div>
                         <div class="col-md-3">
-                            <button type="button" class="btn btn-primary w-100" onclick="filtrarActividades()">Filtrar</button>
+                            <button type="button" class="btn btn-primary w-100"
+                                onclick="filtrarActividades()">Filtrar</button>
                         </div>
                     </form>
                     <div id="actividadesDisponibles">
                         <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
                             {% for actividad in actividades_disponibles %}
                             <div class="col">
-                                <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0" style="min-height: 260px;">
-                                    <div class="actividad-bg" style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');"></div>
-                                    <div class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
-                                        <h2 class="fw-bold mb-3" style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">{{ actividad.nombre }}</h2>
+                                <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0"
+                                    style="min-height: 260px;">
+                                    <div class="actividad-bg"
+                                        style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');">
+                                    </div>
+                                    <div
+                                        class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
+                                        <h2 class="fw-bold mb-3"
+                                            style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">
+                                            {{ actividad.nombre }}</h2>
                                         <button class="btn btn-lg btn-primary ver-mas-btn px-5 py-3 mt-2"
                                             data-bs-toggle="modal"
                                             data-bs-target="#modalActividad{{ actividad.idactividad }}"
@@ -169,34 +181,44 @@
                             </div>
 
                             <!-- Modal Detalle Actividad -->
-                            <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+                            <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1"
+                                aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
                                 <div class="modal-dialog modal-xl modal-dialog-centered">
                                     <div class="modal-content rounded-4">
                                         <div class="modal-header" style="background: #f8fafc;">
-                                            <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabel{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                                            <h2 class="modal-title fw-bold w-100 text-center"
+                                                id="modalActividadLabel{{ actividad.idactividad }}"
+                                                style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
                                                 {{ actividad.nombre }}
                                             </h2>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Cerrar"></button>
                                         </div>
                                         <div class="modal-body px-5 py-4">
                                             <div class="mb-4 text-center">
-                                                <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                                                <span class="badge bg-primary fs-4 px-4 py-2 mb-3"
+                                                    style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
                                             </div>
                                             <ul class="list-unstyled mb-4" style="font-size: 2rem;">
-                                                <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
+                                                <li class="mb-3"><strong>📍 Lugar:</strong> <span
+                                                        style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
                                                 <li class="mb-3">
                                                     <strong>🗓️ Fecha:</strong>
                                                     <span style="color:#3b5bdb;">
-                                                        {% set fecha = actividad.fecha.split(' ')[0] if ' ' in actividad.fecha else actividad.fecha.split('T')[0] %}
+                                                        {% set fecha = actividad.fecha.split(' ')[0] if ' ' in
+                                                        actividad.fecha else actividad.fecha.split('T')[0] %}
                                                         {% set partes = fecha.split('-') %}
                                                         {{ partes[2] }}/{{ partes[1] }}/{{ partes[0] }}
                                                     </span>
                                                 </li>
-                                                <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
-                                                <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                                                <li class="mb-3"><strong>🕒 Hora:</strong> <span
+                                                        style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
+                                                <li class="mb-3"><strong>⏳ Duración:</strong> <span
+                                                        style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
                                             </ul>
                                             <div class="mb-4">
-                                                <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
+                                                <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">
+                                                    Descripción</h4>
                                                 <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
                                             </div>
                                             <div class="mb-4">
@@ -221,17 +243,33 @@
                                                     
                                                 </ul>
                                                 {% else %}
-                                                <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
+                                                <p class="text-muted" style="font-size: 1.3rem;">No hay participantes
+                                                    aún.</p>
                                                 {% endif %}
                                             </div>
-                                            <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST" class="mt-4">
-                                                <button type="submit" class="btn btn-success btn-lg w-100" style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                            {% if actividad.idactividad in ids_inscrito %}
+                                            <form
+                                                action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
+                                                method="POST" class="d-inline ms-2">
+                                                <button type="submit" class="btn btn-danger btn-lg w-100"
+                                                    style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                                    Desapuntarme
+                                                </button>
+                                            </form>
+                                            {% else %}
+                                            <form
+                                                action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}"
+                                                method="POST" class="d-inline ms-2">
+                                                <button type="submit" class="btn btn-success btn-lg w-100"
+                                                    style="font-size: 1.5rem; border-radius: 1.5rem;">
                                                     Apuntarme
                                                 </button>
                                             </form>
+                                            {% endif %}
                                         </div>
                                         <div class="modal-footer" style="background: #f8fafc;">
-                                            <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                                            <button type="button" class="btn btn-secondary btn-lg"
+                                                data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -246,16 +284,23 @@
                 </div>
             </div>
             <!-- Actividades Creadas -->
-            <div class="tab-pane fade" id="creadas" role="tabpanel">
+            <div class="tab-pane fade {% if active_tab == 'creadas' %}show active{% endif %}" id="creadas"
+                role="tabpanel">
                 <div class="card p-4 mb-4">
                     <h3 class="mb-3">Mis actividades creadas</h3>
                     <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
                         {% for actividad in actividades_creadas %}
                         <div class="col">
-                            <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0" style="min-height: 260px;">
-                                <div class="actividad-bg" style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');"></div>
-                                <div class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
-                                    <h2 class="fw-bold mb-3" style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">{{ actividad.nombre }}</h2>
+                            <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0"
+                                style="min-height: 260px;">
+                                <div class="actividad-bg"
+                                    style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');">
+                                </div>
+                                <div
+                                    class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
+                                    <h2 class="fw-bold mb-3"
+                                        style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">
+                                        {{ actividad.nombre }}</h2>
                                     <button class="btn btn-lg btn-primary ver-mas-btn px-5 py-3 mt-2"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modalActividad{{ actividad.idactividad }}"
@@ -266,39 +311,55 @@
                                         style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(255,193,7,0.18);">
                                         Editar
                                     </button>
-                                    <form action="{{ url_for('borrar_actividad', actividad_id=actividad.idactividad) }}" method="POST" class="d-inline ms-2">
+                                    <form action="{{ url_for('borrar_actividad', actividad_id=actividad.idactividad) }}"
+                                        method="POST" class="d-inline ms-2">
                                         <button type="submit" class="btn btn-danger ver-mas-btn px-4 py-3 mt-2"
                                             style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(220,53,69,0.18);">
                                             Borrar
                                         </button>
                                     </form>
                                     </form>
-                            </div>
                                 </div>
+                            </div>
                         </div>
+
                         
                         <!-- Modal Detalle Actividad -->
-                        <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+                        <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1"
+                            aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
                             <div class="modal-dialog modal-xl modal-dialog-centered">
                                 <div class="modal-content rounded-4">
                                     <div class="modal-header" style="background: #f8fafc;">
-                                        <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabel{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                                        <h2 class="modal-title fw-bold w-100 text-center"
+                                            id="modalActividadLabel{{ actividad.idactividad }}"
+                                            style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
                                             {{ actividad.nombre }}
                                         </h2>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
                                     </div>
                                     <div class="modal-body px-5 py-4">
                                         <div class="mb-4 text-center">
-                                            <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                                            <span class="badge bg-primary fs-4 px-4 py-2 mb-3"
+                                                style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
                                         </div>
                                         <ul class="list-unstyled mb-4" style="font-size: 2rem;">
-                                            <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
-                                            <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha }}</span></li>
-                                            <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
-                                            <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                                            <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{
+                                                    actividad.lugar }}</span></li>
+                                            <li class="mb-3"><strong>🗓️ Fecha:</strong><span style="color:#3b5bdb;">
+                                                    {% set fecha = actividad.fecha.split(' ')[0] if ' ' in
+                                                    actividad.fecha else actividad.fecha.split('T')[0] %}
+                                                    {% set partes = fecha.split('-') %}
+                                                    {{ partes[2] }}/{{ partes[1] }}/{{ partes[0] }}
+                                                </span></li>
+                                            <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{
+                                                    actividad.hora }}</span></li>
+                                            <li class="mb-3"><strong>⏳ Duración:</strong> <span
+                                                    style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
                                         </ul>
                                         <div class="mb-4">
-                                            <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
+                                            <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción
+                                            </h4>
                                             <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
                                         </div>
                                         <div class="mb-4">
@@ -329,17 +390,32 @@
                                                 {% endfor %}
                                             </ul>
                                             {% else %}
-                                            <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
+                                            <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.
+                                            </p>
                                             {% endif %}
                                         </div>
-                                        <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST" class="mt-4">
-                                            <button type="submit" class="btn btn-success btn-lg w-100" style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                        {% if actividad.idactividad in ids_inscrito %}
+                                        <form
+                                            action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
+                                            method="POST" class="d-inline ms-2">
+                                            <button type="submit" class="btn btn-danger btn-lg w-100"
+                                                style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                                Desapuntarme
+                                            </button>
+                                        </form>
+                                        {% else %}
+                                        <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}"
+                                            method="POST" class="d-inline ms-2">
+                                            <button type="submit" class="btn btn-success btn-lg w-100"
+                                                style="font-size: 1.5rem; border-radius: 1.5rem;">
                                                 Apuntarme
                                             </button>
                                         </form>
+                                        {% endif %}
                                     </div>
                                     <div class="modal-footer" style="background: #f8fafc;">
-                                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal"
+                                            style="font-size: 1.2rem;">Cerrar</button>
                                     </div>
                                 </div>
                             </div>
@@ -352,17 +428,25 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Actividades Apuntado -->
-            <div class="tab-pane fade" id="apuntado" role="tabpanel">
+            <div class="tab-pane fade {% if active_tab == 'apuntado' %}show active{% endif %}" id="apuntado"
+                role="tabpanel">
                 <div class="card p-4 mb-4">
                     <h3 class="mb-3">Actividades a las que estoy apuntado</h3>
                     <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
                         {% for actividad in actividades_apuntado %}
                         <div class="col">
-                            <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0" style="min-height: 260px;">
-                                <div class="actividad-bg" style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');"></div>
-                                <div class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
-                                    <h2 class="fw-bold mb-3" style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">{{ actividad.nombre }}</h2>
+                            <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0"
+                                style="min-height: 260px;">
+                                <div class="actividad-bg"
+                                    style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');">
+                                </div>
+                                <div
+                                    class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
+                                    <h2 class="fw-bold mb-3"
+                                        style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">
+                                        {{ actividad.nombre }}</h2>
                                     <button class="btn btn-lg btn-primary ver-mas-btn px-5 py-3 mt-2"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modalActividadApuntado{{ actividad.idactividad }}"
@@ -374,27 +458,41 @@
                         </div>
 
                         <!-- Modal Detalle Actividad para Apuntado -->
-                        <div class="modal fade" id="modalActividadApuntado{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabelApuntado{{ actividad.idactividad }}" aria-hidden="true">
+                        <div class="modal fade" id="modalActividadApuntado{{ actividad.idactividad }}" tabindex="-1"
+                            aria-labelledby="modalActividadLabelApuntado{{ actividad.idactividad }}" aria-hidden="true">
                             <div class="modal-dialog modal-xl modal-dialog-centered">
                                 <div class="modal-content rounded-4">
                                     <div class="modal-header" style="background: #f8fafc;">
-                                        <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabelApuntado{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                                        <h2 class="modal-title fw-bold w-100 text-center"
+                                            id="modalActividadLabelApuntado{{ actividad.idactividad }}"
+                                            style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
                                             {{ actividad.nombre }}
                                         </h2>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Cerrar"></button>
                                     </div>
                                     <div class="modal-body px-5 py-4">
                                         <div class="mb-4 text-center">
-                                            <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                                            <span class="badge bg-primary fs-4 px-4 py-2 mb-3"
+                                                style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
                                         </div>
                                         <ul class="list-unstyled mb-4" style="font-size: 2rem;">
-                                            <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
-                                            <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha }}</span></li>
-                                            <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
-                                            <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                                            <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{
+                                                    actividad.lugar }}</span></li>
+                                            <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">
+                                                    {% set fecha = actividad.fecha.split(' ')[0] if ' ' in
+                                                    actividad.fecha else actividad.fecha.split('T')[0] %}
+                                                    {% set partes = fecha.split('-') %}
+                                                    {{ partes[2] }}/{{ partes[1] }}/{{ partes[0] }}
+                                                </span></li>
+                                            <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{
+                                                    actividad.hora }}</span></li>
+                                            <li class="mb-3"><strong>⏳ Duración:</strong> <span
+                                                    style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
                                         </ul>
                                         <div class="mb-4">
-                                            <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
+                                            <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción
+                                            </h4>
                                             <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
                                         </div>
                                          <div class="mb-4">
@@ -421,10 +519,19 @@
                                             <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
                                             {% endif %}
                                         </div>
-                                    </div>
+                                        <form
+                                            action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
+                                            method="POST" class="mt-4">
+                                            <button type="submit" class="btn btn-danger btn-lg w-100"
+                                                style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                                Desapuntarme
+                                            </button>
+                                        </form>
+                                        <div class="modal-footer" style="background: #f8fafc;">
+                                            <button type="button" class="btn btn-secondary btn-lg"
+                                                data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                                        </div>
                                     
-                                    <div class="modal-footer" style="background: #f8fafc;">
-                                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
                                     </div>
 
                                 </div>
@@ -443,24 +550,32 @@
 
     <!-- Modales de actividades (fuera de las tabs para evitar duplicados) -->
     {% for actividad in actividades_disponibles + actividades_creadas + actividades_apuntado %}
-    <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+    <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1"
+        aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content rounded-4">
                 <div class="modal-header" style="background: #f8fafc;">
-                    <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabel{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                    <h2 class="modal-title fw-bold w-100 text-center"
+                        id="modalActividadLabel{{ actividad.idactividad }}"
+                        style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
                         {{ actividad.nombre }}
                     </h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body px-5 py-4">
                     <div class="mb-4 text-center">
-                        <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                        <span class="badge bg-primary fs-4 px-4 py-2 mb-3" style="font-size: 1.5rem;">{{ actividad.tipo
+                            }}</span>
                     </div>
                     <ul class="list-unstyled mb-4" style="font-size: 2rem;">
-                        <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
-                        <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha }}</span></li>
-                        <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
-                        <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                        <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar
+                                }}</span></li>
+                        <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha
+                                }}</span></li>
+                        <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora
+                                }}</span></li>
+                        <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion
+                                }} min</span></li>
                     </ul>
                     <div class="mb-4">
                         <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
@@ -478,14 +593,17 @@
                         <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
                         {% endif %}
                     </div>
-                    <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST" class="mt-4">
-                        <button type="submit" class="btn btn-success btn-lg w-100" style="font-size: 1.5rem; border-radius: 1.5rem;">
+                    <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST"
+                        class="mt-4">
+                        <button type="submit" class="btn btn-success btn-lg w-100"
+                            style="font-size: 1.5rem; border-radius: 1.5rem;">
                             Apuntarme
                         </button>
                     </form>
                 </div>
                 <div class="modal-footer" style="background: #f8fafc;">
-                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal"
+                        style="font-size: 1.2rem;">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -522,12 +640,13 @@
         <div class="container p-4">
             <div class="row">
                 <div class="col-lg-6 col-md-12 mb-4 mb-md-0 d-flex align-items-center">
-                    <img src="../static/IMAGES/logo_unigen.svg" alt="UniGen Logo" width="50px" height="auto" class="me-3"
-                        style="filter: invert(1);">
+                    <img src="../static/IMAGES/logo_unigen.svg" alt="UniGen Logo" width="50px" height="auto"
+                        class="me-3" style="filter: invert(1);">
                     <div>
                         <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">UniGen</h5>
                         <p class="fst-italic">
-                            UniGen es una plataforma diseñada para conectar personas y fomentar el aprendizaje a través de
+                            UniGen es una plataforma diseñada para conectar personas y fomentar el aprendizaje a través
+                            de
                             actividades únicas.
                         </p>
                     </div>

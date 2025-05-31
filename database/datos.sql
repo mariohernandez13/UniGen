@@ -239,6 +239,3 @@ VALUES
 (10 ,20 ,20),(11 ,21 ,11),(12 ,22 ,13),
 (13 ,23 ,15),(14 ,24 ,17),(15 ,25 ,19);
 
--- Insertar relaciones de creación (Usuarios que han creado actividades)
-INSERT INTO creacion (idusuario, idactividad)
-VALUES (1, 1), (2, 2), (3, 3);

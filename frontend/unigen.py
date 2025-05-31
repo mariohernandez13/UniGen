@@ -111,12 +111,20 @@ def dashboard():
     if lugar:
         actividades_disponibles = [a for a in actividades_disponibles if lugar.lower() in a["lugar"].lower()]
 
+    # Establecer la pestaña activa por defecto como "crear"
+    active_tab = request.args.get("active_tab", "crear")
+
+    # Pasar la lista de IDs de actividades inscritas al contexto
+    ids_inscrito = list(ids_inscrito)
+
     return render_template(
         "dashboard.html",
         actividades_disponibles=actividades_disponibles,
         actividades_creadas=actividades_creadas,
         actividades_apuntado=actividades_apuntado,
-        usuario=usuario
+        usuario=usuario,
+        active_tab=active_tab,
+        ids_inscrito=ids_inscrito
     )
 
 # Endpoint para inscribirse en una actividad
@@ -138,7 +146,8 @@ def inscribirse(actividad_id):
         error_message = response.json().get("message", "Error al inscribirse")
         flash(error_message, "danger")
 
-    return redirect(url_for("dashboard"))
+    # Redirige a la página del dashboard con la pestaña "creadas" activa
+    return redirect(url_for("dashboard", active_tab="creadas"))
 
 # Endpoint para desinscribirse de una actividad
 @app.route("/desinscribirse/<int:actividad_id>", methods=["POST"])
@@ -161,7 +170,8 @@ def desinscribirse(actividad_id):
     except Exception as e:
         flash("Error al conectar con la API.", "danger")
 
-    return redirect(url_for("dashboard"))
+    # Redirige a la página del dashboard with la pestaña "apuntado" activa
+    return redirect(url_for("dashboard", active_tab="apuntado"))
 
 # Endpoint para crear una actividad
 @app.route("/crear_actividad", methods=["POST"])
@@ -255,7 +265,9 @@ def borrar_actividad(actividad_id):
         flash("Actividad borrada correctamente.", "success")
     else:
         flash(response.json().get("message", "Error al borrar la actividad"), "danger")
-    return redirect(url_for("dashboard"))
+    
+    # Redirige a la página del dashboard with la pestaña "disponibles" activa
+    return redirect(url_for("dashboard", active_tab="creadas"))
 
 @app.route("/registro", methods=["GET", "POST"])
 def registro():

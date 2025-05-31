@@ -46,10 +46,4 @@ CREATE TABLE participacion (
     FOREIGN KEY (idactividad) REFERENCES actividad(idactividad) ON DELETE CASCADE
 );
 
-CREATE TABLE creacion (
-    idusuario INT,
-    idactividad INT,
-    PRIMARY KEY (idusuario, idactividad),
-    FOREIGN KEY (idusuario) REFERENCES usuario(idusuario),
-    FOREIGN KEY (idactividad) REFERENCES actividad(idactividad)
-);
+
