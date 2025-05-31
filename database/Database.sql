@@ -11,8 +11,10 @@ CREATE TABLE usuario (
     telefono VARCHAR(20),
     pais VARCHAR(50),
     edad INT,
-    foto VARCHAR(255)
+    foto VARCHAR(255),
+    puntos INT DEFAULT 0
 );
+-- TODO cambiar edad por fecha de nacimiento
 
 CREATE TABLE actividad (
     idactividad INT AUTO_INCREMENT PRIMARY KEY,
@@ -23,7 +25,10 @@ CREATE TABLE actividad (
     tipo VARCHAR(100),
     descripcion TEXT,
     duracion INT,
-    foto VARCHAR(255)
+    foto VARCHAR(255),
+    creador INT,
+    puntos INT DEFAULT 0,
+    FOREIGN KEY (creador) REFERENCES usuario(idusuario)
 );
 
 CREATE TABLE tipo (

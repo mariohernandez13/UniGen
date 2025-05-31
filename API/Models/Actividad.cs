@@ -14,6 +14,7 @@ namespace API.Models
         public string lugar { get; set; }
         public int duracion { get; set; }
         public string foto { get; set; }
+        public int creador { get; set; }
 
         // Relación con Participaciones
         public ICollection<Participacion> Participaciones { get; set; }

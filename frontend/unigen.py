@@ -171,6 +171,13 @@ def crear_actividad():
         flash("Debes iniciar sesión para crear actividades.", "danger")
         return redirect(url_for("index"))
 
+    # Extraer el ID del usuario desde la sesión
+    usuario_id = usuario.get("idusuario")
+    if not usuario_id:
+        flash("Error al obtener el ID del usuario.", "danger")
+        return redirect(url_for("dashboard"))
+
+    # Construir el payload para la actividad
     data = {
         "nombre": request.form.get("nombre"),
         "descripcion": request.form.get("descripcion"),
@@ -179,9 +186,10 @@ def crear_actividad():
         "hora": request.form.get("hora"),
         "lugar": request.form.get("lugar"),
         "duracion": request.form.get("duracion"),
-        "creador": int(usuario["idusuario"])
+        "creadorId": usuario_id  # Incluye el ID del usuario como creador
     }
 
+    # Enviar la solicitud al backend
     response = requests.post(f"{API_BASE_URL}/activity/create", json=data)
 
     if response.status_code == 200:

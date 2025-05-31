@@ -90,12 +90,12 @@
                             <label class="form-label">Tipo</label>
                             <select required class="form-select" name="tipo">
                                 <option value="" disabled selected>Selecciona un tipo</option>
-                                <option value="Ocio">Ocio</option>
-                                <option value="Deporte">Deporte</option>
-                                <option value="Curso">Curso</option>
-                                <option value="Taller">Taller</option>
-                                <option value="Charla">Charla</option>
-                                <option value="Ayuda">Ayuda</option>
+                                <option value="ocio">Ocio</option>
+                                <option value="deporte">Deporte</option>
+                                <option value="curso">Curso</option>
+                                <option value="taller">Taller</option>
+                                <option value="charla">Charla</option>
+                                <option value="ayuda">Ayuda</option>
                             </select>
                         </div>
                         <div class="col-md-12">
@@ -117,10 +117,6 @@
                         <div class="col-md-3">
                             <label class="form-label">Duración (min)</label>
                             <input required type="number" class="form-control" name="duracion">
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Imagen</label>
-                            <input type="file" class="form-control" name="foto" accept="image/*">
                         </div>
                         <div class="col-12">
                             <button class="btn btn-success w-100" type="submit">Crear Actividad</button>
@@ -188,7 +184,14 @@
                                             </div>
                                             <ul class="list-unstyled mb-4" style="font-size: 2rem;">
                                                 <li class="mb-3"><strong>📍 Lugar:</strong> <span style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
-                                                <li class="mb-3"><strong>🗓️ Fecha:</strong> <span style="color:#3b5bdb;">{{ actividad.fecha }}</span></li>
+                                                <li class="mb-3">
+                                                    <strong>🗓️ Fecha:</strong>
+                                                    <span style="color:#3b5bdb;">
+                                                        {% set fecha = actividad.fecha.split(' ')[0] if ' ' in actividad.fecha else actividad.fecha.split('T')[0] %}
+                                                        {% set partes = fecha.split('-') %}
+                                                        {{ partes[2] }}/{{ partes[1] }}/{{ partes[0] }}
+                                                    </span>
+                                                </li>
                                                 <li class="mb-3"><strong>🕒 Hora:</strong> <span style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
                                                 <li class="mb-3"><strong>⏳ Duración:</strong> <span style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
                                             </ul>
@@ -197,7 +200,9 @@
                                                 <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
                                             </div>
                                             <div class="mb-4">
-                                                <h5 class="fw-bold mb-2" style="font-size: 2rem;">Participantes inscritos</h5>
+                                                <h5 class="fw-bold mb-2" style="font-size: 2rem;">
+                                                    Participantes inscritos: {{ actividad.num_participantes }}
+                                                </h5>
                                                 {% if actividad.num_participantes > 0 %}
                                                 <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
                                                     {% for participante in actividad.participantes %}
@@ -246,8 +251,18 @@
                                         style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(59,91,219,0.18);">
                                         Ver más
                                     </button>
-                                </div>
+                                    <button class="btn btn-warning ver-mas-btn px-4 py-3 mt-2 ms-2"
+                                        style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(255,193,7,0.18);">
+                                        Editar
+                                    </button>
+                                    <form action="" method="POST" class="d-inline ms-2">
+                                        <button type="submit" class="btn btn-danger ver-mas-btn px-4 py-3 mt-2"
+                                            style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(220,53,69,0.18);">
+                                            Borrar
+                                        </button>
+                                    </form>
                             </div>
+                                </div>
                         </div>
                         <!-- Modal Detalle Actividad -->
                         <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
@@ -274,7 +289,9 @@
                                             <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
                                         </div>
                                         <div class="mb-4">
-                                            <h5 class="fw-bold mb-2" style="font-size: 2rem;">Participantes inscritos</h5>
+                                            <h5 class="fw-bold mb-2" style="font-size: 2rem;">
+                                                Participantes inscritos: {{ actividad.num_participantes }}
+                                            </h5>
                                             {% if actividad.num_participantes > 0 %}
                                             <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
                                                 {% for participante in actividad.participantes %}
@@ -318,19 +335,20 @@
                                     <h2 class="fw-bold mb-3" style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">{{ actividad.nombre }}</h2>
                                     <button class="btn btn-lg btn-primary ver-mas-btn px-5 py-3 mt-2"
                                         data-bs-toggle="modal"
-                                        data-bs-target="#modalActividad{{ actividad.idactividad }}"
+                                        data-bs-target="#modalActividadApuntado{{ actividad.idactividad }}"
                                         style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(59,91,219,0.18);">
                                         Ver más
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <!-- Modal Detalle Actividad -->
-                        <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+
+                        <!-- Modal Detalle Actividad para Apuntado -->
+                        <div class="modal fade" id="modalActividadApuntado{{ actividad.idactividad }}" tabindex="-1" aria-labelledby="modalActividadLabelApuntado{{ actividad.idactividad }}" aria-hidden="true">
                             <div class="modal-dialog modal-xl modal-dialog-centered">
                                 <div class="modal-content rounded-4">
                                     <div class="modal-header" style="background: #f8fafc;">
-                                        <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabel{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                                        <h2 class="modal-title fw-bold w-100 text-center" id="modalActividadLabelApuntado{{ actividad.idactividad }}" style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
                                             {{ actividad.nombre }}
                                         </h2>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -349,23 +367,6 @@
                                             <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">Descripción</h4>
                                             <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
                                         </div>
-                                        <div class="mb-4">
-                                            <h5 class="fw-bold mb-2" style="font-size: 2rem;">Participantes inscritos</h5>
-                                            {% if actividad.num_participantes > 0 %}
-                                            <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
-                                                {% for participante in actividad.participantes %}
-                                                <li class="list-group-item">{{ participante }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                            {% else %}
-                                            <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
-                                            {% endif %}
-                                        </div>
-                                        <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST" class="mt-4">
-                                            <button type="submit" class="btn btn-success btn-lg w-100" style="font-size: 1.5rem; border-radius: 1.5rem;">
-                                                Apuntarme
-                                            </button>
-                                        </form>
                                     </div>
                                     <div class="modal-footer" style="background: #f8fafc;">
                                         <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
@@ -435,18 +436,6 @@
     </div>
     {% endfor %}
 
-    <script>
-function filtrarActividades() {
-    const tipo = document.getElementById('filtroTipo').value;
-    const fecha = document.getElementById('filtroFecha').value;
-    const lugar = document.getElementById('filtroLugar').value;
-    let params = [];
-    if (tipo) params.push('tipo=' + encodeURIComponent(tipo));
-    if (fecha) params.push('fecha=' + encodeURIComponent(fecha));
-    if (lugar) params.push('lugar=' + encodeURIComponent(lugar));
-    window.location.href = '/dashboard?' + params.join('&');
-}
-</script>
 
     <div class="modal fade" id="confirmarModal" tabindex="-1" aria-labelledby="confirmarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

@@ -81,6 +81,13 @@ public class ActivityController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(new { message = "Datos inválidos", errors = ModelState });
 
+        // Validar que el creador existe en la base de datos
+        var creadorActividad = await _context.usuario
+            .FirstOrDefaultAsync(u => u.idusuario == actividadDTO.CreadorId);
+
+        if (creadorActividad == null)
+            return NotFound(new { message = "Creador de la actividad no encontrado" });
+
         // Asignar una foto dependiendo del tipo de actividad
         string fotoAsignada = actividadDTO.Tipo.ToLower() switch
         {
@@ -103,7 +110,8 @@ public class ActivityController : ControllerBase
             hora = actividadDTO.Hora,
             lugar = actividadDTO.Lugar,
             duracion = actividadDTO.Duracion,
-            foto = fotoAsignada
+            foto = fotoAsignada,
+            creador = actividadDTO.CreadorId  // Asignar el ID del creador
         };
 
 

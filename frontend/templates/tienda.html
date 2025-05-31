@@ -9,80 +9,100 @@
         <title>UniGen | Tienda</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-      
+
         <link rel="icon" href="../static/IMAGES/logo_unigen.svg" class="imagen">
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/navbar.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/tienda.css') }}">
-        
-   
+
+
 
     </head>
 </head>
 
 <body>
-
+    <!-- Botones para controlar la lectura -->
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <button id="playContentButton" class="btn btn-primary" aria-label="Reproducir contenido de la página">
+            <i class="bi bi-volume-up"></i> Escuchar contenido
+        </button>
+        <button id="pauseButton" class="btn btn-warning" aria-label="Pausar lectura">⏸️ Pausar</button>
+        <button id="resumeButton" class="btn btn-success" aria-label="Reanudar lectura">▶️ Reanudar</button>
+        <button id="stopButton" class="btn btn-danger" aria-label="Detener lectura">🛑 Detener</button>
+    </div>
 
     <!-- Modal de Contacto -->
     {% include 'modal_contacto.html' %}
 
-   
-    <nav class="navbar navbar-expand-lg navbar-expand-md px-4">
-        <a class="navbar-brand d-flex align-items-center" href="inicio">
-            <img src="../static/IMAGES/logo_unigen.svg" width="50px" height="auto">
+    <nav class="navbar navbar-expand-lg navbar-expand-md px-4" role="navigation" aria-label="Menú principal">
+        <a class="navbar-brand d-flex align-items-center" href="inicio" aria-label="Ir a Inicio">
+            <img src="../static/IMAGES/logo_unigen.svg" width="50px" height="auto" alt="Logo UniGen">
             <span class="ms-2 fw-bold logo-text" style="font-size: 1.5rem; letter-spacing: 1px;">UniGen</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Abrir menú de navegación">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="ms-auto collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-5">
-                <a class="nav-link px-3 " href="inicio" id="link1"><i class="fa-solid fa-house"></i> Inicio</a>
-                <a class="nav-link px-3 " href="dashboard" id="link2"><i class="fa-solid fa-file-pen"></i> Actividades</a>
-                <a class="nav-link px-3 active" href="tienda" id="link3"><i class="fa-solid fa-cart-shopping"></i> Tienda</a>
-                <a class="nav-link px-3" href="sobrenosotros" id="link4"><i class="fa-solid fa-circle-info"></i> Sobre nosotros</a>
-                <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"><i
-                        class="fa-solid fa-paper-plane"></i> Contacto</a>
-                  <a class="nav-link px-3" href="modal_Usuario" id="link6" ><i
+                <a class="nav-link px-3" href="inicio" id="link1" aria-label="Ir a Inicio"><i
+                        class="fa-solid fa-house"></i> Inicio</a>
+                <a class="nav-link px-3" href="dashboard" id="link2" aria-label="Ir a Actividades"><i
+                        class="fa-solid fa-file-pen"></i> Actividades</a>
+                <a class="nav-link px-3 active" href="tienda" id="link3" aria-label="Ir a Tienda"><i
+                        class="fa-solid fa-cart-shopping"></i> Tienda</a>
+                <a class="nav-link px-3" href="sobrenosotros" id="link4" aria-label="Ir a Sobre Nosotros"><i
+                        class="fa-solid fa-circle-info"></i> Sobre nosotros</a>
+                <a class="nav-link px-3" href="#" id="link5" data-bs-toggle="modal" data-bs-target="#contactModal"
+                    aria-label="Abrir modal de contacto"><i class="fa-solid fa-paper-plane"></i> Contacto</a>
+                <a class="nav-link px-3" href="modal_Usuario" id="link6" aria-label="Ir a Mi Perfil"><i
                         class="fa-solid fa-user"></i> Mi perfil</a>
             </div>
-            <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"><i
-                    class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
+            <a class="nav-link px-3 ms-auto" href="/" id="link7" style="margin-left: auto;"
+                aria-label="Cerrar sesión"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
         </div>
     </nav>
 
-    <div class="tienda-container container my-5" style="max-width: 1800px; font-size: 1.5rem;">
+    <div class="tienda-container container my-5" role="main" aria-label="Contenido principal de la tienda">
         <!-- Encabezado de la tienda -->
-        <section class="tienda-header text-center mb-5">
-            <h1 class="display-4 fw-bold tienda-title">Bienvenido a la Tienda UniGen</h1>
+        <section class="tienda-header text-center mb-5" aria-labelledby="tienda-title">
+            <h1 id="tienda-title" class="display-4 fw-bold tienda-title">Bienvenido a la Tienda UniGen</h1>
             <p class="lead tienda-desc text-muted">
                 Descubre ofertas, personaliza tu perfil y apoya causas solidarias.
             </p>
         </section>
 
         <!-- Sección de Ofertas -->
-        <section class="tienda-ofertas mb-5">
-            <h2 class="section-title mb-4 text-primary"><i class="bi bi-stars"></i> Ofertas Especiales</h2>
+        <section class="tienda-ofertas mb-5" aria-labelledby="ofertas-title">
+            <h2 id="ofertas-title" class="section-title mb-4 text-primary"><i class="bi bi-stars"></i> Ofertas
+                Especiales</h2>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6">
-                    <div class="card oferta-card h-100">
-                        <img src="../static/IMAGES/tienda/cashback.png" class="card-img-top" alt="Oferta 1">
+                    <div class="card oferta-card h-100" role="article" aria-labelledby="oferta1-title">
+                        <img src="../static/IMAGES/tienda/cashback.png" class="card-img-top"
+                            alt="Imagen de oferta Pack de Créditos x2">
                         <div class="card-body">
-                            <h5 class="card-title fw-bold">Pack de Créditos x2</h5>
-                            <p class="card-text">¡Duplica tus créditos por tiempo limitado! Ideal para avanzar más rápido en tus actividades y desbloquear recompensas exclusivas.</p>
-                            <button class="btn btn-warning w-100 fw-bold btn-lg py-3">Canjear 500 <i class="bi bi-coin"></i></button>
+                            <h5 id="oferta1-title" class="card-title fw-bold">Pack de Créditos x2</h5>
+                            <p class="card-text">¡Duplica tus créditos por tiempo limitado! Ideal para avanzar más
+                                rápido en tus actividades y desbloquear recompensas exclusivas.</p>
+                            <button class="btn btn-warning w-100 fw-bold btn-lg py-3"
+                                aria-label="Canjear oferta Pack de Créditos x2">Canjear 500 <i
+                                    class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
-            
+
                 <div class="col-lg-4 col-md-6">
                     <div class="card oferta-card h-100">
-                        <img src="../static/IMAGES/tienda/clothes-hanger.png" class="card-img-top" alt="Descuento Accesorio">
+                        <img src="../static/IMAGES/tienda/clothes-hanger.png" class="card-img-top"
+                            alt="Descuento Accesorio">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Descuento en Accesorio</h5>
-                            <p class="card-text">Obtén un 30% de descuento en cualquier accesorio de la tienda. ¡Personaliza tu perfil a un precio especial por tiempo limitado!</p>
-                            <button class="btn btn-success w-100 fw-bold btn-lg py-3">Canjear 250 <i class="bi bi-coin"></i></button>
+                            <p class="card-text">Obtén un 30% de descuento en cualquier accesorio de la tienda.
+                                ¡Personaliza tu perfil a un precio especial por tiempo limitado!</p>
+                            <button class="btn btn-success w-100 fw-bold btn-lg py-3"
+                                aria-label="Canjear descuento en accesorio">Canjear 250 <i
+                                    class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -92,8 +112,10 @@
                         <img src="../static/IMAGES/tienda/raffle.png" class="card-img-top" alt="Oferta 4">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Sorteo Mensual</h5>
-                            <p class="card-text">Participa en el sorteo mensual de UniGen y gana premios exclusivos. ¡Cuantos más tickets, más oportunidades!</p>
-                            <button class="btn btn-primary w-100 fw-bold btn-lg py-3">Canjear 150 <i class="bi bi-coin"></i></button>
+                            <p class="card-text">Participa en el sorteo mensual de UniGen y gana premios exclusivos.
+                                ¡Cuantos más tickets, más oportunidades!</p>
+                            <button class="btn btn-primary w-100 fw-bold btn-lg py-3"
+                                aria-label="Canjear sorteo mensual">Canjear 150 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -102,105 +124,138 @@
 
         <!-- Sección de Canje de Artículos -->
         <section class="tienda-articulos mb-5">
-            <h2 class="section-title mb-4 text-secondary display-5"><i class="bi bi-person-badge"></i> Personaliza tu Perfil</h2>
+            <h2 class="section-title mb-4 text-secondary display-5"><i class="bi bi-person-badge"></i> Personaliza tu
+                Perfil</h2>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/crown.png" class="card-img-top mx-auto" style="width:120px;" alt="Corona">
+                        <img src="../static/IMAGES/tienda/crown.png" class="card-img-top mx-auto" style="width:120px;"
+                            alt="Corona">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Corona Real</h5>
-                            <p class="card-text fs-5 text-muted">Haz que tu perfil brille con esta corona exclusiva. Perfecta para quienes lideran en las actividades y quieren ser reconocidos.</p>
-                            <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4">Canjear 10000 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Haz que tu perfil brille con esta corona exclusiva.
+                                Perfecta para quienes lideran en las actividades y quieren ser reconocidos.</p>
+                            <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Corona Real">Canjear 10000 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/graduate-hat.png" class="card-img-top mx-auto" style="width:120px;" alt="Gorro">
+                        <img src="../static/IMAGES/tienda/graduate-hat.png" class="card-img-top mx-auto"
+                            style="width:120px;" alt="Gorro">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Gorro de Graduación</h5>
-                            <p class="card-text fs-5 text-muted">Demuestra tu éxito académico con estilo. Ideal para celebrar logros y compartir tu progreso con amigos.</p>
-                            <button class="btn btn-outline-primary w-100 fw-bold btn-xl py-4 fs-4">Canjear 5350 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Demuestra tu éxito académico con estilo. Ideal para
+                                celebrar logros y compartir tu progreso con amigos.</p>
+                            <button class="btn btn-outline-primary w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Gorro de Graduación">Canjear 5350 <i
+                                    class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/cap.png" class="card-img-top mx-auto" style="width:120px;" alt="Gafas">
+                        <img src="../static/IMAGES/tienda/cap.png" class="card-img-top mx-auto" style="width:120px;"
+                            alt="Gafas">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Gafas Cool</h5>
-                            <p class="card-text fs-5 text-muted">Dale un toque moderno a tu avatar. Perfectas para quienes buscan un look fresco y divertido.</p>
-                            <button class="btn btn-outline-dark w-100 fw-bold btn-xl py-4 fs-4">Canjear 4200 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Dale un toque moderno a tu avatar. Perfectas para
+                                quienes buscan un look fresco y divertido.</p>
+                            <button class="btn btn-outline-dark w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Gafas Cool">Canjear 4200 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/party-hat.png" class="card-img-top mx-auto" style="width:120px;" alt="Estrella">
+                        <img src="../static/IMAGES/tienda/party-hat.png" class="card-img-top mx-auto"
+                            style="width:120px;" alt="Estrella">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Estrella Dorada</h5>
-                            <p class="card-text fs-5 text-muted">Destaca entre los demás con esta estrella. Ideal para quienes han alcanzado metas importantes.</p>
-                            <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4">Canjear 3250 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Destaca entre los demás con esta estrella. Ideal para
+                                quienes han alcanzado metas importantes.</p>
+                            <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Estrella Dorada">Canjear 3250 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/chef.png" class="card-img-top mx-auto" style="width:120px;" alt="Capa">
+                        <img src="../static/IMAGES/tienda/chef.png" class="card-img-top mx-auto" style="width:120px;"
+                            alt="Capa">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Capa de Superhéroe</h5>
-                            <p class="card-text fs-5 text-muted">Convierte tu avatar en un héroe. Perfecta para quienes ayudan a otros y colaboran en la comunidad.</p>
-                            <button class="btn btn-outline-danger w-100 fw-bold btn-xl py-4 fs-4">Canjear 2500 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Convierte tu avatar en un héroe. Perfecta para quienes
+                                ayudan a otros y colaboran en la comunidad.</p>
+                            <button class="btn btn-outline-danger w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Capa de Superhéroe">Canjear 2500 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/wizard-hat.png" class="card-img-top mx-auto" style="width:120px;" alt="Medalla">
+                        <img src="../static/IMAGES/tienda/wizard-hat.png" class="card-img-top mx-auto"
+                            style="width:120px;" alt="Medalla">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Medalla de Participación</h5>
-                            <p class="card-text fs-5 text-muted">Reconoce tu esfuerzo y constancia en UniGen. ¡Presume tu compromiso!</p>
-                            <button class="btn btn-outline-success w-100 fw-bold btn-xl py-4 fs-4">Canjear 1180 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Reconoce tu esfuerzo y constancia en UniGen. ¡Presume
+                                tu compromiso!</p>
+                            <button class="btn btn-outline-success w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Medalla de Participación">Canjear 1180 <i
+                                    class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/medal.png" class="card-img-top mx-auto" style="width:120px;" alt="Corazón">
+                        <img src="../static/IMAGES/tienda/medal.png" class="card-img-top mx-auto" style="width:120px;"
+                            alt="Corazón">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Corazón Solidario</h5>
-                            <p class="card-text fs-5 text-muted">Muestra tu lado solidario con este ícono especial en tu perfil.</p>
-                            <button class="btn btn-outline-danger w-100 fw-bold btn-xl py-4 fs-4">Canjear 920 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Muestra tu lado solidario con este ícono especial en tu
+                                perfil.</p>
+                            <button class="btn btn-outline-danger w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Corazón Solidario">Canjear 920 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/military-rank (1).png" class="card-img-top mx-auto" style="width:120px;" alt="Auriculares">
+                        <img src="../static/IMAGES/tienda/military-rank (1).png" class="card-img-top mx-auto"
+                            style="width:120px;" alt="Auriculares">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Auriculares Gamer</h5>
-                            <p class="card-text fs-5 text-muted">Para los amantes de la música y los videojuegos. ¡Haz que tu avatar suene genial!</p>
-                            <button class="btn btn-outline-info w-100 fw-bold btn-xl py-4 fs-4">Canjear 500 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Para los amantes de la música y los videojuegos. ¡Haz
+                                que tu avatar suene genial!</p>
+                            <button class="btn btn-outline-info w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Auriculares Gamer">Canjear 500 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/military-rank.png" class="card-img-top mx-auto" style="width:120px;" alt="Copa">
+                        <img src="../static/IMAGES/tienda/military-rank.png" class="card-img-top mx-auto"
+                            style="width:120px;" alt="Copa">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Copa de Campeón</h5>
-                            <p class="card-text fs-5 text-muted">Demuestra que eres el mejor en UniGen con esta copa exclusiva.</p>
-                            <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4">Canjear 300 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Demuestra que eres el mejor en UniGen con esta copa
+                                exclusiva.</p>
+                            <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Copa de Campeón">Canjear 300 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/military-rank (2).png" class="card-img-top mx-auto" style="width:120px;" alt="Robot">
+                        <img src="../static/IMAGES/tienda/military-rank (2).png" class="card-img-top mx-auto"
+                            style="width:120px;" alt="Robot">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Robot Inteligente</h5>
-                            <p class="card-text fs-5 text-muted">Agrega un toque tecnológico y divertido a tu perfil.</p>
-                            <button class="btn btn-outline-secondary w-100 fw-bold btn-xl py-4 fs-4">Canjear 280 <i class="bi bi-coin"></i></button>
+                            <p class="card-text fs-5 text-muted">Agrega un toque tecnológico y divertido a tu perfil.
+                            </p>
+                            <button class="btn btn-outline-secondary w-100 fw-bold btn-xl py-4 fs-4"
+                                aria-label="Canjear Robot Inteligente">Canjear 280 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -216,8 +271,11 @@
                         <img src="../static/IMAGES/tienda/classroom.png" class="card-img-top" alt="Caridad 1">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Educación para Todos</h5>
-                            <p class="card-text">Ayuda a niños a acceder a una educación de calidad. Tu donación se destina a becas y materiales escolares.</p>
-                            <button class="btn btn-outline-danger w-100 fw-bold btn-lg py-3">Donar 20900 <i class="bi bi-coin"></i></button>
+                            <p class="card-text">Ayuda a niños a acceder a una educación de calidad. Tu donación se
+                                destina a becas y materiales escolares.</p>
+                            <button class="btn btn-outline-danger w-100 fw-bold btn-lg py-3"
+                                aria-label="Donar a Educación para Todos">Donar 20900 <i
+                                    class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -226,8 +284,10 @@
                         <img src="../static/IMAGES/tienda/healthcare.png" class="card-img-top" alt="Caridad 2">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Salud y Bienestar</h5>
-                            <p class="card-text">Contribuye a proyectos de salud y nutrición. Apoya campañas de vacunación y alimentación saludable.</p>
-                            <button class="btn btn-outline-success w-100 fw-bold btn-lg py-3">Donar 2000 <i class="bi bi-coin"></i></button>
+                            <p class="card-text">Contribuye a proyectos de salud y nutrición. Apoya campañas de
+                                vacunación y alimentación saludable.</p>
+                            <button class="btn btn-outline-success w-100 fw-bold btn-lg py-3"
+                                aria-label="Donar a Salud y Bienestar">Donar 2000 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -236,8 +296,10 @@
                         <img src="../static/IMAGES/tienda/footprint.png" class="card-img-top" alt="Caridad 3">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Protección Animal</h5>
-                            <p class="card-text">Apoya refugios y rescates de animales. Tu ayuda permite alimentar, cuidar y buscar hogar a mascotas necesitadas.</p>
-                            <button class="btn btn-outline-info w-100 fw-bold btn-lg py-3">Donar 2000 <i class="bi bi-coin"></i></button>
+                            <p class="card-text">Apoya refugios y rescates de animales. Tu ayuda permite alimentar,
+                                cuidar y buscar hogar a mascotas necesitadas.</p>
+                            <button class="btn btn-outline-info w-100 fw-bold btn-lg py-3"
+                                aria-label="Donar a Protección Animal">Donar 2000 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -247,8 +309,10 @@
                         <img src="../static/IMAGES/tienda/save-the-planet.png" class="card-img-top" alt="Caridad 4">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Medio Ambiente</h5>
-                            <p class="card-text">Contribuye a la reforestación y limpieza de espacios naturales. Ayuda a crear un mundo más verde para todos.</p>
-                            <button class="btn btn-outline-primary w-100 fw-bold btn-lg py-3">Donar 2000 <i class="bi bi-coin"></i></button>
+                            <p class="card-text">Contribuye a la reforestación y limpieza de espacios naturales. Ayuda a
+                                crear un mundo más verde para todos.</p>
+                            <button class="btn btn-outline-primary w-100 fw-bold btn-lg py-3"
+                                aria-label="Donar a Medio Ambiente">Donar 2000 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -256,76 +320,77 @@
         </section>
     </div>
 
-  
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
+    <script src="{{ url_for('static', filename='../static/JS/speech.js') }}"></script>
 </body>
 
 
-    <footer class="bg-dark text-center text-lg-start mt-5 text-white">
-        <div class="container p-4">
-            <div class="row">
-                <div class="col-lg-6 col-md-12 mb-4 mb-md-0 d-flex align-items-center">
-                    <img src="../static/IMAGES/logo_unigen.svg" alt="UniGen Logo" width="50px" height="auto" class="me-3"
-                        style="filter: invert(1);">
-                    <div>
-                        <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">UniGen</h5>
-                        <p class="fst-italic">
-                            UniGen es una plataforma diseñada para conectar personas y fomentar el aprendizaje a través de
-                            actividades únicas.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Enlaces</h5>
-                    <ul class="list-unstyled mb-0">
-                        <li><a href="inicio" class="text-white text-decoration-none">Inicio</a></li>
-                        <li><a href="dashboard" class="text-white text-decoration-none">Actividades</a></li>
-                        <li><a href="tienda" class="text-white text-decoration-none">Tienda</a></li>
-                        <li><a href="sobrenosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Síguenos</h5>
-                    <ul class="list-unstyled d-flex justify-content-start">
-                        <li>
-                            <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
-                                <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
-                                <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/unigen_ufv/" class="text-white me-3"
-                                style="transition: transform 0.3s;">
-                                <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-white" style="transition: transform 0.3s;">
-                                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-white ms-3" style="transition: transform 0.3s;">
-                                <i class="bi bi-youtube" style="font-size: 1.5rem;"></i>
-                            </a>
-                        </li>
-                    </ul>
+<footer class="bg-dark text-center text-lg-start mt-5 text-white">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0 d-flex align-items-center">
+                <img src="../static/IMAGES/logo_unigen.svg" alt="UniGen Logo" width="50px" height="auto" class="me-3"
+                    style="filter: invert(1);">
+                <div>
+                    <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">UniGen</h5>
+                    <p class="fst-italic">
+                        UniGen es una plataforma diseñada para conectar personas y fomentar el aprendizaje a través de
+                        actividades únicas.
+                    </p>
                 </div>
             </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Enlaces</h5>
+                <ul class="list-unstyled mb-0">
+                    <li><a href="inicio" class="text-white text-decoration-none">Inicio</a></li>
+                    <li><a href="dashboard" class="text-white text-decoration-none">Actividades</a></li>
+                    <li><a href="tienda" class="text-white text-decoration-none">Tienda</a></li>
+                    <li><a href="sobrenosotros" class="text-white text-decoration-none">Sobre Nosotros</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase fw-bold" style="letter-spacing: 1px;">Síguenos</h5>
+                <ul class="list-unstyled d-flex justify-content-start">
+                    <li>
+                        <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                            <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white me-3" style="transition: transform 0.3s;">
+                            <i class="bi bi-twitter" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/unigen_ufv/" class="text-white me-3"
+                            style="transition: transform 0.3s;">
+                            <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white" style="transition: transform 0.3s;">
+                            <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-white ms-3" style="transition: transform 0.3s;">
+                            <i class="bi bi-youtube" style="font-size: 1.5rem;"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.5);">
-        <div class="text-center p-3 text-white">
-            <p>&copy; 2025 ROAR SL - Ingeniería Informática UFV</p>
-            <p>Proyecto UniGen</p>
-        </div>
-    </footer>
+    </div>
+    <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.5);">
+    <div class="text-center p-3 text-white">
+        <p>&copy; 2025 ROAR SL - Ingeniería Informática UFV</p>
+        <p>Proyecto UniGen</p>
+    </div>
+</footer>
 
 </html>
