@@ -243,6 +243,19 @@ def login():
     else:
         return f"Error en la conexión con la API: {response.text}", response.status_code
     
+@app.route("/borrar_actividad/<int:actividad_id>", methods=["POST"])
+def borrar_actividad(actividad_id):
+    usuario = session.get("usuario")
+    if not usuario:
+        flash("Debes iniciar sesión para borrar actividades.", "danger")
+        return redirect(url_for("index"))
+
+    response = requests.delete(f"{API_BASE_URL}/activity/delete/{actividad_id}")
+    if response.status_code == 200:
+        flash("Actividad borrada correctamente.", "success")
+    else:
+        flash(response.json().get("message", "Error al borrar la actividad"), "danger")
+    return redirect(url_for("dashboard"))
 
 @app.route("/registro", methods=["GET", "POST"])
 def registro():

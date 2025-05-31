@@ -43,7 +43,7 @@ CREATE TABLE participacion (
     puntos INT DEFAULT 0,
     PRIMARY KEY (idusuario, idactividad),
     FOREIGN KEY (idusuario) REFERENCES usuario(idusuario),
-    FOREIGN KEY (idactividad) REFERENCES actividad(idactividad)
+    FOREIGN KEY (idactividad) REFERENCES actividad(idactividad) ON DELETE CASCADE
 );
 
 CREATE TABLE creacion (

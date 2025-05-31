@@ -255,11 +255,12 @@
                                         style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(255,193,7,0.18);">
                                         Editar
                                     </button>
-                                    <form action="" method="POST" class="d-inline ms-2">
+                                    <form action="{{ url_for('borrar_actividad', actividad_id=actividad.idactividad) }}" method="POST" class="d-inline ms-2">
                                         <button type="submit" class="btn btn-danger ver-mas-btn px-4 py-3 mt-2"
                                             style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(220,53,69,0.18);">
                                             Borrar
                                         </button>
+                                    </form>
                                     </form>
                             </div>
                                 </div>
