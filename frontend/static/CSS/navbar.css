@@ -3,6 +3,51 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    font-size: 1.7rem;
+    width: 100%;
+    overflow-x: auto; /* Permite scroll horizontal si es necesario */
+    flex-wrap: wrap;  /* Permite que los elementos bajen a otra línea */
+}
+
+/* Asegura que la barra de navegación y los enlaces se ajusten y no se desborden */
+.navbar-nav {
+    flex-wrap: wrap !important;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.nav-link, .navbar-brand, .logo-text {
+    font-size: 1.7rem !important;
+    white-space: nowrap; /* Evita que los enlaces se partan en varias líneas */
+}
+
+/* Dispositivos medianos */
+@media (max-width: 1200px) {
+    .navbar, .nav-link, .navbar-brand, .logo-text {
+        font-size: 1.4rem !important;
+    }
+}
+
+/* Tablets y pantallas pequeñas */
+@media (max-width: 900px) {
+    .navbar, .nav-link, .navbar-brand, .logo-text {
+        font-size: 1.1rem !important;
+    }
+    .navbar-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+}
+
+/* Móviles */
+@media (max-width: 600px) {
+    .navbar, .nav-link, .navbar-brand, .logo-text {
+        font-size: 0.95rem !important;
+    }
+    .navbar-nav {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
 }
 
 body {
@@ -18,7 +63,7 @@ body {
 }
 
 .active {
-    background-color: #cece22;
+    background-color: #f5f506;
 }
 
 .nav-link {
