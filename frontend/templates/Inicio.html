@@ -290,58 +290,50 @@
 
 
 
-        <!-- Apartado de Mis Actividades -->
+        <!-- Apartado de Mis Actividades (ELIMINADO) -->
+        <!-- Sustituido por la sección de Testimonios de Usuarios -->
+
+        <!-- Sección de Testimonios de Usuarios -->
         <div class="container mt-5">
-            <!-- Mensaje de bienvenida -->
-
-            <!-- Título de la sección -->
-            <div class="mt-4 text-center"></div>
-            <h2 class="mb-4 text-center"><i class="bi bi-list-check text-primary me-2"></i>Mis Actividades</h2>
-        </div>
-
-        {% if usuario.actividades|length == 0 %}
-        <div class="text-center p-4 bg-light rounded shadow-sm">
-            <p class="text-muted mb-0">No tienes actividades inscritas actualmente.</p>
-            <p class="text-muted">¡Explora las actividades disponibles y comienza a participar!</p>
-            <a href="dashboard" class="btn btn-primary mt-3"><i class="bi bi-search me-2"></i>Explorar
-                Actividades</a>
-        </div>
-        {% else %}
-        <div class="row">
-            {% for actividad in usuario.actividades %}
-            <div class="col-12 col-md-6 col-lg-3 d-flex justify-content-center mb-4">
-                <div class="card" style="width: 18rem" ;>
-                    <div class="image-container position-relative">
-                        <img class="card-img" src="{{ url_for('static', filename='IMAGES/' + actividad.foto) }}"
-                            alt="Imagen de la actividad" style="width: 100%; height: 200px; object-fit: cover;">
-                        <div class="descripcion text-center">{{ actividad.descripcion }}</div>
-                        <div class="overlay">
-                            <div class="title-bg">
-                                <h5 class="card-title">{{ actividad.nombre }}</h5>
-                            </div>
-                        </div>
+            <h2 class="mb-4 text-center"><i class="bi bi-chat-quote text-primary me-2"></i>Lo que opinan nuestros usuarios
+            </h2>
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0 text-center p-4">
+                        <img src="../static/IMAGES/testimonio1.jpg" alt="Usuario 1"
+                            class="rounded-circle mx-auto mb-3"
+                            style="width: 90px; height: 90px; object-fit: cover;">
+                        <h5 class="fw-bold mb-1">María López</h5>
+                        <p class="text-muted mb-2">Estudiante de Psicología</p>
+                        <p class="fst-italic">"UniGen me ha permitido conocer gente increíble y participar en actividades que
+                            nunca habría imaginado. ¡Repetiré sin duda!"</p>
                     </div>
-                    <div class="card-body small">
-                        <p class="mb-1"><strong>🕒 Hora:</strong> {{ actividad.hora }}</p>
-                        <p class="mb-1"><strong>📍 Lugar:</strong> {{ actividad.lugar }}</p>
-                        <p class="mb-1"><strong>🕒 Duración:</strong> {{ actividad.duracion }}</p>
-                        <p class="mb-3"><strong>⌛ Fecha:</strong> {{ actividad.fecha }} </p>
-                        <div class="d-flex gap-2">
-                            <!-- Botón para desapuntarse -->
-                            <form action="{{ url_for('desinscribirse', actividad_id=actividad.idactividad) }}"
-                                method="POST">
-                                <input type="hidden" name="idusuario" value="{{ usuario.idusuario }}">
-                                <button type="submit" class="btn btn-danger">Desapuntarse</button>
-                            </form>
-                            <button class="btn btn-primary mas_informacion">Ver Detalles</button>
-                        </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0 text-center p-4">
+                        <img src="../static/IMAGES/testimonio2.jpg" alt="Usuario 2"
+                            class="rounded-circle mx-auto mb-3"
+                            style="width: 90px; height: 90px; object-fit: cover;">
+                        <h5 class="fw-bold mb-1">Carlos Pérez</h5>
+                        <p class="text-muted mb-2">Ingeniero Informático</p>
+                        <p class="fst-italic">"Gracias a UniGen he podido aprender nuevas habilidades y sentirme parte de una
+                            comunidad activa y solidaria."</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm h-100 border-0 text-center p-4">
+                        <img src="../static/IMAGES/testimonio3.jpg" alt="Usuario 3"
+                            class="rounded-circle mx-auto mb-3"
+                            style="width: 90px; height: 90px; object-fit: cover;">
+                        <h5 class="fw-bold mb-1">Lucía Fernández</h5>
+                        <p class="text-muted mb-2">Profesora de Arte</p>
+                        <p class="fst-italic">"Las actividades culturales y los talleres de UniGen son de gran calidad. ¡Muy
+                            recomendable para todos!"</p>
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
-        {% endif %}
-    </div>
+
     </div>
 
     <!-- Modal de Contacto -->

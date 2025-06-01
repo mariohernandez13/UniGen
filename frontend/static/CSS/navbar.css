@@ -3,7 +3,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    font-size: 1.7rem;
+    font-size: 1.7rem !important;
     width: 100%;
     overflow-x: auto; /* Permite scroll horizontal si es necesario */
     flex-wrap: wrap;  /* Permite que los elementos bajen a otra línea */

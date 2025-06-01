@@ -214,6 +214,54 @@ h3 {
     margin-top: 1rem;
 }
 
+/* Tamaño de fuente MUY grande y responsive para Sobre Nosotros */
+
+
+body, .container, .card, .card-body, .navbar, .nav-link, .btn, .lead, h1, h2, h3, h5, p, .card-title, ul, li {
+    font-size: 1.5rem !important;
+}
+
+h1, .logo, .title-with-logo h1 {
+    font-size: 4rem !important;
+}
+
+h2 {
+    font-size: 2.7rem !important;
+}
+
+h3 {
+    font-size: 2rem !important;
+}
+
+p, li, .lead, .tagline {
+    font-size: 1.5rem !important;
+}
+
+/* Responsive: reduce progresivamente en pantallas pequeñas */
+@media (max-width: 1200px) {
+    html { font-size: 22px; }
+    h1, .logo, .title-with-logo h1 { font-size: 3rem !important; }
+    h2 { font-size: 2.1rem !important; }
+    h3 { font-size: 1.5rem !important; }
+    p, li, .lead, .tagline { font-size: 1.2rem !important; }
+}
+
+@media (max-width: 900px) {
+    html { font-size: 18px; }
+    h1, .logo, .title-with-logo h1 { font-size: 2.2rem !important; }
+    h2 { font-size: 1.5rem !important; }
+    h3 { font-size: 1.1rem !important; }
+    p, li, .lead, .tagline { font-size: 1.05rem !important; }
+}
+
+@media (max-width: 600px) {
+    html { font-size: 18px; }
+    h1, .logo, .title-with-logo h1 { font-size: 1.8rem !important; }
+    h2 { font-size: 1.5rem !important; }
+    h3 { font-size: 1.4rem !important; }
+    p, li, .lead, .tagline { font-size: 1.3rem !important; }
+}
+
 @media (max-width: 768px) {
     .team-grid {
         grid-template-columns: 1fr;
