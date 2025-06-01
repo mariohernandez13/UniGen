@@ -2,6 +2,7 @@ namespace API.Models.DTOs
 {
     public class ActividadDTO
     {
+        public int IdActividad { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Tipo { get; set; }
@@ -10,8 +11,6 @@ namespace API.Models.DTOs
         public string Lugar { get; set; }
         public int Duracion { get; set; }
         public int CreadorId { get; set; }
-        //public string Foto { get; set; }
-        // public string Organizador { get; set; }
-
+        public int Puntos { get; set; } // <--- ASEGÚRATE DE QUE EXISTE
     }
 }

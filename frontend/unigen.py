@@ -182,13 +182,18 @@ def crear_actividad():
         flash("Debes iniciar sesión para crear actividades.", "danger")
         return redirect(url_for("index"))
 
-    # Extraer el ID del usuario desde la sesión
     usuario_id = usuario.get("idusuario")
     if not usuario_id:
         flash("Error al obtener el ID del usuario.", "danger")
         return redirect(url_for("dashboard"))
 
-    # Construir el payload para la actividad
+    # Obtén la duración en minutos
+    duracion = int(request.form.get("duracion", 0))
+    # Calcula los puntos: 50 puntos por cada 60 minutos
+    puntos = max(50, (duracion // 60) * 50)
+    if duracion % 60 != 0:
+        puntos += 50  # Si hay minutos extra, suma otros 50 puntos
+
     data = {
         "nombre": request.form.get("nombre"),
         "descripcion": request.form.get("descripcion"),
@@ -196,11 +201,11 @@ def crear_actividad():
         "fecha": request.form.get("fecha"),
         "hora": request.form.get("hora"),
         "lugar": request.form.get("lugar"),
-        "duracion": request.form.get("duracion"),
-        "creadorId": usuario_id  # Incluye el ID del usuario como creador
+        "duracion": duracion,
+        "creadorId": usuario_id,
+        "puntos": puntos  # Añade los puntos calculados
     }
 
-    # Enviar la solicitud al backend
     response = requests.post(f"{API_BASE_URL}/activity/create", json=data)
 
     if response.status_code == 200:

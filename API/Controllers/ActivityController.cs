@@ -111,7 +111,8 @@ public class ActivityController : ControllerBase
             lugar = actividadDTO.Lugar,
             duracion = actividadDTO.Duracion,
             foto = fotoAsignada,
-            creador = actividadDTO.CreadorId  // Asignar el ID del creador
+            creador = actividadDTO.CreadorId,  // Asignar el ID del creador
+            Puntos = actividadDTO.Puntos // Asegúrate de que este campo exista en tu modelo
         };
 
 
