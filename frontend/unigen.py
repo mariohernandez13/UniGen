@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for, j
 import requests
 import os
 from werkzeug.utils import secure_filename
+from flask import render_template_string
 
 app = Flask(__name__)
 
@@ -355,6 +356,157 @@ def subir_foto():
             print("Error:", response.text)
             flash("Error al actualizar la foto de perfil en el servidor", "danger")
     return redirect(url_for("inicio"))
+
+@app.route("/filtrar_actividades_disponibles")
+def filtrar_actividades_disponibles():
+    usuario = session.get("usuario")
+    if not usuario:
+        return "", 401
+
+    usuario_id = usuario["idusuario"]
+
+    # Obtener todas las actividades
+    response = requests.get(f"{API_BASE_URL}/activity/all")
+    actividades = response.json() if response.status_code == 200 else []
+
+    # Obtener IDs de actividades a las que estoy apuntado
+    response_inscripciones = requests.get(f"{API_BASE_URL}/activity/user/{usuario_id}/subscriptions")
+    inscripciones = response_inscripciones.json() if response_inscripciones.status_code == 200 else []
+
+    # Obtener actividades creadas por el usuario (usando campo 'creador')
+    actividades_creadas = [a for a in actividades if str(a.get("creador")) == str(usuario_id)]
+
+    # Actividades disponibles (no creadas ni inscritas)
+    ids_creadas = {a["idactividad"] for a in actividades_creadas}
+    ids_inscrito = set(inscripciones)
+    actividades_disponibles = [
+        a for a in actividades
+        if a["idactividad"] not in ids_creadas and a["idactividad"] not in ids_inscrito
+    ]
+
+    # Filtros GET para actividades disponibles (corrige formato y mayúsculas)
+    tipo = request.args.get("tipo")
+    fecha = request.args.get("fecha")
+    lugar = request.args.get("lugar")
+    if tipo:
+        actividades_disponibles = [a for a in actividades_disponibles if a["tipo"].lower() == tipo.lower()]
+    if fecha:
+        actividades_disponibles = [a for a in actividades_disponibles if a["fecha"].startswith(fecha)]
+    if lugar:
+        actividades_disponibles = [a for a in actividades_disponibles if lugar.lower() in a["lugar"].lower()]
+
+    # Añadir participantes y contador a las actividades filtradas
+    for actividad in actividades_disponibles:
+        participantes_response = requests.get(f"{API_BASE_URL}/activity/{actividad['idactividad']}/participantes")
+        participantes = participantes_response.json() if participantes_response.status_code == 200 else []
+        actividad["num_participantes"] = len(participantes)
+        actividad["participantes"] = participantes
+
+    # Renderiza SOLO el bloque de actividades en el MISMO formato que dashboard.html espera
+    bloque_html = """
+    <div class="row row-cols-1 row-cols-md-2 g-5 justify-content-center">
+    {% for actividad in actividades_disponibles %}
+        <div class="col">
+            <div class="card actividad-card shadow-lg w-100 text-white position-relative overflow-hidden p-0" style="min-height: 260px;">
+                <div class="actividad-bg" style="background-image: url('{{ url_for('static', filename='IMAGES/' + actividad.foto) }}');"></div>
+                <div class="actividad-overlay d-flex flex-column justify-content-center align-items-start h-100 p-5">
+                    <h2 class="fw-bold mb-3" style="font-size: 2.7rem; letter-spacing: 1px; text-shadow: 0 2px 12px #0008;">{{ actividad.nombre }}</h2>
+                    <button class="btn btn-lg btn-primary ver-mas-btn px-5 py-3 mt-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalActividad{{ actividad.idactividad }}"
+                        style="font-size: 1.6rem; border-radius: 2rem; font-weight: 700; box-shadow: 0 2px 12px rgba(59,91,219,0.18);">
+                        Ver más
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Detalle Actividad -->
+        <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1"
+            aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content rounded-4">
+                    <div class="modal-header" style="background: #f8fafc;">
+                        <h2 class="modal-title fw-bold w-100 text-center"
+                            id="modalActividadLabel{{ actividad.idactividad }}"
+                            style="font-size: 2.8rem; color: #3b5bdb; letter-spacing: 1px;">
+                            {{ actividad.nombre }}
+                        </h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body px-5 py-4">
+                        <div class="mb-4 text-center">
+                            <span class="badge bg-primary fs-4 px-4 py-2 mb-3"
+                                style="font-size: 1.5rem;">{{ actividad.tipo }}</span>
+                        </div>
+                        <ul class="list-unstyled mb-4" style="font-size: 2rem;">
+                            <li class="mb-3"><strong>📍 Lugar:</strong> <span
+                                    style="color:#3b5bdb;">{{ actividad.lugar }}</span></li>
+                            <li class="mb-3">
+                                <strong>🗓️ Fecha:</strong>
+                                <span style="color:#3b5bdb;">
+                                    {% set fecha = actividad.fecha.split(' ')[0] if ' ' in actividad.fecha else actividad.fecha.split('T')[0] %}
+                                    {% set partes = fecha.split('-') %}
+                                    {{ partes[2] }}/{{ partes[1] }}/{{ partes[0] }}
+                                </span>
+                            </li>
+                            <li class="mb-3"><strong>🕒 Hora:</strong> <span
+                                    style="color:#3b5bdb;">{{ actividad.hora }}</span></li>
+                            <li class="mb-3"><strong>⏳ Duración:</strong> <span
+                                    style="color:#3b5bdb;">{{ actividad.duracion }} min</span></li>
+                        </ul>
+                        <div class="mb-4">
+                            <h4 class="fw-bold text-secondary" style="font-size: 2.2rem;">
+                                Descripción</h4>
+                            <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="fw-bold mb-2" style="font-size: 2rem;">
+                                Participantes inscritos: {{ actividad.num_participantes }}
+                            </h5>
+                            {% if actividad.num_participantes > 0 %}
+                            <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
+                                {% for participante in actividad.participantes %}
+                                <li class="list-group-item d-flex align-items-center justify-content-between">
+                                    <span class="flex-grow-1">{{ participante.nombre }}</span>
+                                    <button type="button"
+                                        class="btn btn-outline-info btn-sm ms-2"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalPerfilUsuario{{ participante.idusuario }}"
+                                        title="Ver perfil"> Ver Perfil
+                                        <i class="bi bi-person-circle"></i>
+                                    </button>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
+                            {% endif %}
+                        </div>
+                        <form action="{{ url_for('inscribirse', actividad_id=actividad.idactividad) }}" method="POST"
+                            class="mt-4">
+                            <button type="submit" class="btn btn-success btn-lg w-100"
+                                style="font-size: 1.5rem; border-radius: 1.5rem;">
+                                Apuntarme
+                            </button>
+                        </form>
+                    </div>
+                    <div class="modal-footer" style="background: #f8fafc;">
+                        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal"
+                            style="font-size: 1.2rem;">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fin Modal -->
+    {% endfor %}
+    {% if actividades_disponibles|length == 0 %}
+        <div class="col-12 text-center text-muted">No hay actividades disponibles.</div>
+    {% endif %}
+    </div>
+    """
+
+    return render_template_string(bloque_html, actividades_disponibles=actividades_disponibles)
 
 if __name__ == "__main__":
     app.run(debug=True)
