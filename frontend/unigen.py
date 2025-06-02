@@ -315,52 +315,43 @@ def allowed_file(filename):
 
 @app.route("/subir_foto", methods=["POST"])
 def subir_foto():
-
     if "foto" not in request.files:
         flash("No se seleccionó ninguna imagen", "danger")
-        return redirect(url_for("inicio"))
+        return redirect(url_for("modal_usuario"))
 
     file = request.files["foto"]
-
     if file.filename == "":
         flash("Nombre de archivo vacio", "danger")
-        return redirect(url_for("inicio"))
+        return redirect(url_for("modal_usuario"))
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-
         if not os.path.exists(app.config["UPLOAD_FOLDER"]):
             os.makedirs(app.config["UPLOAD_FOLDER"])
-
-
         filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         file.save(filepath)
 
         usuario = session.get("usuario")
         usuario["foto"] = filename
-        
-        # Construir el payload con toda la información del usuario
-        usuarioCompleto = {
-            "idusuario": usuario["idusuario"],
-            "username": usuario["username"],
-            "password": usuario["password"], 
-            "email": usuario["email"],
-            "telefono": usuario["telefono"],
-            "pais": usuario["pais"],
-            "edad": usuario["edad"],
-            "foto": usuario["foto"] 
-        }
 
-        # Enviar la solicitud PUT al backend para actualizar el usuario
-        response = requests.put(f"{API_BASE_URL}/auth/update/{usuario['idusuario']}", json=usuarioCompleto)
+        # Envía todos los datos, incluida la nueva foto
+        data = {
+            "username": usuario["username"],
+            "email": usuario["email"],
+            "telefono": usuario.get("telefono", ""),
+            "ciudad": usuario.get("ciudad", ""),
+            "estudios": usuario.get("estudios", ""),
+            "foto": filename
+        }
+        response = requests.put(f"{API_BASE_URL}/auth/usuario/{usuario['idusuario']}/editar_perfil", json=data)
 
         if response.status_code == 200:
-            session["usuario"] = usuarioCompleto  # Actualizar la sesión con los nuevos datos
+            usuario.update(data)
+            session["usuario"] = usuario
             flash("Foto de perfil actualizada correctamente", "success")
         else:
-            print("Error:", response.text)
             flash("Error al actualizar la foto de perfil en el servidor", "danger")
-    return redirect(url_for("inicio"))
+    return redirect(url_for("modal_usuario"))
 
 @app.route("/filtrar_actividades_disponibles")
 def filtrar_actividades_disponibles():
@@ -512,6 +503,36 @@ def filtrar_actividades_disponibles():
     """
 
     return render_template_string(bloque_html, actividades_disponibles=actividades_disponibles)
+
+@app.route("/editar_perfil", methods=["POST"])
+def editar_perfil():
+    usuario = session.get("usuario")
+    if not usuario:
+        flash("Debes iniciar sesión.", "danger")
+        return redirect(url_for("modal_usuario"))
+
+    usuario_id = usuario["idusuario"]
+    data = {
+        "username": request.form.get("username", ""),
+        "email": request.form.get("email", ""),
+        "telefono": request.form.get("telefono", ""),
+        "foto": usuario.get("foto", "default-avatar.svg")
+    }
+    response = requests.put(f"{API_BASE_URL}/auth/usuario/{usuario_id}/editar_perfil", json=data)
+    print("STATUS:", response.status_code)
+    print("RESPUESTA:", response.text)
+    if response.status_code == 200:
+        # Refresca los datos del usuario desde la API
+        user_response = requests.get(f"{API_BASE_URL}/auth/users")
+        if user_response.status_code == 200:
+            usuarios = user_response.json()
+            usuario_actualizado = next((u for u in usuarios if u["idusuario"] == usuario_id), None)
+            if usuario_actualizado:
+                session["usuario"] = usuario_actualizado
+        flash("Perfil actualizado correctamente.", "success")
+    else:
+        flash("No se pudo actualizar el perfil. " + response.text, "danger")
+    return redirect(url_for("modal_usuario"))
 
 if __name__ == "__main__":
     app.run(debug=True)

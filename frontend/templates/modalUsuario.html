@@ -75,7 +75,7 @@
                             <span class="text-secondary fw-semibold ms-2 fs-5">puntos</span>
                         </div>
                       </div>
-                      <a href="#" class="btn btn-outline-secondary btn-lg px-5 mt-3 fs-6 fs-md-5 fs-lg-4">
+                      <a href="#" class="btn btn-outline-secondary btn-lg px-5 mt-3 fs-6 fs-md-5 fs-lg-4" data-bs-toggle="modal" data-bs-target="#modalEditarPerfil">
                         <i class="bi bi-pencil"></i> Editar perfil
                       </a>
                     </div>
@@ -131,6 +131,44 @@
       </div>
     </div>
   {% include 'modal_contacto.html' %}
+    <!-- Modal Editar Perfil -->
+<div class="modal fade" id="modalEditarPerfil" tabindex="-1" aria-labelledby="modalEditarPerfilLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form class="modal-content" method="POST" action="{{ url_for('editar_perfil') }}">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEditarPerfilLabel">Editar perfil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="username" class="form-label">Nombre de usuario</label>
+          <input type="text" class="form-control" id="username" name="username" value="{{ usuario.username }}" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo</label>
+          <input type="email" class="form-control" id="email" name="email" value="{{ usuario.email }}" required>
+        </div>
+        <div class="mb-3">
+          <label for="telefono" class="form-label">Teléfono</label>
+          <input type="text" class="form-control" id="telefono" name="telefono" value="{{ usuario.telefono }}">
+        </div>
+        <div class="mb-3">
+          <label for="ciudad" class="form-label">Ciudad</label>
+          <input type="text" class="form-control" id="ciudad" name="ciudad" value="{{ usuario.ciudad }}">
+        </div>
+        <div class="mb-3">
+          <label for="estudios" class="form-label">Estudios</label>
+          <input type="text" class="form-control" id="estudios" name="estudios" value="{{ usuario.estudios }}">
+        </div>
+        <!-- Agrega más campos si lo necesitas -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
     <footer class="bg-dark text-center text-lg-start mt-5 text-white">
       <div class="container p-4">
         <div class="row">

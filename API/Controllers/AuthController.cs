@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Text.Json;
 
 /// <summary>
 /// Controlador para autenticación de usuarios.
@@ -134,5 +135,21 @@ public class AuthController : ControllerBase
         _context.usuario.Remove(usuario);
         await _context.SaveChangesAsync();
         return Ok(new { message = "Usuario eliminado" });
+    }
+
+    [HttpPut("usuario/{idusuario}/editar_perfil")]
+    public async Task<IActionResult> EditarPerfil(int idusuario, [FromBody] JsonElement body)
+    {
+        var usuario = await _context.usuario.FindAsync(idusuario);
+        if (usuario == null) return NotFound();
+
+        usuario.username = body.GetProperty("username").GetString();
+        usuario.email = body.GetProperty("email").GetString();
+        usuario.telefono = body.GetProperty("telefono").GetString();
+        if (body.TryGetProperty("foto", out var fotoProp))
+            usuario.foto = fotoProp.GetString();
+
+        await _context.SaveChangesAsync();
+        return Ok();
     }
 }
