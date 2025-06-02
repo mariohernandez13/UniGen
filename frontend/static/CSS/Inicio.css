@@ -401,22 +401,30 @@
   /* Sombra para destacar el texto */
 }
 
-body, .container, .card, .card-body, .carousel-caption, .navbar, .nav-link, .btn, .lead, h1, h2, h5, p, .card-title {
+body {
     font-size: 1.25rem !important;
 }
 
-h1, .display-4 {
-    font-size: 3rem !important;
+
+
+/* Móviles pequeños */
+@media (max-width: 400px) {
+    footer {
+        font-size: 0.85rem;
+    }
 }
 
-h2 {
-    font-size: 2.2rem !important;
+/* Tamaño grande para las fotos de perfil en testimonios */
+.card .rounded-circle.mx-auto.mb-3,
+.card .rounded-circle.mx-auto {
+    width: 190px !important;
+    height: 190px !important;
+    object-fit: cover;
 }
 
-.card-title, .carousel-caption h5 {
-    font-size: 1.5rem !important;
-}
-
-.lead, .card-text, .carousel-caption p {
-    font-size: 1.25rem !important;
+/* Si quieres que solo afecte a la sección de testimonios, puedes ser más específico: */
+.container .card .rounded-circle.mx-auto.mb-3 {
+    width: 190px !important;
+    height: 190px !important;
+    object-fit: cover;
 }

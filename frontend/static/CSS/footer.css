@@ -1,0 +1,32 @@
+/* Tamaño de letra del footer adaptable según el tamaño de pantalla */
+footer {
+    font-size: 1.25rem;
+}
+
+/* Pantallas grandes (escritorio ancho) */
+@media (min-width: 1400px) {
+    footer {
+        font-size: 1.5rem;
+    }
+}
+
+/* Portátiles y tablets grandes */
+@media (max-width: 1200px) {
+    footer {
+        font-size: 1.15rem;
+    }
+}
+
+/* Tablets y portátiles pequeños */
+@media (max-width: 900px) {
+    footer {
+        font-size: 1rem;
+    }
+}
+
+/* Móviles grandes */
+@media (max-width: 600px) {
+    footer {
+        font-size: 0.95rem;
+    }
+}

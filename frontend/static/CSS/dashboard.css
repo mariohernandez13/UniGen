@@ -397,24 +397,8 @@
 
 /* SOLO agranda el contenido principal del dashboard, NO el navbar ni el footer */
 
-.tab-content,
-.tab-pane,
-.mb-4,
-#actividadesDisponibles,
-#actividadesTabsContent,
-.actividad-card,
-.actividad-overlay,
-.card,
-.card-body,
-.form-label,
-.form-control,
-.form-select,
-.list-group-item,
-ul,
-li,
-p,
-h1, h2, h3, h4, h5, h6,
-label {
+body
+ {
     font-size: 1.7rem !important;
 }
 
@@ -436,24 +420,8 @@ input, select, textarea, .form-control, .form-select {
 }
 
 @media (max-width: 992px) {
-    .tab-content,
-    .tab-pane,
-    .mb-4,
-    #actividadesDisponibles,
-    #actividadesTabsContent,
-    .actividad-card,
-    .actividad-overlay,
-    .card,
-    .card-body,
-    .form-label,
-    .form-control,
-    .form-select,
-    .list-group-item,
-    ul,
-    li,
-    p,
-    h1, h2, h3, h4, h5, h6,
-    label {
+   
+body{
         font-size: 1.15rem !important;
     }
     .btn, .btn-lg, .btn-primary, .btn-success, .btn-secondary, .ver-mas-btn {
