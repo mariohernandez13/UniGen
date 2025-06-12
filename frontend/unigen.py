@@ -99,7 +99,7 @@ def dashboard():
             participantes_response = requests.get(f"{API_BASE_URL}/activity/{actividad['idactividad']}/participantes")
             participantes = participantes_response.json() if participantes_response.status_code == 200 else []
             actividad["num_participantes"] = len(participantes)
-            actividad["participantes"] = [p["nombre"] for p in participantes]
+            actividad["participantes"] = participantes  # <-- Aquí guardas el objeto completo
 
     # Filtros GET para actividades disponibles
     tipo = request.args.get("tipo")
@@ -240,7 +240,7 @@ def login():
     if response.status_code == 200:
         usuario = response.json().get("usuario")
         
-        # Guardar todo en la sesión
+        # Guardar todo en la sesión, incluyendo puntos
         session["usuario"] = {
             "idusuario": usuario["idusuario"],
             "username": usuario["username"],
@@ -249,7 +249,8 @@ def login():
             "telefono": usuario.get("telefono"),
             "pais": usuario.get("pais"),
             "edad": usuario.get("edad"),
-            "foto": usuario.get("foto", "default-avatar.svg")
+            "foto": usuario.get("foto", "default-avatar.svg"),
+            "puntos": usuario.get("puntos", 0)  # <-- AÑADE ESTA LÍNEA
         }
         
         return redirect(url_for("inicio"))
@@ -533,6 +534,30 @@ def editar_perfil():
     else:
         flash("No se pudo actualizar el perfil. " + response.text, "danger")
     return redirect(url_for("modal_usuario"))
+
+@app.route("/validar_creditos", methods=["POST"])
+def validar_creditos():
+    data = request.json
+    idusuario = data.get("idusuario")
+    idactividad = data.get("idactividad")
+    puntos = data.get("puntos")
+    if idusuario is None or idactividad is None or puntos is None:
+        return jsonify({"success": False, "message": "Datos incompletos"}), 400
+
+    response = requests.post(
+        f"{API_BASE_URL}/auth/sumar_creditos",
+        json={"idusuario": int(idusuario), "idactividad": int(idactividad), "puntos": int(puntos)}
+    )
+    if response.status_code == 200:
+        # Actualiza los puntos en la sesión
+        nuevos_puntos = response.json().get("puntos")
+        usuario = session.get("usuario")
+        if usuario and nuevos_puntos is not None:
+            usuario["puntos"] = nuevos_puntos
+            session["usuario"] = usuario
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False, "message": "Error al validar créditos"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

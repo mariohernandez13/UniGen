@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models
 {
-    public class Participacion
+    public class ParticipacionDTO
     {
         public int idusuario { get; set; }
         public int idactividad { get; set; }

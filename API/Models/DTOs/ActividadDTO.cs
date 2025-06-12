@@ -11,6 +11,7 @@ namespace API.Models.DTOs
         public string Lugar { get; set; }
         public int Duracion { get; set; }
         public int CreadorId { get; set; }
-        public int Puntos { get; set; } // <--- ASEGÚRATE DE QUE EXISTE
+        public int puntos { get; set; } // <--- ASEGÚRATE DE QUE EXISTE
+        
     }
 }

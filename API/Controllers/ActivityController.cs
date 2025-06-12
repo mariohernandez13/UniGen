@@ -57,16 +57,19 @@ public class ActivityController : ControllerBase
     {
         var participantes = await _context.participacion
             .Where(p => p.idactividad == idActividad)
+            .Include(p => p.Usuario)
+
             .Select(p => new
             {
                 p.idusuario,
-                Nombre = _context.usuario
-                    .Where(u => u.idusuario == p.idusuario)
-                    .Select(u => u.username)
-                    .FirstOrDefault()
+                nombre = p.Usuario.username,
+                email = p.Usuario.email,
+                foto = p.Usuario.foto,
+                creditos_validados = p.creditos_validados,
+                puntos = p.puntos
             })
             .ToListAsync();
-        
+
         return Ok(participantes);
     }
 
@@ -112,7 +115,7 @@ public class ActivityController : ControllerBase
             duracion = actividadDTO.Duracion,
             foto = fotoAsignada,
             creador = actividadDTO.CreadorId,  // Asignar el ID del creador
-            Puntos = actividadDTO.Puntos // Asegúrate de que este campo exista en tu modelo
+            puntos = actividadDTO.puntos // Asegúrate de que este campo exista en tu modelo
         };
 
 
@@ -162,7 +165,9 @@ public class ActivityController : ControllerBase
         var participacion = new Participacion
         {
             idusuario = idUsuario,
-            idactividad = id
+            idactividad = id,
+            puntos = actividad.puntos, // <-- GUARDA LOS PUNTOS DE LA ACTIVIDAD
+            creditos_validados = false // <-- ¡Siempre inicializa a false!
         };
 
         _context.participacion.Add(participacion);

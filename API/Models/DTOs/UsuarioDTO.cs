@@ -20,5 +20,6 @@ namespace API.Models
         public int edad { get; set; }
         public string foto { get; set; }
 
+        public int puntos { get; set; }
     }
 }

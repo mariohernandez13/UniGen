@@ -57,7 +57,8 @@ public class AuthController : ControllerBase
             telefono = userDto.telefono,
             pais = userDto.pais,
             edad = userDto.edad,
-            foto = "default-avatar.svg"
+            foto = "default-avatar.svg",
+            puntos = 0 // Inicializar puntos a 0
         };
 
         _context.usuario.Add(usuario);
@@ -90,7 +91,8 @@ public class AuthController : ControllerBase
                 usuario.telefono,
                 usuario.pais,
                 usuario.edad,
-                foto = usuario.foto ?? "default-avatar.svg"
+                foto = usuario.foto ?? "default-avatar.svg",
+                puntos = usuario.puntos 
             }
         });
     }
@@ -115,6 +117,7 @@ public class AuthController : ControllerBase
         existingUser.pais = usuario.pais;
         existingUser.edad = usuario.edad;
         existingUser.foto = usuario.foto ?? existingUser.foto;
+        existingUser.puntos = usuario.puntos;
 
 
         await _context.SaveChangesAsync();
@@ -151,5 +154,31 @@ public class AuthController : ControllerBase
 
         await _context.SaveChangesAsync();
         return Ok();
+    }
+
+    [HttpPost("sumar_creditos")]
+    public async Task<IActionResult> SumarCreditos([FromBody] JsonElement body)
+    {
+        int idusuario = body.GetProperty("idusuario").GetInt32();
+        int idactividad = body.GetProperty("idactividad").GetInt32();
+        int puntos = body.GetProperty("puntos").GetInt32();
+
+        var usuario = await _context.usuario.FindAsync(idusuario);
+        if (usuario == null) return NotFound();
+
+        usuario.puntos = usuario.puntos + puntos;
+
+        // Marca la participación como validada
+        var participacion = await _context.participacion
+            .FirstOrDefaultAsync(p => p.idusuario == idusuario && p.idactividad == idactividad);
+        if (participacion != null)
+        {
+            participacion.creditos_validados = true;
+            _context.Entry(participacion).Property(x => x.creditos_validados).IsModified = true; // <-- FUERZA EL UPDATE
+        }
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new { puntos = usuario.puntos });
     }
 }

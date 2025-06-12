@@ -153,7 +153,7 @@
                             <input type="text" class="form-control" name="lugar" id="filtroLugar" placeholder="Lugar">
                         </div>
                         <div class="col-md-3">
-                           <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
                         </div>
                     </form>
                     <div id="actividadesDisponibles">
@@ -228,19 +228,34 @@
                                                 {% if actividad.num_participantes > 0 %}
                                                 <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
                                                     {% for participante in actividad.participantes %}
-                                                      <li class="list-group-item d-flex align-items-center justify-content-between">
-                                                    <span class="flex-grow-1">{{ participante }}</span>
-                                                    <button type="button"
-                                                        class="btn btn-outline-info btn-sm ms-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalPerfilUsuario{{ participante.idusuario }}"
-                                                        title="Ver perfil"> Ver Perfil
-                                                        <i class="bi bi-person-circle"></i>
-                                                    </button>
-                                                </li>
-                                                  
+                                                    <li
+                                                        class="list-group-item d-flex align-items-center justify-content-between">
+                                                        <span class="flex-grow-1">{{ participante.nombre }}</span>
+                                                        <span class="ms-3">
+                                                            <button type="button"
+                                                                class="btn btn-outline-info btn-sm me-2"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modalPerfilUsuario{{ participante.idusuario }}"
+                                                                title="Ver perfil"> Ver Perfil
+                                                                <i class="bi bi-person-circle"></i>
+                                                            </button>
+                                                            {% if participante.creditos_validados == 1 or
+                                                            participante.creditos_validados == '1' or
+                                                            participante.creditos_validados is true %}
+
+                                                            <button type="button"
+                                                                class="btn btn-outline-success btn-sm btn-validar-creditos"
+                                                                data-idusuario="{{ participante.idusuario }}"
+                                                                data-idactividad="{{ actividad.idactividad }}"
+                                                                data-puntos="{{ actividad.puntos }}"
+                                                                title="Validar créditos">
+                                                                <i class="bi bi-patch-check"></i> Validar créditos
+                                                            </button>
+                                                            {% endif %}
+                                                        </span>
+                                                    </li>
                                                     {% endfor %}
-                                                    
+
                                                 </ul>
                                                 {% else %}
                                                 <p class="text-muted" style="font-size: 1.3rem;">No hay participantes
@@ -323,7 +338,7 @@
                             </div>
                         </div>
 
-                        
+
                         <!-- Modal Detalle Actividad -->
                         <div class="modal fade" id="modalActividad{{ actividad.idactividad }}" tabindex="-1"
                             aria-labelledby="modalActividadLabel{{ actividad.idactividad }}" aria-hidden="true">
@@ -369,24 +384,26 @@
                                             {% if actividad.num_participantes > 0 %}
                                             <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
                                                 {% for participante in actividad.participantes %}
-                                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                                    <span class="flex-grow-1">{{ participante }}</span>
+                                                <li
+                                                    class="list-group-item d-flex align-items-center justify-content-between">
+                                                    <span class="flex-grow-1">{{ participante.nombre }}</span>
                                                     <span class="ms-3">
-                                                        <button type="button"
-                                                            class="btn btn-outline-info btn-sm me-2"
+                                                        <button type="button" class="btn btn-outline-info btn-sm me-2"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalPerfilUsuario{{ participante.idusuario }}"
                                                             title="Ver perfil"> Ver Perfil
                                                             <i class="bi bi-person-circle"></i>
                                                         </button>
                                                         <button type="button"
-                                                            class="btn btn-outline-success btn-sm"
+                                                            class="btn btn-outline-success btn-sm btn-validar-creditos"
+                                                            data-idusuario="{{ participante.idusuario }}"
+                                                            data-idactividad="{{ actividad.idactividad }}"
+                                                            data-puntos="{{ actividad.puntos }}"
                                                             title="Validar créditos">
                                                             <i class="bi bi-patch-check"></i> Validar créditos
                                                         </button>
                                                     </span>
                                                 </li>
-
                                                 {% endfor %}
                                             </ul>
                                             {% else %}
@@ -428,7 +445,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Actividades Apuntado -->
             <div class="tab-pane fade {% if active_tab == 'apuntado' %}show active{% endif %}" id="apuntado"
                 role="tabpanel">
@@ -495,17 +512,17 @@
                                             </h4>
                                             <p style="font-size: 1.7rem;">{{ actividad.descripcion }}</p>
                                         </div>
-                                         <div class="mb-4">
+                                        <div class="mb-4">
                                             <h5 class="fw-bold mb-2" style="font-size: 2rem;">
                                                 Participantes inscritos: {{ actividad.num_participantes }}
                                             </h5>
                                             {% if actividad.num_participantes > 0 %}
                                             <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
                                                 {% for participante in actividad.participantes %}
-                                                <li class="list-group-item d-flex align-items-center justify-content-between">
-                                                    <span class="flex-grow-1">{{ participante }}</span>
-                                                    <button type="button"
-                                                        class="btn btn-outline-info btn-sm ms-2"
+                                                <li
+                                                    class="list-group-item d-flex align-items-center justify-content-between">
+                                                    <span class="flex-grow-1">{{ participante.nombre }}</span>
+                                                    <button type="button" class="btn btn-outline-info btn-sm ms-2"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalPerfilUsuario{{ participante.idusuario }}"
                                                         title="Ver perfil"> Ver Perfil
@@ -516,7 +533,8 @@
                                                 {% endfor %}
                                             </ul>
                                             {% else %}
-                                            <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.</p>
+                                            <p class="text-muted" style="font-size: 1.3rem;">No hay participantes aún.
+                                            </p>
                                             {% endif %}
                                         </div>
                                         <form
@@ -528,10 +546,10 @@
                                             </button>
                                         </form>
                                         <div class="modal-footer" style="background: #f8fafc;">
-                                            <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal"
-                                                style="font-size: 1.2rem;">Cerrar</button>
+                                            <button type="button" class="btn btn-secondary btn-lg"
+                                                data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
                                         </div>
-                                    
+
                                     </div>
 
                                 </div>
@@ -701,68 +719,101 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.btn-validar-creditos').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const idusuario = btn.getAttribute('data-idusuario');
+                    const idactividad = btn.getAttribute('data-idactividad');
+                    const puntos = btn.getAttribute('data-puntos');
+                    fetch('/validar_creditos', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ idusuario: idusuario, idactividad: idactividad, puntos: puntos })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                btn.style.display = 'none';
+                                Swal.fire('¡Créditos enviados!', 'Los créditos han sido validados correctamente.', 'success');
+                            } else {
+                                Swal.fire('Error', data.message || 'No se pudo validar créditos.', 'error');
+                            }
+                        })
+                        .catch(() => {
+                            Swal.fire('Error', 'No se pudo validar créditos.', 'error');
+                        });
+                });
+            });
+        });
+    </script>
     <script src="{{ url_for('static', filename='../static/JS/dashboard.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
     <script>
-document.getElementById('filtroForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const params = new URLSearchParams(new FormData(form)).toString();
-    fetch('/filtrar_actividades_disponibles?' + params)
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById('actividadesDisponibles').innerHTML = html;
+        document.getElementById('filtroForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const params = new URLSearchParams(new FormData(form)).toString();
+            fetch('/filtrar_actividades_disponibles?' + params)
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('actividadesDisponibles').innerHTML = html;
+                });
         });
-});
-</script>
+    </script>
 </body>
 
 
 
 {% for actividad in actividades_disponibles + actividades_creadas + actividades_apuntado %}
-    {% if actividad.participantes %}
-        {% for participante in actividad.participantes %}
-            <div class="modal fade" id="modalPerfilUsuario{{ participante.idusuario }}" tabindex="-1" aria-labelledby="modalPerfilUsuarioLabel{{ participante.idusuario }}" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content rounded-4">
-                        <div class="modal-header" style="background: #f8fafc;">
-                            <h2 class="modal-title fw-bold w-100 text-center" id="modalPerfilUsuarioLabel{{ participante.idusuario }}" style="font-size: 2rem; color: #3b5bdb;">
-                                Perfil de {{ participante.nombre }}
-                            </h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body px-4 py-3 text-center">
-                            {% if participante.foto %}
-                                <img src="{{ url_for('static', filename='IMAGES/' ~ participante.foto) }}" alt="Foto de {{ participante.nombre }}" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #3b5bdb;">
-                            {% else %}
-                                <i class="bi bi-person-circle text-secondary mb-3" style="font-size: 6rem;"></i>
-                            {% endif %}
-                            <h4 class="fw-bold mb-2">{{ participante.nombre }}</h4>
-                            {% if participante.email %}
-                                <p class="mb-1"><i class="bi bi-envelope"></i> {{ participante.email }}</p>
-                            {% endif %}
-                            {% if participante.descripcion %}
-                                <p class="mb-2"><i class="bi bi-info-circle"></i> {{ participante.descripcion }}</p>
-                            {% endif %}
-                            {% if participante.carrera %}
-                                <p class="mb-2"><i class="bi bi-mortarboard"></i> {{ participante.carrera }}</p>
-                            {% endif %}
-                            {% if participante.telefono %}
-                                <p class="mb-2"><i class="bi bi-telephone"></i> {{ participante.telefono }}</p>
-                            {% endif %}
-                            {% if participante.creditos is defined %}
-                                <p class="mb-2"><i class="bi bi-patch-check"></i> Créditos: {{ participante.creditos }}</p>
-                            {% endif %}
-                        </div>
-                        <div class="modal-footer" style="background: #f8fafc;">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
+{% if actividad.participantes %}
+{% for participante in actividad.participantes %}
+<div class="modal fade" id="modalPerfilUsuario{{ participante.idusuario }}" tabindex="-1"
+    aria-labelledby="modalPerfilUsuarioLabel{{ participante.idusuario }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4">
+            <div class="modal-header" style="background: #f8fafc;">
+                <h2 class="modal-title fw-bold w-100 text-center"
+                    id="modalPerfilUsuarioLabel{{ participante.idusuario }}" style="font-size: 2rem; color: #3b5bdb;">
+                    Perfil de {{ participante.nombre }}
+                </h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
-        {% endfor %}
-    {% endif %}
+            <div class="modal-body px-4 py-3 text-center">
+                {% if participante.foto %}
+                <img src="{{ url_for('static', filename='IMAGES/' ~ participante.foto) }}"
+                    alt="Foto de {{ participante.nombre }}" class="rounded-circle mb-3"
+                    style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #3b5bdb;">
+                {% else %}
+                <i class="bi bi-person-circle text-secondary mb-3" style="font-size: 6rem;"></i>
+                {% endif %}
+                <h4 class="fw-bold mb-2">{{ participante.nombre }}</h4>
+                {% if participante.email %}
+                <p class="mb-1"><i class="bi bi-envelope"></i> {{ participante.email }}</p>
+                {% endif %}
+                {% if participante.descripcion %}
+                <p class="mb-2"><i class="bi bi-info-circle"></i> {{ participante.descripcion }}</p>
+                {% endif %}
+                {% if participante.carrera %}
+                <p class="mb-2"><i class="bi bi-mortarboard"></i> {{ participante.carrera }}</p>
+                {% endif %}
+                {% if participante.telefono %}
+                <p class="mb-2"><i class="bi bi-telephone"></i> {{ participante.telefono }}</p>
+                {% endif %}
+                {% if participante.creditos is defined %}
+                <p class="mb-2"><i class="bi bi-patch-check"></i> Créditos: {{ participante.creditos }}</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer" style="background: #f8fafc;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endfor %}
+{% endif %}
+{% endfor %}
+
 </html>

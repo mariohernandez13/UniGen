@@ -11,21 +11,23 @@ public class MiDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Configurar clave primaria compuesta para Participacion
         modelBuilder.Entity<Participacion>()
             .HasKey(p => new { p.idusuario, p.idactividad });
 
-        // Configurar relación entre Participacion y Usuario
         modelBuilder.Entity<Participacion>()
             .HasOne(p => p.Usuario)
             .WithMany(u => u.Participaciones)
             .HasForeignKey(p => p.idusuario);
 
-        // Configurar relación entre Participacion y Actividad
         modelBuilder.Entity<Participacion>()
             .HasOne(p => p.Actividad)
             .WithMany(a => a.Participaciones)
             .HasForeignKey(p => p.idactividad);
+
+        modelBuilder.Entity<Participacion>()
+            .Property(p => p.creditos_validados)
+            .HasColumnType("tinyint(1)") // MySQL/MariaDB: bool <-> tinyint(1)
+            .HasDefaultValue(false);
     }
 
 }
