@@ -66,7 +66,6 @@ public class ActivityController : ControllerBase
                 email = p.Usuario.email,
                 foto = p.Usuario.foto,
                 creditos_validados = p.creditos_validados,
-                puntos = p.puntos
             })
             .ToListAsync();
 
@@ -166,8 +165,7 @@ public class ActivityController : ControllerBase
         {
             idusuario = idUsuario,
             idactividad = id,
-            puntos = actividad.puntos, // <-- GUARDA LOS PUNTOS DE LA ACTIVIDAD
-            creditos_validados = false // <-- ¡Siempre inicializa a false!
+            creditos_validados = false
         };
 
         _context.participacion.Add(participacion);

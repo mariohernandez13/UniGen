@@ -80,6 +80,8 @@
                     data-bs-toggle="pill" data-bs-target="#apuntado" type="button" role="tab">Apuntado</button>
             </li>
         </ul>
+
+
         <div class="tab-content" id="actividadesTabsContent">
             <!-- Crear Actividad -->
             <div class="tab-pane fade {% if active_tab == 'crear' %}show active{% endif %}" id="crear" role="tabpanel">
@@ -129,6 +131,8 @@
                     </form>
                 </div>
             </div>
+
+
             <!-- Actividades Disponibles -->
             <div class="tab-pane fade {% if active_tab == 'disponibles' %}show active{% endif %}" id="disponibles"
                 role="tabpanel">
@@ -239,9 +243,9 @@
                                                                 title="Ver perfil"> Ver Perfil
                                                                 <i class="bi bi-person-circle"></i>
                                                             </button>
-                                                            {% if participante.creditos_validados == 1 or
-                                                            participante.creditos_validados == '1' or
-                                                            participante.creditos_validados is true %}
+                                                            {% if participante.creditos_validados == 0 or
+                                                            participante.creditos_validados == '0' or
+                                                            participante.creditos_validados is not true %}
 
                                                             <button type="button"
                                                                 class="btn btn-outline-success btn-sm btn-validar-creditos"
@@ -298,6 +302,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Actividades Creadas -->
             <div class="tab-pane fade {% if active_tab == 'creadas' %}show active{% endif %}" id="creadas"
                 role="tabpanel">

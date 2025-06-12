@@ -7,7 +7,6 @@ namespace API.Models
     {
         public int idusuario { get; set; }
         public int idactividad { get; set; }
-        public int puntos { get; set; }
         public bool creditos_validados { get; set; } // <-- bool simple
 
         // Propiedades de navegación

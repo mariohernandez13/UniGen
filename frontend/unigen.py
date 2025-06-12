@@ -544,6 +544,15 @@ def validar_creditos():
     if idusuario is None or idactividad is None or puntos is None:
         return jsonify({"success": False, "message": "Datos incompletos"}), 400
 
+    # Obtener la lista de participantes de la actividad
+    response = requests.get(f"{API_BASE_URL}/activity/{idactividad}/participantes")
+    participantes = response.json() if response.status_code == 200 else []
+
+    # Verifica que el usuario no tenga creditos_validados en True
+    participante = next((p for p in participantes if str(p.get("idusuario")) == str(idusuario)), None)
+    if participante and participante.get("creditos_validados") is True:
+        return jsonify({"success": False, "message": "Créditos ya validados para este usuario"}), 400
+    
     response = requests.post(
         f"{API_BASE_URL}/auth/sumar_creditos",
         json={"idusuario": int(idusuario), "idactividad": int(idactividad), "puntos": int(puntos)}
@@ -561,5 +570,3 @@ def validar_creditos():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-

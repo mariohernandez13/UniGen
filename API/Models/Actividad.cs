@@ -15,7 +15,7 @@ namespace API.Models
         public int duracion { get; set; }
         public string foto { get; set; }
         public int creador { get; set; }
-        public int puntos { get; set; } // <--- ASEGÚRATE DE QUE EXISTE
+        public int puntos { get; set; } 
 
         // Relación con Participaciones
         public ICollection<Participacion> Participaciones { get; set; }

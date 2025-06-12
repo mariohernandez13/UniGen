@@ -40,14 +40,8 @@ CREATE TABLE tipo (
 CREATE TABLE participacion (
     idusuario INT,
     idactividad INT,
-    puntos INT DEFAULT 0,
     creditos_validados TINYINT(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (idusuario, idactividad),
     FOREIGN KEY (idusuario) REFERENCES usuario(idusuario),
     FOREIGN KEY (idactividad) REFERENCES actividad(idactividad) ON DELETE CASCADE
 );
-
-UPDATE participacion SET creditos_validados = 0 WHERE creditos_validados IS NULL;
-
-
-SELECT * FROM usuario;

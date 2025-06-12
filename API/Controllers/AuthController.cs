@@ -174,7 +174,7 @@ public class AuthController : ControllerBase
         if (participacion != null)
         {
             participacion.creditos_validados = true;
-            _context.Entry(participacion).Property(x => x.creditos_validados).IsModified = true; // <-- FUERZA EL UPDATE
+            _context.Entry(participacion).Property(x => x.creditos_validados).IsModified = true;
         }
 
         await _context.SaveChangesAsync();
