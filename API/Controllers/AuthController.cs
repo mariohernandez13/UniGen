@@ -181,4 +181,44 @@ public class AuthController : ControllerBase
 
         return Ok(new { puntos = usuario.puntos });
     }
+
+    [HttpPost("usuario/{idusuario}/comprar_articulo")]
+    public async Task<IActionResult> ComprarArticulo(int idusuario, [FromBody] JsonElement body)
+    {
+        try
+        {
+            string? articulo = body.GetProperty("articulo").GetString();
+
+            if (string.IsNullOrEmpty(articulo))
+            {
+                return BadRequest(new { message = "El nombre del artículo no puede ser nulo o vacío." });
+            }
+
+            var usuario = await _context.usuario.FindAsync(idusuario);
+            if (usuario == null) return NotFound();
+
+            var compra = new UsuarioArticulo
+            {
+                idusuario = idusuario,
+                articulo = articulo
+            };
+            _context.Add(compra);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Artículo comprado y guardado en el perfil." });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = "Error al guardar el artículo: " + ex.Message });
+        }
+    }
+
+    [HttpGet("usuario/{idusuario}/articulos")]
+    public async Task<IActionResult> GetArticulosUsuario(int idusuario)
+    {
+        var articulos = await _context.Set<UsuarioArticulo>()
+            .Where(a => a.idusuario == idusuario)
+            .ToListAsync();
+        return Ok(articulos);
+    }
 }

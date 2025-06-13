@@ -45,3 +45,11 @@ CREATE TABLE participacion (
     FOREIGN KEY (idusuario) REFERENCES usuario(idusuario),
     FOREIGN KEY (idactividad) REFERENCES actividad(idactividad) ON DELETE CASCADE
 );
+
+CREATE TABLE usuario_articulo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idusuario INT,
+    articulo VARCHAR(100),
+    fecha_compra DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
+);

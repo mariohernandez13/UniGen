@@ -50,18 +50,28 @@
             <div class="card shadow-lg border-0 rounded-4" style="font-size: 2.3rem;">
               <div class="card-body p-5">
                 <div class="d-flex flex-column flex-md-row align-items-center mb-5">
-                    <div class="me-md-5 mb-4 mb-md-0 text-center">
+                    <div class="d-flex align-items-center justify-content-center me-md-5 mb-4 mb-md-0" style="gap: 2rem;">
+                      <div class="position-relative d-inline-block perfil-img-wrapper">
                       <img src="{{ url_for('static', filename='IMAGES/perfiles/' + usuario.foto) }}"
                          alt="Foto de perfil"
-                         class="rounded-circle border border-3 border-primary shadow"
+                         class="rounded-circle border border-3 border-primary shadow perfil-img"
                          style="width: 260px; height: 260px; object-fit: cover;">
-                      <form action="{{ url_for('subir_foto') }}" method="POST" enctype="multipart/form-data" class="mt-4">
-                        <label for="foto" class="form-label fw-semibold fs-5 fs-md-4 fs-lg-3">Actualizar foto</label>
-                        <input type="file" id="foto" name="foto" accept="image/*" class="form-control form-control-lg mb-3 fs-6 fs-md-5 fs-lg-4" required>
-                        <button class="btn btn-outline-primary btn-lg w-100 fs-6 fs-md-5 fs-lg-4" type="submit">
-                            <i class="bi bi-upload"></i> Subir
-                        </button>
-                      </form>
+                      {% if gorro_mas_valioso %}
+                        <div class="articulo-gorro">
+                        <img src="{{ url_for('static', filename='IMAGES/tienda/' ~ gorro_mas_valioso.articulo) }}"
+                           alt="Icono artículo más valioso"
+                           class="img-fluid"
+                           style="width: 140px; height: 140px; object-fit: contain;">
+                        </div>
+                      {% endif %}
+                      {% if chapa_mas_valiosa %}
+                        <div class="articulo-chapa">
+                        <img src="{{ url_for('static', filename='IMAGES/tienda/' ~ chapa_mas_valiosa.articulo) }}"
+                           class="img-fluid"
+                           style="width: 90px; height: 90px; object-fit: contain;">
+                        </div>
+                      {% endif %}
+                      </div>
                     </div>
                     <div class="flex-grow-1 text-center text-md-start">
                       <h2 class="fw-bold mb-2 fs-2 fs-md-1">{{ usuario.username }}</h2>
@@ -125,6 +135,16 @@
                       <div class="ps-5 fs-6">{{ usuario.estudios if usuario.estudios is defined else 'No especificados' }}</div>
                     </div>
                 </div>
+                {% if articulos %}
+                <div class="mt-4">
+                    <h4 class="fw-bold">Tus artículos:</h4>
+                    <ul class="list-group list-group-flush">
+                        {% for articulo in articulos %}
+                        <li class="list-group-item">{{ articulo.articulo }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
               </div>
             </div>
         </div>
@@ -228,4 +248,129 @@
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
+    <style>
+/* Imagen de perfil y wrapper */
+.perfil-img-wrapper {
+  width: 260px;
+  height: 260px;
+  max-width: 100vw;
+  max-height: 60vw;
+  position: relative;
+  margin: 0 auto;
+}
+.perfil-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  min-width: 100px;
+  min-height: 100px;
+  border-radius: 50%;
+}
+
+/* Gorro arriba */
+.articulo-gorro {
+  position: absolute;
+  left: 50%;
+  top: -30px;
+  transform: translate(-50%, -40%);
+  z-index: 2;
+  text-align: center;
+}
+.articulo-gorro img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+}
+
+/* Chapa abajo derecha */
+.articulo-chapa {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translate(40%, 40%);
+  z-index: 2;
+}
+.articulo-chapa img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+/* Ajustes generales para móvil */
+@media (max-width: 576px) {
+  .container.py-5 {
+    padding: 1.5rem 0 !important;
+  }
+  .perfil-img-wrapper {
+    width: 120vw !important;
+    height: 120vw !important;
+
+  }
+  .perfil-img {
+    width: 100% !important;
+    height: 100% !important;
+  
+  }
+  .articulo-gorro img {
+    width: 55px !important;
+    height: 55px !important;
+  }
+  .articulo-gorro {
+    top: -18px;
+  }
+  .articulo-chapa img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .articulo-chapa {
+    right: -8px;
+    bottom: -8px;
+    transform: translate(10%, 10%);
+  }
+  .card-body {
+    padding: 1.7rem !important;
+  }
+  .fs-2, .fs-md-1, .fs-5, .fs-md-4, .fs-lg-3 {
+    font-size: 1.5rem !important;
+  }
+  .badge, .btn, .list-group-item {
+    font-size: 1.85rem !important;
+    padding: 0.4em 0.8em !important;
+  }
+  .px-5, .py-4, .px-4, .py-3 {
+    padding-left: 1.7rem !important;
+    padding-right: 1.7rem !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  .gap-4 {
+    gap: 1.5rem !important;
+  }
+  .row.g-5 > [class^="col-"] {
+    margin-bottom: 1rem;
+  }
+  .list-group-item {
+    word-break: break-all;
+  }
+}
+
+/* Mejoras para tablets */
+@media (max-width: 768px) {
+  .perfil-img-wrapper {
+    width: 140px;
+    height: 140px;
+    max-width: 140px;
+    max-height: 140px;
+  }
+  .articulo-gorro img {
+    width: 70px !important;
+    height: 70px !important;
+  }
+  .articulo-chapa img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+</style>
 </html>

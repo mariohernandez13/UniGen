@@ -14,6 +14,20 @@ UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), "static", "IMAGES", "per
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "svg", "webp"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+ARTICULOS_VALOR = {
+    "crown.png": 10000,
+    "graduate-hat.png": 5350,
+    "cap.png": 4200,
+    "party-hat.png": 3250,
+    "chef.png": 2500,
+    "wizard-hat.png": 1180,
+    "medal.png": 920,
+    "military-rank (1).png": 500,
+    "military-rank.png": 300,
+    "military-rank (2).png": 280,
+    # Añade más si tienes
+}
+
 
 # Página principal: Login
 @app.route("/")
@@ -53,7 +67,42 @@ def modal_usuario():
     if not usuario:
         flash("Debes iniciar sesión para ver tu perfil.", "danger")
         return redirect(url_for("index"))
-    return render_template("modalUsuario.html", usuario=usuario)
+
+    # Obtener artículos comprados
+    response = requests.get(f"{API_BASE_URL}/auth/usuario/{usuario['idusuario']}/articulos")
+    articulos = response.json() if response.status_code == 200 else []
+
+    # Definir listas de nombres para gorros y chapas
+    GORROS = {
+        "crown.png", "graduate-hat.png", "cap.png", "party-hat.png", "chef.png", "wizard-hat.png"
+    }
+    CHAPAS = {
+        "medal.png", "military-rank.png", "military-rank (1).png", "military-rank (2).png"
+    }
+
+    # Buscar el gorro más valioso
+    gorro_mas_valioso = None
+    max_valor_gorro = -1
+    # Buscar la chapa más valiosa
+    chapa_mas_valiosa = None
+    max_valor_chapa = -1
+
+    for articulo in articulos:
+        nombre = articulo.get("articulo", "")
+        valor = ARTICULOS_VALOR.get(nombre, 0)
+        if nombre in GORROS and valor > max_valor_gorro:
+            max_valor_gorro = valor
+            gorro_mas_valioso = articulo
+        if nombre in CHAPAS and valor > max_valor_chapa:
+            max_valor_chapa = valor
+            chapa_mas_valiosa = articulo
+
+    return render_template(
+        "modalUsuario.html",
+        usuario=usuario,
+        gorro_mas_valioso=gorro_mas_valioso,
+        chapa_mas_valiosa=chapa_mas_valiosa
+    )
 
 # ...existing code...
 @app.route("/RecuperarContraseña")
@@ -98,6 +147,10 @@ def dashboard():
         for actividad in lista:
             participantes_response = requests.get(f"{API_BASE_URL}/activity/{actividad['idactividad']}/participantes")
             participantes = participantes_response.json() if participantes_response.status_code == 200 else []
+            # Añade los artículos a cada participante
+            for participante in participantes:
+                response_articulos = requests.get(f"{API_BASE_URL}/auth/usuario/{participante['idusuario']}/articulos")
+                participante['articulos'] = response_articulos.json() if response_articulos.status_code == 200 else []
             actividad["num_participantes"] = len(participantes)
             actividad["participantes"] = participantes  # <-- Aquí guardas el objeto completo
 
@@ -579,6 +632,7 @@ def comprar_articulo():
     data = request.json
     coste = int(data.get("coste", 0))
     nombre = data.get("nombre", "artículo")
+    imagen = data.get("imagen", "")  # <-- Nuevo
 
     puntos_actuales = int(usuario.get("puntos", 0))
 
@@ -590,14 +644,13 @@ def comprar_articulo():
     usuario["puntos"] = nuevos_puntos
     session["usuario"] = usuario
 
-    # ACTUALIZA TAMBIÉN EN LA BASE DE DATOS DEL USUARIO
-    # Usa el endpoint /auth/update/{id} que ya tienes en tu AuthController
+    # Actualiza los puntos en la base de datos
     response = requests.put(
         f"{API_BASE_URL}/auth/update/{usuario['idusuario']}",
         json={
             "username": usuario["username"],
             "email": usuario["email"],
-            "password": usuario.get("password", ""),  # Si tu DTO lo requiere
+            "password": usuario.get("password", ""),
             "telefono": usuario.get("telefono", ""),
             "pais": usuario.get("pais", ""),
             "edad": usuario.get("edad", 0),
@@ -608,7 +661,16 @@ def comprar_articulo():
     if response.status_code != 200:
         return jsonify({"success": False, "message": "No se pudo actualizar los puntos en la base de datos."}), 500
 
+    # Guarda el artículo comprado en la base de datos (guarda el identificador de la imagen)
+    response_articulo = requests.post(
+        f"{API_BASE_URL}/auth/usuario/{usuario['idusuario']}/comprar_articulo",
+        json={"articulo": imagen if imagen else nombre}  # <-- Cambiado
+    )
+    if response_articulo.status_code != 200:
+        return jsonify({"success": False, "message": "No se pudo guardar el artículo en el perfil."}), 500
+
     return jsonify({"success": True, "message": f"¡Has comprado {nombre} correctamente!", "puntos": nuevos_puntos})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

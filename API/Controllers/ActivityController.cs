@@ -64,7 +64,7 @@ public class ActivityController : ControllerBase
                 idusuario = p.idusuario,
                 idactividad = p.idactividad,
                 creditos_validados = p.creditos_validados,
-                
+
                 Usuario = new UsuarioDTO
                 {
                     username = p.Usuario.username,

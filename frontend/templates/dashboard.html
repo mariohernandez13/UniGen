@@ -539,8 +539,8 @@
                                             </button>
                                         </form>
                                         <div class="modal-footer" style="background: #f8fafc;">
-                                            <button type="button" class="btn btn-secondary btn-lg"
-                                                data-bs-dismiss="modal" style="font-size: 1.2rem;">Cerrar</button>
+                                            <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal"
+                                                style="font-size: 1.2rem;">Cerrar</button>
                                         </div>
 
                                     </div>
@@ -725,7 +725,7 @@
                         body: JSON.stringify({ idusuario: idusuario, idactividad: idactividad, puntos: puntos })
                     })
                         .then(res => res.json())
-                        .then(data => {
+                        .then (data => {
                             if (data.success) {
                                 btn.style.display = 'none';
                                 Swal.fire('¡Créditos enviados!', 'Los créditos han sido validados correctamente.', 'success');
@@ -780,6 +780,26 @@
                                 style="width: 300px; height: 300px; object-fit: cover; border: 8px solid #3b5bdb;">
                             {% else %}
                             <i class="bi bi-person-circle text-secondary" style="font-size: 18rem;"></i>
+                            {% endif %}
+
+                            {% if participante.articulos %}
+                                {# Gorro arriba #}
+                                {% set gorros = ['crown.png', 'graduate-hat.png', 'cap.png', 'party-hat.png', 'chef.png', 'wizard-hat.png'] %}
+                                {% set primer_gorro = participante.articulos | selectattr('articulo', 'in', gorros) | list | first %}
+                                {% if primer_gorro %}
+                                    <img src="{{ url_for('static', filename='IMAGES/tienda/' ~ primer_gorro.articulo) }}"
+                                         alt="Icono gorro"
+                                         style="position: absolute; top: -95px; left: 50%; transform: translateX(-50%); width: 140px; height: 140px; object-fit: contain;">
+                                {% endif %}
+
+                                {# Chapas abajo a la derecha #}
+                                {% set chapas = ['medal.png', 'military-rank (1).png', 'military-rank.png', 'military-rank (2).png'] %}
+                                {% set primera_chapa = participante.articulos | selectattr('articulo', 'in', chapas) | list | first %}
+                                {% if primera_chapa %}
+                                    <img src="{{ url_for('static', filename='IMAGES/tienda/' ~ primera_chapa.articulo) }}"
+                                         alt="Chapa"
+                                         style="position: absolute; bottom: -20px; right: -20px; width: 100px; height: 100px; object-fit: contain;">
+                                {% endif %}
                             {% endif %}
                         </div>
                         <span class="badge bg-success mb-3" style="font-size: 2.5rem; padding: 0.8em 2em; border-radius: 2rem;">

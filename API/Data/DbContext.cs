@@ -6,6 +6,7 @@ public class MiDbContext : DbContext
     public DbSet<Usuario> usuario { get; set; }
     public DbSet<Actividad> actividad { get; set; }
     public DbSet<Participacion> participacion { get; set; }
+    public DbSet<UsuarioArticulo> usuario_articulo { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

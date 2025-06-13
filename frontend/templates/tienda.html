@@ -141,6 +141,7 @@
                             <p class="card-text fs-5 text-muted">Haz que tu perfil brille con esta corona exclusiva.
                                 Perfecta para quienes lideran en las actividades y quieren ser reconocidos.</p>
                             <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4"
+                                data-img="crown.png"
                                 aria-label="Canjear Corona Real">Canjear 10000 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
@@ -154,8 +155,8 @@
                             <p class="card-text fs-5 text-muted">Demuestra tu éxito académico con estilo. Ideal para
                                 celebrar logros y compartir tu progreso con amigos.</p>
                             <button class="btn btn-outline-primary w-100 fw-bold btn-xl py-4 fs-4"
-                                aria-label="Canjear Gorro de Graduación">Canjear 5350 <i
-                                    class="bi bi-coin"></i></button>
+                                data-img="graduate-hat.png"
+                                aria-label="Canjear Gorro de Graduación">Canjear 5350 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -168,6 +169,7 @@
                             <p class="card-text fs-5 text-muted">Dale un toque moderno a tu avatar. Perfectas para
                                 quienes buscan un look fresco y divertido.</p>
                             <button class="btn btn-outline-dark w-100 fw-bold btn-xl py-4 fs-4"
+                                data-img="cap.png"
                                 aria-label="Canjear Gafas Cool">Canjear 4200 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
@@ -181,6 +183,7 @@
                             <p class="card-text fs-5 text-muted">Destaca entre los demás con esta estrella. Ideal para
                                 quienes han alcanzado metas importantes.</p>
                             <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4"
+                                data-img="party-hat.png"
                                 aria-label="Canjear Estrella Dorada">Canjear 3250 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
@@ -194,6 +197,7 @@
                             <p class="card-text fs-5 text-muted">Convierte tu avatar en un héroe. Perfecta para quienes
                                 ayudan a otros y colaboran en la comunidad.</p>
                             <button class="btn btn-outline-danger w-100 fw-bold btn-xl py-4 fs-4"
+                                data-img="chef.png"
                                 aria-label="Canjear Capa de Superhéroe">Canjear 2500 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
@@ -207,20 +211,20 @@
                             <p class="card-text fs-5 text-muted">Reconoce tu esfuerzo y constancia en UniGen. ¡Presume
                                 tu compromiso!</p>
                             <button class="btn btn-outline-success w-100 fw-bold btn-xl py-4 fs-4"
-                                aria-label="Canjear Medalla de Participación">Canjear 1180 <i
-                                    class="bi bi-coin"></i></button>
+                                data-img="wizard-hat.png"
+                                aria-label="Canjear Medalla de Participación">Canjear 1180 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="card articulo-card h-100 text-center p-3">
-                        <img src="../static/IMAGES/tienda/medal.png" class="card-img-top mx-auto" style="width:120px;"
-                            alt="Corazón">
+                        <img src="../static/IMAGES/tienda/medal.png" class="card-img-top mx-auto" style="width:120px;" alt="Corazón">
                         <div class="card-body">
                             <h5 class="card-title fw-bold fs-3">Corazón Solidario</h5>
                             <p class="card-text fs-5 text-muted">Muestra tu lado solidario con este ícono especial en tu
                                 perfil.</p>
                             <button class="btn btn-outline-danger w-100 fw-bold btn-xl py-4 fs-4"
+                                data-img="medal.png"
                                 aria-label="Canjear Corazón Solidario">Canjear 920 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
@@ -234,6 +238,7 @@
                             <p class="card-text fs-5 text-muted">Para los amantes de la música y los videojuegos. ¡Haz
                                 que tu avatar suene genial!</p>
                             <button class="btn btn-outline-info w-100 fw-bold btn-xl py-4 fs-4"
+                                data-img="military-rank (1).png"
                                 aria-label="Canjear Auriculares Gamer">Canjear 500 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
@@ -247,6 +252,7 @@
                             <p class="card-text fs-5 text-muted">Demuestra que eres el mejor en UniGen con esta copa
                                 exclusiva.</p>
                             <button class="btn btn-outline-warning w-100 fw-bold btn-xl py-4 fs-4"
+                                data-img="military-rank.png"
                                 aria-label="Canjear Copa de Campeón">Canjear 300 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
@@ -260,6 +266,7 @@
                             <p class="card-text fs-5 text-muted">Agrega un toque tecnológico y divertido a tu perfil.
                             </p>
                             <button class="btn btn-outline-secondary w-100 fw-bold btn-xl py-4 fs-4"
+                                data-img="military-rank (2).png"
                                 aria-label="Canjear Robot Inteligente">Canjear 280 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
@@ -334,15 +341,15 @@
     <script>
 document.querySelectorAll('.btn-xl, .btn-lg').forEach(btn => {
     btn.addEventListener('click', function () {
-        // Extrae el coste y nombre del artículo
         const texto = btn.innerText;
         const coste = parseInt(texto.replace(/\D/g, ''));
         const nombre = btn.closest('.card').querySelector('.card-title').innerText;
+        const imagen = btn.getAttribute('data-img'); // <-- Nuevo
 
         fetch('/comprar_articulo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ coste: coste, nombre: nombre })
+            body: JSON.stringify({ coste: coste, nombre: nombre, imagen: imagen }) // <-- Nuevo
         })
         .then(res => res.json())
         .then(data => {
