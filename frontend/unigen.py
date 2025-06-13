@@ -568,5 +568,47 @@ def validar_creditos():
     else:
         return jsonify({"success": False, "message": "Error al validar créditos"}), 500
 
+from flask import jsonify
+
+@app.route("/comprar_articulo", methods=["POST"])
+def comprar_articulo():
+    usuario = session.get("usuario")
+    if not usuario:
+        return jsonify({"success": False, "message": "Debes iniciar sesión para comprar."}), 401
+
+    data = request.json
+    coste = int(data.get("coste", 0))
+    nombre = data.get("nombre", "artículo")
+
+    puntos_actuales = int(usuario.get("puntos", 0))
+
+    if puntos_actuales < coste:
+        return jsonify({"success": False, "message": "No tienes suficientes créditos para comprar este artículo."})
+
+    # Resta los puntos y actualiza en la sesión
+    nuevos_puntos = puntos_actuales - coste
+    usuario["puntos"] = nuevos_puntos
+    session["usuario"] = usuario
+
+    # ACTUALIZA TAMBIÉN EN LA BASE DE DATOS DEL USUARIO
+    # Usa el endpoint /auth/update/{id} que ya tienes en tu AuthController
+    response = requests.put(
+        f"{API_BASE_URL}/auth/update/{usuario['idusuario']}",
+        json={
+            "username": usuario["username"],
+            "email": usuario["email"],
+            "password": usuario.get("password", ""),  # Si tu DTO lo requiere
+            "telefono": usuario.get("telefono", ""),
+            "pais": usuario.get("pais", ""),
+            "edad": usuario.get("edad", 0),
+            "foto": usuario.get("foto", "default-avatar.svg"),
+            "puntos": nuevos_puntos
+        }
+    )
+    if response.status_code != 200:
+        return jsonify({"success": False, "message": "No se pudo actualizar los puntos en la base de datos."}), 500
+
+    return jsonify({"success": True, "message": f"¡Has comprado {nombre} correctamente!", "puntos": nuevos_puntos})
+
 if __name__ == "__main__":
     app.run(debug=True)

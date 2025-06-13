@@ -10,7 +10,7 @@ namespace API.Models
         public bool creditos_validados { get; set; }
 
         // Propiedades de navegación
-        public Usuario Usuario { get; set; }
-        public Actividad Actividad { get; set; }
+        public UsuarioDTO? Usuario { get; set; }
+        public Actividad? Actividad { get; set; }
     }
 }

@@ -59,13 +59,22 @@ public class ActivityController : ControllerBase
             .Where(p => p.idactividad == idActividad)
             .Include(p => p.Usuario)
 
-            .Select(p => new
+            .Select(p => new ParticipacionDTO
             {
-                p.idusuario,
-                nombre = p.Usuario.username,
-                email = p.Usuario.email,
-                foto = p.Usuario.foto,
+                idusuario = p.idusuario,
+                idactividad = p.idactividad,
                 creditos_validados = p.creditos_validados,
+                
+                Usuario = new UsuarioDTO
+                {
+                    username = p.Usuario.username,
+                    email = p.Usuario.email,
+                    telefono = p.Usuario.telefono,
+                    pais = p.Usuario.pais,
+                    edad = p.Usuario.edad,
+                    foto = p.Usuario.foto,
+                    puntos = p.Usuario.puntos
+                }
             })
             .ToListAsync();
 
