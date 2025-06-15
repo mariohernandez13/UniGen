@@ -92,7 +92,8 @@ public class AuthController : ControllerBase
                 usuario.pais,
                 usuario.edad,
                 foto = usuario.foto ?? "default-avatar.svg",
-                puntos = usuario.puntos 
+                puntos = usuario.puntos,
+                papeletas = usuario.papeletas // <-- ESTA LÍNEA ES CLAVE
             }
         });
     }
@@ -118,7 +119,7 @@ public class AuthController : ControllerBase
         existingUser.edad = usuario.edad;
         existingUser.foto = usuario.foto ?? existingUser.foto;
         existingUser.puntos = usuario.puntos;
-
+        existingUser.papeletas = usuario.papeletas; // <-- ESTA LÍNEA ES CLAVE
 
         await _context.SaveChangesAsync();
         return Ok(existingUser);

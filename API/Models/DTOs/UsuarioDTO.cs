@@ -21,5 +21,6 @@ namespace API.Models
         public string? foto { get; set; }
 
         public int puntos { get; set; }
+        public int papeletas { get; set; }
     }
 }

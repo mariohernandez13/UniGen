@@ -77,6 +77,15 @@
                 Créditos: <span id="puntosUsuario">{{ usuario.puntos }}</span>
             </span>
         </div>
+        <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3 mb-4">
+            <span class="badge bg-primary text-light fs-3 px-4 py-3 shadow-lg d-flex align-items-center" id="contadorPapeletas" style="font-size: 2.2rem;">
+                <i class="bi bi-ticket-perforated me-2"></i>
+                Papeletas para sorteo: <span id="numPapeletas" class="ms-1">{{ usuario.papeletas if usuario.papeletas is defined else 0 }}</span>
+            </span>
+       
+            </span>
+          
+        </div>
         <!-- Sección de Ofertas -->
         <section class="tienda-ofertas mb-5" aria-labelledby="ofertas-title">
             <h2 id="ofertas-title" class="section-title mb-4 text-primary"><i class="bi bi-stars"></i> Ofertas
@@ -333,6 +342,7 @@
     </div>
 
  
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
@@ -344,20 +354,29 @@ document.querySelectorAll('.btn-xl, .btn-lg').forEach(btn => {
         const texto = btn.innerText;
         const coste = parseInt(texto.replace(/\D/g, ''));
         const nombre = btn.closest('.card').querySelector('.card-title').innerText;
-        const imagen = btn.getAttribute('data-img'); // <-- Nuevo
+        const imagen = btn.getAttribute('data-img');
 
         fetch('/comprar_articulo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ coste: coste, nombre: nombre, imagen: imagen }) // <-- Nuevo
+            body: JSON.stringify({ coste: coste, nombre: nombre, imagen: imagen })
         })
         .then(res => res.json())
         .then(data => {
-            if (data.success) {
-                Swal.fire('¡Compra realizada!', data.message, 'success')
-                    .then(() => {
-                        location.reload(); // Solo JS puede recargar la página
-                    });
+           if (data.success) {
+    Swal.fire('¡Compra realizada!', data.message, 'success')
+        .then(() => {
+            if (nombre.toLowerCase().includes('sorteo')) {
+                const numElem = document.getElementById('numPapeletas');
+                if (data.papeletas !== undefined) {
+                    numElem.textContent = data.papeletas;
+                } else {
+                    numElem.textContent = parseInt(numElem.textContent) + 1;
+                }
+            } else {
+                location.reload();
+            }
+        });
             } else {
                 Swal.fire('No se pudo comprar', data.message, 'error');
             }

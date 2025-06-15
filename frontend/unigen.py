@@ -303,7 +303,8 @@ def login():
             "pais": usuario.get("pais"),
             "edad": usuario.get("edad"),
             "foto": usuario.get("foto", "default-avatar.svg"),
-            "puntos": usuario.get("puntos", 0)  # <-- AÑADE ESTA LÍNEA
+            "puntos": usuario.get("puntos", 0), 
+            "papeletas": usuario.get("papeletas", 0)  # Asegúrate de que este campo exista en la respuesta
         }
         
         return redirect(url_for("inicio"))
@@ -632,7 +633,7 @@ def comprar_articulo():
     data = request.json
     coste = int(data.get("coste", 0))
     nombre = data.get("nombre", "artículo")
-    imagen = data.get("imagen", "")  # <-- Nuevo
+    imagen = data.get("imagen", "")
 
     puntos_actuales = int(usuario.get("puntos", 0))
 
@@ -642,9 +643,13 @@ def comprar_articulo():
     # Resta los puntos y actualiza en la sesión
     nuevos_puntos = puntos_actuales - coste
     usuario["puntos"] = nuevos_puntos
+
+    # --- NUEVO: Sumar papeleta si es sorteo ---
+    if "sorteo mensual" in nombre.lower() or "raffle" in nombre.lower():
+        usuario["papeletas"] = usuario.get("papeletas", 0) + 1
     session["usuario"] = usuario
 
-    # Actualiza los puntos en la base de datos
+    # Actualiza los puntos y papeletas en la base de datos
     response = requests.put(
         f"{API_BASE_URL}/auth/update/{usuario['idusuario']}",
         json={
@@ -655,21 +660,27 @@ def comprar_articulo():
             "pais": usuario.get("pais", ""),
             "edad": usuario.get("edad", 0),
             "foto": usuario.get("foto", "default-avatar.svg"),
-            "puntos": nuevos_puntos
+            "puntos": nuevos_puntos,
+            "papeletas": usuario.get("papeletas", 0)  # <-- Añade esto
         }
     )
     if response.status_code != 200:
         return jsonify({"success": False, "message": "No se pudo actualizar los puntos en la base de datos."}), 500
 
-    # Guarda el artículo comprado en la base de datos (guarda el identificador de la imagen)
+    # Guarda el artículo comprado en la base de datos
     response_articulo = requests.post(
         f"{API_BASE_URL}/auth/usuario/{usuario['idusuario']}/comprar_articulo",
-        json={"articulo": imagen if imagen else nombre}  # <-- Cambiado
+        json={"articulo": imagen if imagen else nombre}
     )
     if response_articulo.status_code != 200:
         return jsonify({"success": False, "message": "No se pudo guardar el artículo en el perfil."}), 500
 
-    return jsonify({"success": True, "message": f"¡Has comprado {nombre} correctamente!", "puntos": nuevos_puntos})
+    return jsonify({
+        "success": True,
+        "message": f"¡Has comprado {nombre} correctamente!",
+        "puntos": nuevos_puntos,
+        "papeletas": usuario.get("papeletas", 0)  # <-- Devuelve el nuevo número de papeletas
+    })
 
 
 if __name__ == "__main__":
