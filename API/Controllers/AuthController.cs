@@ -93,7 +93,8 @@ public class AuthController : ControllerBase
                 usuario.edad,
                 foto = usuario.foto ?? "default-avatar.svg",
                 puntos = usuario.puntos,
-                papeletas = usuario.papeletas // <-- ESTA LÍNEA ES CLAVE
+                papeletas = usuario.papeletas,
+                descuento_hasta = usuario.descuento_hasta
             }
         });
     }
@@ -120,6 +121,10 @@ public class AuthController : ControllerBase
         existingUser.foto = usuario.foto ?? existingUser.foto;
         existingUser.puntos = usuario.puntos;
         existingUser.papeletas = usuario.papeletas; // <-- ESTA LÍNEA ES CLAVE
+        if (!string.IsNullOrEmpty(usuario.descuento_hasta?.ToString()))
+        {
+            existingUser.descuento_hasta = usuario.descuento_hasta;
+        }
 
         await _context.SaveChangesAsync();
         return Ok(existingUser);

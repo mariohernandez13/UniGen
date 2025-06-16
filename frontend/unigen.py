@@ -3,6 +3,7 @@ import requests
 import os
 from werkzeug.utils import secure_filename
 from flask import render_template_string
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -279,7 +280,21 @@ def sobre_nosotros():
 @app.route("/tienda")
 def tienda():
     usuario = session.get("usuario")
-    return render_template("tienda.html", usuario=usuario)
+    descuento_activo = False
+    if usuario and usuario.get("descuento_hasta"):
+        fecha = usuario["descuento_hasta"]
+        try:
+            # Intenta formato ISO (con T)
+            descuento_activo = datetime.strptime(fecha, "%Y-%m-%dT%H:%M:%S.%f") > datetime.now()
+        except ValueError:
+            try:
+                descuento_activo = datetime.strptime(fecha, "%Y-%m-%dT%H:%M:%S") > datetime.now()
+            except ValueError:
+                try:
+                    descuento_activo = datetime.strptime(fecha, "%Y-%m-%d %H:%M:%S") > datetime.now()
+                except Exception:
+                    descuento_activo = False
+    return render_template("tienda.html", usuario=usuario, descuento_activo=descuento_activo)
 
 
 # Procesa el login
@@ -304,7 +319,8 @@ def login():
             "edad": usuario.get("edad"),
             "foto": usuario.get("foto", "default-avatar.svg"),
             "puntos": usuario.get("puntos", 0), 
-            "papeletas": usuario.get("papeletas", 0)  # Asegúrate de que este campo exista en la respuesta
+            "papeletas": usuario.get("papeletas", 0),  
+           "descuento_hasta": usuario.get("descuento_hasta", "")
         }
         
         return redirect(url_for("inicio"))
@@ -682,6 +698,52 @@ def comprar_articulo():
         "papeletas": usuario.get("papeletas", 0)  # <-- Devuelve el nuevo número de papeletas
     })
 
+@app.route('/comprar_descuento', methods=['POST'])
+def comprar_descuento():
+    usuario = session.get("usuario")
+    if not usuario:
+        return jsonify(success=False, message="Debes iniciar sesión."), 401
+
+    COSTE_DESCUENTO = 250
+    puntos_actuales = int(usuario.get("puntos", 0))
+
+    # No dejar comprar si ya tiene descuento activo
+    if usuario.get("descuento_hasta"):
+        try:
+            if datetime.strptime(usuario["descuento_hasta"], "%Y-%m-%d %H:%M:%S") > datetime.now():
+                return jsonify(success=False, message="Ya tienes un descuento activo.")
+        except Exception:
+            pass
+
+    if puntos_actuales < COSTE_DESCUENTO:
+        return jsonify(success=False, message="No tienes suficientes créditos.")
+
+    # Resta créditos y actualiza descuento_hasta
+    usuario["puntos"] -= COSTE_DESCUENTO
+    descuento_hasta = (datetime.now() + timedelta(hours=2)).isoformat()
+    usuario["descuento_hasta"] = descuento_hasta
+
+    # Actualiza en la API
+    response = requests.put(
+        f"{API_BASE_URL}/auth/update/{usuario['idusuario']}",
+        json={
+            "username": usuario["username"],
+            "email": usuario["email"],
+            "password": usuario.get("password", ""),
+            "telefono": usuario.get("telefono", ""),
+            "pais": usuario.get("pais", ""),
+            "edad": usuario.get("edad", 0),
+            "foto": usuario.get("foto", "default-avatar.svg"),
+            "puntos": usuario["puntos"],
+            "papeletas": usuario.get("papeletas", 0),
+            "descuento_hasta": usuario.get("descuento_hasta", "")
+        }
+    )
+    if response.status_code != 200:
+        return jsonify(success=False, message="No se pudo activar el descuento."), 500
+
+    session["usuario"] = usuario
+    return jsonify(success=True, descuento_hasta=descuento_hasta, puntos=usuario["puntos"])
 
 if __name__ == "__main__":
     app.run(debug=True)

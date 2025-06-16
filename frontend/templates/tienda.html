@@ -114,7 +114,7 @@
                             <h5 class="card-title fw-bold">Descuento en Accesorio</h5>
                             <p class="card-text">Obtén un 30% de descuento en cualquier accesorio de la tienda.
                                 ¡Personaliza tu perfil a un precio especial por tiempo limitado!</p>
-                            <button class="btn btn-success w-100 fw-bold btn-lg py-3"
+                            <button class="btn btn-success w-100 fw-bold btn-lg py-3" id="btn-descuento"
                                 aria-label="Canjear descuento en accesorio">Canjear 250 <i
                                     class="bi bi-coin"></i></button>
                         </div>
@@ -349,42 +349,130 @@
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/JS/speech.js') }}"></script>
     <script>
-document.querySelectorAll('.btn-xl, .btn-lg').forEach(btn => {
-    btn.addEventListener('click', function () {
-        const texto = btn.innerText;
-        const coste = parseInt(texto.replace(/\D/g, ''));
-        const nombre = btn.closest('.card').querySelector('.card-title').innerText;
-        const imagen = btn.getAttribute('data-img');
+document.addEventListener('DOMContentLoaded', function () {
+    // Variable de Jinja para saber si el usuario tiene descuento activo (la pasa Flask)
+    const descuentoActivo = "{{ 'true' if descuento_activo else 'false' }}";
+    const btnDescuento = document.getElementById('btn-descuento');
+    const puntosUsuario = document.getElementById('puntosUsuario');
 
-        fetch('/comprar_articulo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ coste: coste, nombre: nombre, imagen: imagen })
-        })
-        .then(res => res.json())
-        .then(data => {
-           if (data.success) {
-    Swal.fire('¡Compra realizada!', data.message, 'success')
-        .then(() => {
-            if (nombre.toLowerCase().includes('sorteo')) {
-                const numElem = document.getElementById('numPapeletas');
-                if (data.papeletas !== undefined) {
-                    numElem.textContent = data.papeletas;
-                } else {
-                    numElem.textContent = parseInt(numElem.textContent) + 1;
-                }
-            } else {
-                location.reload();
-            }
-        });
-            } else {
-                Swal.fire('No se pudo comprar', data.message, 'error');
-            }
-        })
-        .catch(() => {
-            Swal.fire('Error', 'No se pudo procesar la compra.', 'error');
-        });
+    // Guarda el precio original en todos los botones si no lo tienen
+    document.querySelectorAll('.btn-xl, .btn-lg').forEach(btn => {
+        if (!btn.hasAttribute('data-precio-original')) {
+            const texto = btn.innerText;
+            const precio = parseInt(texto.replace(/\D/g, ''));
+            btn.setAttribute('data-precio-original', precio);
+        }
     });
+
+    function aplicarDescuentoVisual() {
+        document.querySelectorAll('.btn-xl, .btn-lg').forEach(btn => {
+            if (btn.id === 'btn-descuento') return;
+            const precioOriginal = parseInt(btn.getAttribute('data-precio-original'));
+            if (!isNaN(precioOriginal)) {
+                const precioDescuento = Math.ceil(precioOriginal * 0.7);
+                btn.innerHTML = btn.innerHTML.replace(/\d+/, precioDescuento);
+            }
+        });
+        if (btnDescuento) {
+            btnDescuento.disabled = true;
+            btnDescuento.innerHTML = '¡Descuento aplicado!';
+        }
+    }
+
+    function quitarDescuentoVisual() {
+        document.querySelectorAll('.btn-xl, .btn-lg').forEach(btn => {
+            if (btn.id === 'btn-descuento') return;
+            const precioOriginal = parseInt(btn.getAttribute('data-precio-original'));
+            if (!isNaN(precioOriginal)) {
+                btn.innerHTML = btn.innerHTML.replace(/\d+/, precioOriginal);
+            }
+        });
+        if (btnDescuento) {
+            btnDescuento.disabled = false;
+            btnDescuento.innerHTML = 'Canjear 250 <i class="bi bi-coin"></i>';
+        }
+    }
+
+    // Aplica el descuento visual si está activo al cargar la página
+    if (descuentoActivo === "true") {
+        aplicarDescuentoVisual();
+    } else {
+        quitarDescuentoVisual();
+    }
+
+    // Lógica de compra de artículos (EXCLUYE el botón de descuento)
+    document.querySelectorAll('.btn-xl, .btn-lg').forEach(btn => {
+        if (btn.id !== 'btn-descuento') {
+            btn.addEventListener('click', function () {
+                const texto = btn.innerText;
+                let coste = parseInt(texto.replace(/\D/g, ''));
+                const nombre = btn.closest('.card').querySelector('.card-title').innerText;
+                const imagen = btn.getAttribute('data-img');
+
+                // Si el descuento está activo, aplica el descuento al coste
+                if (descuentoActivo === "true") {
+                    const precioOriginal = parseInt(btn.getAttribute('data-precio-original'));
+                    if (!isNaN(precioOriginal)) {
+                        coste = Math.ceil(precioOriginal * 0.7);
+                    }
+                }
+
+                fetch('/comprar_articulo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ coste: coste, nombre: nombre, imagen: imagen })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire('¡Compra realizada!', data.message, 'success')
+                            .then(() => {
+                                if (nombre.toLowerCase().includes('sorteo')) {
+                                    const numElem = document.getElementById('numPapeletas');
+                                    if (data.papeletas !== undefined) {
+                                        numElem.textContent = data.papeletas;
+                                    } else {
+                                        numElem.textContent = parseInt(numElem.textContent) + 1;
+                                    }
+                                } else {
+                                    location.reload();
+                                }
+                            });
+                    } else {
+                        Swal.fire('No se pudo comprar', data.message, 'error');
+                    }
+                })
+                .catch(() => {
+                    Swal.fire('Error', 'No se pudo procesar la compra.', 'error');
+                });
+            });
+        }
+    });
+
+    // Lógica de compra del descuento
+    if (btnDescuento) {
+        btnDescuento.addEventListener('click', function () {
+            if (btnDescuento.disabled) return;
+            fetch('/comprar_descuento', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // Resta los créditos visualmente
+                        if (puntosUsuario && data.puntos !== undefined) {
+                            puntosUsuario.textContent = data.puntos;
+                        }
+                        // Aplica el descuento visual
+                        aplicarDescuentoVisual();
+                        // Opcional: recarga la página cuando expire el descuento (2h)
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000 * 60 * 60 * 2);
+                    } else {
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                });
+        });
+    }
 });
 </script>
 </body>
