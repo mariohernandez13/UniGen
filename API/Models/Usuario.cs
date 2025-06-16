@@ -26,6 +26,7 @@ namespace API.Models
         public int papeletas { get; set; }  // Papeletas acumuladas por el usuario
 
         public DateTime? descuento_hasta { get; set; }
+        public DateTime? bonus_creditos_hasta { get; set; }
 
         // Propiedad de navegación
         public ICollection<Participacion>? Participaciones { get; set; }

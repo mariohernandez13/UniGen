@@ -14,7 +14,8 @@ CREATE TABLE usuario (
     foto VARCHAR(255),
     puntos INT DEFAULT 0,
     papeletas INT DEFAULT 0,
-    descuento_hasta DATETIME
+    descuento_hasta DATETIME,
+    bonus_creditos_hasta DATETIME NULL
 );
 -- TODO cambiar edad por fecha de nacimiento
 

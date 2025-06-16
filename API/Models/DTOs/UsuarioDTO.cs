@@ -23,5 +23,6 @@ namespace API.Models
         public int puntos { get; set; }
         public int papeletas { get; set; }
         public DateTime? descuento_hasta { get; set; }
+        public DateTime? bonus_creditos_hasta { get; set; }
     }
 }

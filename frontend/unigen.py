@@ -281,20 +281,18 @@ def sobre_nosotros():
 def tienda():
     usuario = session.get("usuario")
     descuento_activo = False
+    bonus_activo = False
     if usuario and usuario.get("descuento_hasta"):
-        fecha = usuario["descuento_hasta"]
         try:
-            # Intenta formato ISO (con T)
-            descuento_activo = datetime.strptime(fecha, "%Y-%m-%dT%H:%M:%S.%f") > datetime.now()
-        except ValueError:
-            try:
-                descuento_activo = datetime.strptime(fecha, "%Y-%m-%dT%H:%M:%S") > datetime.now()
-            except ValueError:
-                try:
-                    descuento_activo = datetime.strptime(fecha, "%Y-%m-%d %H:%M:%S") > datetime.now()
-                except Exception:
-                    descuento_activo = False
-    return render_template("tienda.html", usuario=usuario, descuento_activo=descuento_activo)
+            descuento_activo = datetime.fromisoformat(usuario["descuento_hasta"]) > datetime.now()
+        except Exception:
+            descuento_activo = False
+    if usuario and usuario.get("bonus_creditos_hasta"):
+        try:
+            bonus_activo = datetime.fromisoformat(usuario["bonus_creditos_hasta"]) > datetime.now()
+        except Exception:
+            bonus_activo = False
+    return render_template("tienda.html", usuario=usuario, descuento_activo=descuento_activo, bonus_activo=bonus_activo)
 
 
 # Procesa el login
@@ -614,6 +612,22 @@ def validar_creditos():
     if idusuario is None or idactividad is None or puntos is None:
         return jsonify({"success": False, "message": "Datos incompletos"}), 400
 
+    usuario = session.get("usuario")
+    bonus_activo = False
+    if usuario and usuario.get("bonus_creditos_hasta"):
+        try:
+            # Soporta formato ISO y con espacio
+            bonus_activo = (
+                datetime.fromisoformat(usuario["bonus_creditos_hasta"].replace(" ", "T"))
+                > datetime.now()
+            )
+        except Exception:
+            pass
+
+    # DUPLICA los puntos si el bonus está activo
+    if bonus_activo:
+        puntos = puntos * 2
+
     # Obtener la lista de participantes de la actividad
     response = requests.get(f"{API_BASE_URL}/activity/{idactividad}/participantes")
     participantes = response.json() if response.status_code == 200 else []
@@ -744,6 +758,54 @@ def comprar_descuento():
 
     session["usuario"] = usuario
     return jsonify(success=True, descuento_hasta=descuento_hasta, puntos=usuario["puntos"])
+
+@app.route('/comprar_bonus_creditos', methods=['POST'])
+def comprar_bonus_creditos():
+    usuario = session.get("usuario")
+    if not usuario:
+        return jsonify(success=False, message="Debes iniciar sesión."), 401
+
+    COSTE_BONUS = 500
+    puntos_actuales = int(usuario.get("puntos", 0))
+
+    # No dejar comprar si ya tiene bonus activo
+    if usuario.get("bonus_creditos_hasta"):
+        try:
+            if datetime.strptime(usuario["bonus_creditos_hasta"], "%Y-%m-%d %H:%M:%S") > datetime.now():
+                return jsonify(success=False, message="Ya tienes el bonus activo.")
+        except Exception:
+            pass
+
+    if puntos_actuales < COSTE_BONUS:
+        return jsonify(success=False, message="No tienes suficientes créditos.")
+
+    # Resta créditos y actualiza bonus_creditos_hasta
+    usuario["puntos"] -= COSTE_BONUS
+    bonus_creditos_hasta = (datetime.now() + timedelta(hours=2)).isoformat()
+    usuario["bonus_creditos_hasta"] = bonus_creditos_hasta
+
+    # Actualiza en la API
+    response = requests.put(
+        f"{API_BASE_URL}/auth/update/{usuario['idusuario']}",
+        json={
+            "username": usuario["username"],
+            "email": usuario["email"],
+            "password": usuario.get("password", ""),
+            "telefono": usuario.get("telefono", ""),
+            "pais": usuario.get("pais", ""),
+            "edad": usuario.get("edad", 0),
+            "foto": usuario.get("foto", "default-avatar.svg"),
+            "puntos": usuario["puntos"],
+            "papeletas": usuario.get("papeletas", 0),
+            "descuento_hasta": usuario.get("descuento_hasta", ""),
+            "bonus_creditos_hasta": usuario.get("bonus_creditos_hasta", "")
+        }
+    )
+    if response.status_code != 200:
+        return jsonify(success=False, message="No se pudo activar el bonus."), 500
+
+    session["usuario"] = usuario
+    return jsonify(success=True, bonus_creditos_hasta=bonus_creditos_hasta, puntos=usuario["puntos"])
 
 if __name__ == "__main__":
     app.run(debug=True)

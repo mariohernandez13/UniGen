@@ -99,9 +99,8 @@
                             <h5 id="oferta1-title" class="card-title fw-bold">Pack de Créditos x2</h5>
                             <p class="card-text">¡Duplica tus créditos por tiempo limitado! Ideal para avanzar más
                                 rápido en tus actividades y desbloquear recompensas exclusivas.</p>
-                            <button class="btn btn-warning w-100 fw-bold btn-lg py-3"
-                                aria-label="Canjear oferta Pack de Créditos x2">Canjear 500 <i
-                                    class="bi bi-coin"></i></button>
+                           <button class="btn btn-warning w-100 fw-bold btn-lg py-3" id="btn-bonus-creditos"
+    aria-label="Canjear Pack de Créditos x2">Canjear 500 <i class="bi bi-coin"></i></button>
                         </div>
                     </div>
                 </div>
@@ -348,12 +347,26 @@
     <script src="https://kit.fontawesome.com/15e77aee33.js" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/JS/speech.js') }}"></script>
-    <script>
+  <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Variable de Jinja para saber si el usuario tiene descuento activo (la pasa Flask)
+    // Variables de Jinja para saber si los bonus están activos
     const descuentoActivo = "{{ 'true' if descuento_activo else 'false' }}";
+    const bonusActivo = "{{ 'true' if bonus_activo else 'false' }}";
     const btnDescuento = document.getElementById('btn-descuento');
+    const btnBonus = document.getElementById('btn-bonus-creditos');
     const puntosUsuario = document.getElementById('puntosUsuario');
+
+    // Deshabilita el botón de descuento si ya está activo
+    if (btnDescuento && descuentoActivo === "true") {
+        btnDescuento.disabled = true;
+        btnDescuento.innerHTML = '¡Descuento aplicado!';
+    }
+
+    // Deshabilita el botón de bonus si ya está activo
+    if (btnBonus && bonusActivo === "true") {
+        btnBonus.disabled = true;
+        btnBonus.innerHTML = '¡Bonus activado!';
+    }
 
     // Guarda el precio original en todos los botones si no lo tienen
     document.querySelectorAll('.btn-xl, .btn-lg').forEach(btn => {
@@ -453,23 +466,55 @@ document.addEventListener('DOMContentLoaded', function () {
     if (btnDescuento) {
         btnDescuento.addEventListener('click', function () {
             if (btnDescuento.disabled) return;
+            btnDescuento.disabled = true; // Deshabilita inmediatamente para evitar doble click
             fetch('/comprar_descuento', { method: 'POST' })
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
-                        // Resta los créditos visualmente
                         if (puntosUsuario && data.puntos !== undefined) {
                             puntosUsuario.textContent = data.puntos;
                         }
-                        // Aplica el descuento visual
                         aplicarDescuentoVisual();
-                        // Opcional: recarga la página cuando expire el descuento (2h)
                         setTimeout(() => {
                             location.reload();
                         }, 1000 * 60 * 60 * 2);
                     } else {
+                        btnDescuento.disabled = false;
                         Swal.fire('Error', data.message, 'error');
                     }
+                })
+                .catch(() => {
+                    btnDescuento.disabled = false;
+                    Swal.fire('Error', 'No se pudo procesar la compra.', 'error');
+                });
+        });
+    }
+
+    // Lógica de compra del bonus x2
+    if (btnBonus) {
+        btnBonus.addEventListener('click', function () {
+            if (btnBonus.disabled) return;
+            btnBonus.disabled = true; // Deshabilita inmediatamente para evitar doble click
+            fetch('/comprar_bonus_creditos', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        if (puntosUsuario && data.puntos !== undefined) {
+                            puntosUsuario.textContent = data.puntos;
+                        }
+                        btnBonus.disabled = true;
+                        btnBonus.innerHTML = '¡Bonus activado!';
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000 * 60 * 60 * 2);
+                    } else {
+                        btnBonus.disabled = false;
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(() => {
+                    btnBonus.disabled = false;
+                    Swal.fire('Error', 'No se pudo procesar la compra.', 'error');
                 });
         });
     }

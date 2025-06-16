@@ -120,11 +120,13 @@ public class AuthController : ControllerBase
         existingUser.edad = usuario.edad;
         existingUser.foto = usuario.foto ?? existingUser.foto;
         existingUser.puntos = usuario.puntos;
-        existingUser.papeletas = usuario.papeletas; // <-- ESTA LÍNEA ES CLAVE
+        existingUser.papeletas = usuario.papeletas;
         if (!string.IsNullOrEmpty(usuario.descuento_hasta?.ToString()))
         {
             existingUser.descuento_hasta = usuario.descuento_hasta;
         }
+        // AÑADE ESTA LÍNEA:
+        existingUser.bonus_creditos_hasta = usuario.bonus_creditos_hasta;
 
         await _context.SaveChangesAsync();
         return Ok(existingUser);
