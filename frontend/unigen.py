@@ -533,7 +533,7 @@ def filtrar_actividades_disponibles():
                             <ul class="list-group list-group-flush mb-4" style="font-size: 1.5rem;">
                                 {% for participante in actividad.participantes %}
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <span class="flex-grow-1">{{ participante.nombre }}</span>
+                                    <span class="flex-grow-1">{{ participante.usuario.username }}</span>
                                     <button type="button"
                                         class="btn btn-outline-info btn-sm ms-2"
                                         data-bs-toggle="modal"
@@ -806,6 +806,30 @@ def comprar_bonus_creditos():
 
     session["usuario"] = usuario
     return jsonify(success=True, bonus_creditos_hasta=bonus_creditos_hasta, puntos=usuario["puntos"])
+
+@app.route("/editar_actividad/<int:actividad_id>", methods=["POST"])
+def editar_actividad(actividad_id):
+    usuario = session.get("usuario")
+    if not usuario:
+        flash("Debes iniciar sesión para editar actividades.", "danger")
+        return redirect(url_for("dashboard", active_tab="creadas"))
+
+    data = {
+        "nombre": request.form.get("nombre"),
+        "descripcion": request.form.get("descripcion"),
+        "tipo": request.form.get("tipo"),
+        "fecha": request.form.get("fecha"),
+        "hora": request.form.get("hora"),
+        "lugar": request.form.get("lugar"),
+        "duracion": int(request.form.get("duracion", 0))
+    }
+
+    response = requests.put(f"{API_BASE_URL}/activity/update/{actividad_id}", json=data)
+    if response.status_code == 200:
+        flash("¡Actividad editada correctamente!", "success")
+    else:
+        flash("Error al editar la actividad", "danger")
+    return redirect(url_for("dashboard", active_tab="creadas"))
 
 if __name__ == "__main__":
     app.run(debug=True)

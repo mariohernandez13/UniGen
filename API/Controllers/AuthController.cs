@@ -94,7 +94,8 @@ public class AuthController : ControllerBase
                 foto = usuario.foto ?? "default-avatar.svg",
                 puntos = usuario.puntos,
                 papeletas = usuario.papeletas,
-                descuento_hasta = usuario.descuento_hasta
+                descuento_hasta = usuario.descuento_hasta,
+                bonus_creditos_hasta = usuario.bonus_creditos_hasta
             }
         });
     }
@@ -173,6 +174,12 @@ public class AuthController : ControllerBase
 
         var usuario = await _context.usuario.FindAsync(idusuario);
         if (usuario == null) return NotFound();
+
+        // BONUS X2: Duplica los puntos si el bonus está activo
+        if (usuario.bonus_creditos_hasta != null && usuario.bonus_creditos_hasta > DateTime.Now)
+        {
+            puntos = puntos * 2;
+        }
 
         usuario.puntos = usuario.puntos + puntos;
 
