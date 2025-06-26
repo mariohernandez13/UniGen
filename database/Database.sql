@@ -56,3 +56,4 @@ CREATE TABLE usuario_articulo (
     fecha_compra DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
 );
+

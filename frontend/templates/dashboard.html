@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/modales.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/CSS/footer.css') }}">
     <link rel="icon" href="../static/IMAGES/logo_unigen.svg" class="imagen">
-
+   <!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -79,6 +80,12 @@
                 <button class="nav-link {% if active_tab == 'apuntado' %}active{% endif %}" id="apuntado-tab"
                     data-bs-toggle="pill" data-bs-target="#apuntado" type="button" role="tab">Apuntado</button>
             </li>
+            <li class="nav-item" role="presentation">
+    <button class="nav-link {% if active_tab == 'calendario' %}active{% endif %}" id="calendario-tab"
+        data-bs-toggle="pill" data-bs-target="#calendario" type="button" role="tab">
+        <i class="bi bi-calendar-event"></i> Calendario Google
+    </button>
+</li>
         </ul>
 
 
@@ -560,6 +567,14 @@
             </div>
         </div>
     </div>
+<div class="tab-pane fade {% if active_tab == 'calendario' %}show active{% endif %}" id="calendario" role="tabpanel">
+    <div class="p-0 mb-4" style="background: none; border: none;">
+        <h3 class="mb-4 text-center" style="font-size: 2.5rem; color: #3b5bdb;">
+            <i class="bi bi-calendar-event me-2"></i>Mi Calendario
+        </h3>
+        <div id="google-calendar-full" class="my-4"></div>
+    </div>
+</div>
 
     <!-- Modales de actividades (fuera de las tabs para evitar duplicados) -->
     {% for actividad in actividades_disponibles + actividades_creadas + actividades_apuntado %}
@@ -742,6 +757,189 @@
             });
         });
     </script>
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+    async function cargarFullCalendar() {
+        const calendarEl = document.getElementById('google-calendar-full');
+        if (!calendarEl) return;
+
+        calendarEl.innerHTML = '<span class="spinner-border"></span> Cargando calendario...';
+
+        // 1. Comprueba si el usuario está autenticado con Google Calendar
+        let status = await fetch('/calendar/status').then(r => r.json());
+        if (!status.authenticated) {
+            // Redirige para iniciar sesión con Google
+            window.location.href = '/calendar';
+            return;
+        }
+
+        // 2. Carga eventos de Google Calendar
+        let eventosGoogle = [];
+        try {
+            const resGoogle = await fetch('/calendar');
+            const dataGoogle = await resGoogle.json();
+            eventosGoogle = Array.isArray(dataGoogle) ? dataGoogle.map(ev => ({
+                title: ev.summary || 'Sin título',
+                start: ev.start?.dateTime || ev.start?.date,
+                end: ev.end?.dateTime || ev.end?.date,
+                description: ev.description || '',
+                color: '#3b5bdb',
+                textColor: '#fff',
+                extendedProps: {
+                    fuente: ev.calendarName || 'Google Calendar'
+                }
+            })) : [];
+        } catch {}
+
+        // 3. Carga actividades a las que el usuario se ha apuntado
+        let eventosActividades = [];
+        try {
+            const resAct = await fetch('/api/actividades_apuntado');
+            const dataAct = await resAct.json();
+            eventosActividades = Array.isArray(dataAct) ? dataAct.map(act => ({
+                title: act.nombre || 'Actividad',
+                start: act.fecha,
+                end: act.fecha,
+                description: act.descripcion || '',
+                color: '#fd7e14',
+                textColor: '#fff',
+                extendedProps: {
+                    fuente: 'UniGen'
+                }
+            })) : [];
+        } catch {}
+
+        // 4. Unifica eventos y muestra el calendario
+        const eventos = [...eventosGoogle, ...eventosActividades];
+
+        calendarEl.innerHTML = ""; // Limpia el spinner
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'es',
+            height: 700,
+            aspectRatio: 1.7,
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: eventos,
+            eventClick: function(info) {
+                info.jsEvent.preventDefault();
+                let html = `<strong>${info.event.title}</strong><br>`;
+                if (info.event.start) {
+                    html += `<span><i class="bi bi-clock"></i> ${info.event.start.toLocaleString()}</span><br>`;
+                }
+                if (info.event.extendedProps.fuente) {
+                    html += `<span class="badge" style="background:${info.event.backgroundColor};color:#fff;">${info.event.extendedProps.fuente}</span><br>`;
+                }
+                if (info.event.extendedProps.description) {
+                    html += `<hr><em>${info.event.extendedProps.description}</em>`;
+                }
+                Swal.fire({
+                    title: 'Evento',
+                    html: html,
+                    icon: 'info',
+                    confirmButtonColor: info.event.backgroundColor || '#3b5bdb'
+                });
+            },
+            dayMaxEventRows: true,
+            eventDisplay: 'block'
+        });
+        calendar.render();
+    }
+
+    // Carga automática si la pestaña está activa al cargar
+    if (document.getElementById('calendario').classList.contains('show')) {
+        cargarFullCalendar();
+    }
+    // Carga al cambiar de pestaña
+    document.getElementById('calendario-tab').addEventListener('shown.bs.tab', cargarFullCalendar);
+});
+</script>
+
+<style>
+/* Calendario ancho y moderno */
+#google-calendar-full {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 32px #3b5bdb22;
+    padding: 2rem 1rem 2rem 1rem;
+}
+#google-calendar-full .fc {
+    font-size: 1.25rem;
+}
+#google-calendar-full .fc-toolbar-title {
+    font-size: 2.5rem;
+    color: #3b5bdb;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#google-calendar-full .fc-event {
+    border-radius: 0.7rem !important;
+    box-shadow: 0 2px 8px #3b5bdb22;
+    font-size: 1.1rem;
+    border: none !important;
+    cursor: pointer;
+    opacity: 0.97;
+    transition: transform 0.1s;
+}
+#google-calendar-full .fc-event:hover {
+    transform: scale(1.04);
+    opacity: 1;
+    z-index: 10;
+}
+#google-calendar-full .fc-daygrid-day-number {
+    font-weight: 600;
+}
+#google-calendar-full .fc-day-today {
+    background: #e7f5ff !important;
+}
+#google-calendar-full .fc-button {
+    font-size: 1.1rem !important;
+    border-radius: 0.7rem !important;
+    background: linear-gradient(90deg, #3b5bdb 70%, #4dabf7 100%) !important;
+    border: none !important;
+}
+#google-calendar-full .fc-button-primary:not(:disabled):active, 
+#google-calendar-full .fc-button-primary:not(:disabled):focus {
+    background: #364fc7 !important;
+}
+@media (max-width: 1200px) {
+    #google-calendar-full {
+        max-width: 98vw !important;
+        width: 98vw !important;
+        padding: 0.5rem;
+    }
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
     <script src="{{ url_for('static', filename='../static/JS/dashboard.js') }}"></script>
     <script src="{{ url_for('static', filename='../static/JS/modales.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
