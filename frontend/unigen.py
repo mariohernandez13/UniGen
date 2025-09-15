@@ -40,7 +40,7 @@ def oauth2callback():
     flow.fetch_token(authorization_response=request.url)
     credentials = flow.credentials
     session["credentials"] = credentials_to_dict(credentials)
-    return redirect("/calendar")
+    return redirect(url_for("dashboard"))
 
 @app.route("/calendar")
 def calendar():
